@@ -397,19 +397,42 @@ function TaxComplianceCalendar({ theme }) {
   );
 }
 
-function QuickToolsGrid({ theme }) {
+function QuickToolsGrid({ theme, sendMessage }) {
   return (
     <div style={{ marginTop: "40px", display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))", gap: "25px" }}>
       <div className="glass-panel service-card" style={{ padding: "30px", borderRadius: "16px", border: "1px solid rgba(16,185,129,0.3)", textAlign: "left", display: "flex", flexDirection: "column" }}>
         <h3 style={{ fontSize: "22px", margin: "0 0 10px 0", color: "#10B981" }}>📊 AI Tax Optimizer</h3>
         <p style={{ color: theme === "light" ? "#475569" : "#94a3b8", fontSize: "14px", margin: "0 0 20px 0", lineHeight: 1.6, flex: 1 }}>Automatically scan your transaction data to find hidden deductions and legal loopholes mapped directly to your state.</p>
-        <button style={{ padding: "14px 20px", background: "rgba(16,185,129,0.1)", border: "1px solid #10B981", borderRadius: "8px", color: "#10B981", fontWeight: 700, cursor: "pointer", transition: "all 0.2s" }} onMouseOver={e => {e.currentTarget.style.background = "#10B981"; e.currentTarget.style.color = "#FFF"}} onMouseOut={e => {e.currentTarget.style.background = "rgba(16,185,129,0.1)"; e.currentTarget.style.color = "#10B981"}}>Run Optimization Mode →</button>
+        <button onClick={() => sendMessage("Please run the AI Tax Optimizer on my profile. Find all hidden deductions, legal loopholes, and specific tax saving opportunities globally and strictly within my state bounds.")} style={{ padding: "14px 20px", background: "rgba(16,185,129,0.1)", border: "1px solid #10B981", borderRadius: "8px", color: "#10B981", fontWeight: 700, cursor: "pointer", transition: "all 0.2s" }} onMouseOver={e => {e.currentTarget.style.background = "#10B981"; e.currentTarget.style.color = "#FFF"}} onMouseOut={e => {e.currentTarget.style.background = "rgba(16,185,129,0.1)"; e.currentTarget.style.color = "#10B981"}}>Run Optimization Mode →</button>
       </div>
       <div className="glass-panel service-card" style={{ padding: "30px", borderRadius: "16px", border: "1px solid rgba(0,180,216,0.3)", textAlign: "left", display: "flex", flexDirection: "column" }}>
         <h3 style={{ fontSize: "22px", margin: "0 0 10px 0", color: "#00B4D8" }}>🔗 Fast E-Way Bill</h3>
         <p style={{ color: theme === "light" ? "#475569" : "#94a3b8", fontSize: "14px", margin: "0 0 20px 0", lineHeight: 1.6, flex: 1 }}>Fastest 1-click E-Way bill logistics automation. Linked seamlessly inside your GSTIN compliance pipeline and supply chain.</p>
-        <button style={{ padding: "14px 20px", background: "rgba(0,180,216,0.1)", border: "1px solid #00B4D8", borderRadius: "8px", color: "#00B4D8", fontWeight: 700, cursor: "pointer", transition: "all 0.2s" }} onMouseOver={e => {e.currentTarget.style.background = "#00B4D8"; e.currentTarget.style.color = "#FFF"}} onMouseOut={e => {e.currentTarget.style.background = "rgba(0,180,216,0.1)"; e.currentTarget.style.color = "#00B4D8"}}>Gen E-Way Bill Pipeline →</button>
+        <button onClick={() => sendMessage("Generate an end-to-end E-Way Bill generation logistics blueprint mapped to my exact profile. Guide me through thresholds, physical constraints, and total compliance with my GST returns.")} style={{ padding: "14px 20px", background: "rgba(0,180,216,0.1)", border: "1px solid #00B4D8", borderRadius: "8px", color: "#00B4D8", fontWeight: 700, cursor: "pointer", transition: "all 0.2s" }} onMouseOver={e => {e.currentTarget.style.background = "#00B4D8"; e.currentTarget.style.color = "#FFF"}} onMouseOut={e => {e.currentTarget.style.background = "rgba(0,180,216,0.1)"; e.currentTarget.style.color = "#00B4D8"}}>Gen E-Way Bill Pipeline →</button>
       </div>
+    </div>
+  );
+}
+
+function GlobalFooter() {
+  const scrollToTop = () => window.scrollTo({ top: 0, behavior: 'smooth' });
+
+  return (
+    <div style={{ padding: "30px 20px", background: "rgba(15,23,42,0.8)", borderTop: "1px solid rgba(255,255,255,0.05)", display: "flex", flexDirection: "column", alignItems: "center", gap: "15px", position: "relative", zIndex: 10, marginTop: "auto" }}>
+      <div style={{ display: "flex", alignItems: "center", gap: "20px", color: "#94a3b8", fontSize: "14px", flexWrap: "wrap", justifyContent: "center" }}>
+        <span style={{ fontWeight: 800, color: "#9BF6FF" }}>IndiaFinBot Pro</span>
+        <span className="hide-mobile">|</span>
+        <a href="#" style={{ color: "#94a3b8", textDecoration: "none", transition: "color 0.2s" }} onMouseOver={e=>e.currentTarget.style.color="#FFF"} onMouseOut={e=>e.currentTarget.style.color="#94a3b8"}>Privacy Policy</a>
+        <span className="hide-mobile">|</span>
+        <a href="#" style={{ color: "#94a3b8", textDecoration: "none", transition: "color 0.2s" }} onMouseOver={e=>e.currentTarget.style.color="#FFF"} onMouseOut={e=>e.currentTarget.style.color="#94a3b8"}>Terms of Service</a>
+        <span className="hide-mobile">|</span>
+        <a href="#" style={{ color: "#94a3b8", textDecoration: "none", transition: "color 0.2s" }} onMouseOver={e=>e.currentTarget.style.color="#FFF"} onMouseOut={e=>e.currentTarget.style.color="#94a3b8"}>Help Center</a>
+      </div>
+      <p style={{ margin: 0, color: "#475569", fontSize: "12px", textAlign: "center" }}>© 2025-2026 IndiaFinBot AI Solutions. Intelligent Enterprise Infrastructure. All rights reserved.</p>
+      
+      <button onClick={scrollToTop} style={{ marginTop: "10px", padding: "10px 20px", background: "rgba(0,180,216,0.1)", border: "1px solid #00B4D8", color: "#00B4D8", borderRadius: "50px", cursor: "pointer", display: "flex", alignItems: "center", gap: "8px", fontWeight: 700, transition: "all 0.2s" }} onMouseOver={e=>{e.currentTarget.style.background="#00B4D8"; e.currentTarget.style.color="#FFF"; e.currentTarget.style.transform="translateY(-3px)"}} onMouseOut={e=>{e.currentTarget.style.background="rgba(0,180,216,0.1)"; e.currentTarget.style.color="#00B4D8"; e.currentTarget.style.transform="translateY(0)"}}>
+        ↑ Scroll To Top
+      </button>
     </div>
   );
 }
@@ -958,7 +981,7 @@ Your Core Capabilities & Guidelines:
 
                 <TaxComplianceCalendar theme={theme} />
 
-                <QuickToolsGrid theme={theme} />
+                <QuickToolsGrid theme={theme} sendMessage={sendMessage} />
               </>
             ) : (
               renderInteractiveDashboard(OVERVIEW_CARDS.find(c => c.id === selectedDetailId))
@@ -1212,6 +1235,7 @@ Your Core Capabilities & Guidelines:
         )}
 
       </div>
+      <GlobalFooter />
     </div>
   );
 }
