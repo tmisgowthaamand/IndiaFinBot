@@ -92,6 +92,34 @@ const TOP_COMPANIES_DATA = [
   { rank: "N/A", name: "Modern AI Startups", category: "Startup", revenue: "₹0-5 Cr", profit: "-₹2 Cr (Loss)", growth: "+310%" },
 ];
 
+const ALL_BANKS_DATA = {
+  govt: [
+    { name: "State Bank of India", abbr: "SBI", rate: "8.00% - 9.50%", link: "https://sbi.co.in/web/business/sme" },
+    { name: "Punjab National Bank", abbr: "PNB", rate: "8.40% - 10.20%", link: "https://pnbindia.in/msme-banking.aspx" },
+    { name: "Bank of Baroda", abbr: "BOB", rate: "8.35% - 10.15%", link: "https://www.bankofbaroda.in/business-banking/msme" },
+    { name: "Canara Bank", abbr: "Canara", rate: "8.50% - 10.25%", link: "https://canarabank.com/userpage?id=3" },
+    { name: "Bank of India", abbr: "BOI", rate: "8.45% - 10.50%", link: "https://bankofindia.co.in/msme" },
+    { name: "Union Bank of India", abbr: "UBI", rate: "8.50% - 10.30%", link: "https://www.unionbankofindia.co.in/english/msme.aspx" },
+    { name: "Indian Bank", abbr: "IB", rate: "8.40% - 10.40%", link: "https://indianbank.in/departments/msme/" },
+    { name: "Central Bank of India", abbr: "CBI", rate: "8.55% - 10.55%", link: "https://www.centralbankofindia.co.in/en/msme-loans" },
+    { name: "Bank of Maharashtra", abbr: "BOM", rate: "8.50% - 10.45%", link: "https://bankofmaharashtra.in/msme-banking" }
+  ],
+  private: [
+    { name: "HDFC Bank", rate: "10.50% - 14.50%", link: "https://www.hdfcbank.com/sme/borrow" },
+    { name: "ICICI Bank", rate: "10.75% - 15.00%", link: "https://www.icicibank.com/business-banking" },
+    { name: "Axis Bank", rate: "11.00% - 15.25%", link: "https://www.axisbank.com/business-banking" },
+    { name: "Kotak Mahindra", rate: "10.99% - 15.50%", link: "https://www.kotak.com/en/business/sme-banking.html" },
+    { name: "IndusInd Bank", rate: "11.25% - 16.00%", link: "https://www.indusind.com/in/en/business.html" },
+    { name: "Yes Bank", rate: "11.50% - 16.25%", link: "https://www.yesbank.in/business-banking/msme-loans" },
+    { name: "IDFC First Bank", rate: "12.00% - 16.50%", link: "https://www.idfcfirstbank.com/business-banking" },
+    { name: "Federal Bank", rate: "10.50% - 14.75%", link: "https://www.federalbank.co.in/business/loans" },
+    { name: "Bandhan Bank", rate: "11.00% - 15.00%", link: "https://bandhanbank.com/sme-banking" },
+    { name: "RBL Bank", rate: "11.50% - 16.00%", link: "https://www.rblbank.com/business-banking" },
+    { name: "South Indian Bank", rate: "10.75% - 15.25%", link: "https://www.southindianbank.com/content/business-banking/29" },
+    { name: "City Union Bank", rate: "11.00% - 15.50%", link: "https://www.cityunionbank.com/corporate" }
+  ]
+};
+
 function Particles() {
   return (
     <div style={{ position: "fixed", inset: 0, pointerEvents: "none", overflow: "hidden", zIndex: 0 }}>
@@ -812,20 +840,18 @@ Your Core Capabilities & Guidelines:
             <h4 style={{ color: "#9BF6FF", margin: "0 0 15px 0", fontSize: "13px", textTransform: "uppercase", letterSpacing: "1px", fontWeight: 700 }}>Live Bank Loans ('25-'26)</h4>
             <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
               <p style={{ margin: "0 0 5px 0", color: "#94a3b8", fontSize: "12px", fontWeight: 600 }}>🏦 Govt & Public Banks</p>
-              <a href="https://sbi.co.in/web/business/sme" target="_blank" rel="noreferrer" style={{ color: "#e2e8f0", textDecoration: "none", padding: "12px 14px", background: "rgba(0,0,0,0.4)", borderRadius: "8px", fontSize: "13px", border: "1px solid rgba(255,255,255,0.05)", display: "flex", justifyContent: "space-between", alignItems: "center", transition: "all 0.2s" }} onMouseOver={e => { e.currentTarget.style.background = "rgba(0,180,216,0.15)"; e.currentTarget.style.borderColor = "#00B4D8"; }} onMouseOut={e => { e.currentTarget.style.background = "rgba(0,0,0,0.4)"; e.currentTarget.style.borderColor = "rgba(255,255,255,0.05)"; }}>
-                <div style={{ display: "flex", flexDirection: "column" }}><span style={{ fontWeight: 700, color: "#9BF6FF", marginBottom: 4 }}>State Bank (SBI)</span><span style={{ fontSize: "11px", color: "#94a3b8" }}>MSME/Business: <strong style={{color:"#10B981"}}>8.00% - 9.50%</strong></span></div> <span>↗</span>
-              </a>
-              <a href="https://pnbindia.in/msme-banking.aspx" target="_blank" rel="noreferrer" style={{ color: "#e2e8f0", textDecoration: "none", padding: "12px 14px", background: "rgba(0,0,0,0.4)", borderRadius: "8px", fontSize: "13px", border: "1px solid rgba(255,255,255,0.05)", display: "flex", justifyContent: "space-between", alignItems: "center", transition: "all 0.2s" }} onMouseOver={e => { e.currentTarget.style.background = "rgba(0,180,216,0.15)"; e.currentTarget.style.borderColor = "#00B4D8"; }} onMouseOut={e => { e.currentTarget.style.background = "rgba(0,0,0,0.4)"; e.currentTarget.style.borderColor = "rgba(255,255,255,0.05)"; }}>
-                <div style={{ display: "flex", flexDirection: "column" }}><span style={{ fontWeight: 700, color: "#9BF6FF", marginBottom: 4 }}>Punjab National (PNB)</span><span style={{ fontSize: "11px", color: "#94a3b8" }}>MSME/Business: <strong style={{color:"#10B981"}}>8.40% - 10.20%</strong></span></div> <span>↗</span>
-              </a>
+              {ALL_BANKS_DATA.govt.map((bank, i) => (
+                <a key={`govt-${i}`} href={bank.link} target="_blank" rel="noreferrer" style={{ color: "#e2e8f0", textDecoration: "none", padding: "12px 14px", background: "rgba(0,0,0,0.4)", borderRadius: "8px", fontSize: "13px", border: "1px solid rgba(255,255,255,0.05)", display: "flex", justifyContent: "space-between", alignItems: "center", transition: "all 0.2s" }} onMouseOver={e => { e.currentTarget.style.background = "rgba(0,180,216,0.15)"; e.currentTarget.style.borderColor = "#00B4D8"; }} onMouseOut={e => { e.currentTarget.style.background = "rgba(0,0,0,0.4)"; e.currentTarget.style.borderColor = "rgba(255,255,255,0.05)"; }}>
+                  <div style={{ display: "flex", flexDirection: "column" }}><span style={{ fontWeight: 700, color: "#9BF6FF", marginBottom: 4 }}>{bank.name} {bank.abbr && `(${bank.abbr})`}</span><span style={{ fontSize: "11px", color: "#94a3b8" }}>MSME/Biz: <strong style={{color:"#10B981"}}>{bank.rate}</strong></span></div> <span>↗</span>
+                </a>
+              ))}
 
               <p style={{ margin: "10px 0 5px 0", color: "#94a3b8", fontSize: "12px", fontWeight: 600 }}>🏛️ Top Private Banks</p>
-              <a href="https://www.hdfcbank.com/sme/borrow" target="_blank" rel="noreferrer" style={{ color: "#e2e8f0", textDecoration: "none", padding: "12px 14px", background: "rgba(0,0,0,0.4)", borderRadius: "8px", fontSize: "13px", border: "1px solid rgba(255,255,255,0.05)", display: "flex", justifyContent: "space-between", alignItems: "center", transition: "all 0.2s" }} onMouseOver={e => { e.currentTarget.style.background = "rgba(0,180,216,0.15)"; e.currentTarget.style.borderColor = "#00B4D8"; }} onMouseOut={e => { e.currentTarget.style.background = "rgba(0,0,0,0.4)"; e.currentTarget.style.borderColor = "rgba(255,255,255,0.05)"; }}>
-                 <div style={{ display: "flex", flexDirection: "column" }}><span style={{ fontWeight: 700, color: "#FFB703", marginBottom: 4 }}>HDFC Bank</span><span style={{ fontSize: "11px", color: "#94a3b8" }}>Biz Loan: <strong style={{color:"#10B981"}}>10.50% - 14.50%</strong></span></div> <span>↗</span>
-              </a>
-              <a href="https://www.icicibank.com/business-banking" target="_blank" rel="noreferrer" style={{ color: "#e2e8f0", textDecoration: "none", padding: "12px 14px", background: "rgba(0,0,0,0.4)", borderRadius: "8px", fontSize: "13px", border: "1px solid rgba(255,255,255,0.05)", display: "flex", justifyContent: "space-between", alignItems: "center", transition: "all 0.2s" }} onMouseOver={e => { e.currentTarget.style.background = "rgba(0,180,216,0.15)"; e.currentTarget.style.borderColor = "#00B4D8"; }} onMouseOut={e => { e.currentTarget.style.background = "rgba(0,0,0,0.4)"; e.currentTarget.style.borderColor = "rgba(255,255,255,0.05)"; }}>
-                 <div style={{ display: "flex", flexDirection: "column" }}><span style={{ fontWeight: 700, color: "#FFB703", marginBottom: 4 }}>ICICI Bank</span><span style={{ fontSize: "11px", color: "#94a3b8" }}>Startup/Biz: <strong style={{color:"#10B981"}}>10.75% - 15.00%</strong></span></div> <span>↗</span>
-              </a>
+              {ALL_BANKS_DATA.private.map((bank, i) => (
+                <a key={`pvt-${i}`} href={bank.link} target="_blank" rel="noreferrer" style={{ color: "#e2e8f0", textDecoration: "none", padding: "12px 14px", background: "rgba(0,0,0,0.4)", borderRadius: "8px", fontSize: "13px", border: "1px solid rgba(255,255,255,0.05)", display: "flex", justifyContent: "space-between", alignItems: "center", transition: "all 0.2s" }} onMouseOver={e => { e.currentTarget.style.background = "rgba(0,180,216,0.15)"; e.currentTarget.style.borderColor = "#00B4D8"; }} onMouseOut={e => { e.currentTarget.style.background = "rgba(0,0,0,0.4)"; e.currentTarget.style.borderColor = "rgba(255,255,255,0.05)"; }}>
+                   <div style={{ display: "flex", flexDirection: "column" }}><span style={{ fontWeight: 700, color: "#FFB703", marginBottom: 4 }}>{bank.name}</span><span style={{ fontSize: "11px", color: "#94a3b8" }}>Startup/Biz: <strong style={{color:"#10B981"}}>{bank.rate}</strong></span></div> <span>↗</span>
+                </a>
+              ))}
             </div>
           </div>
 
