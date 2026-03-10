@@ -512,7 +512,7 @@ Your Core Capabilities & Guidelines:
             return newMessages;
           });
         } catch (imgErr) {
-          showNotification("ChatGPT DALL-E limit reached. Falling back to Nano Banana Engine...");
+          showNotification("OpenAI limit reached. Falling back to Nano Banana Engine...");
           const fallbackPrompt = encodeURIComponent(`${imagePrompt} in ${locationContext} modern professional business style`);
           const fallbackUrl = `https://image.pollinations.ai/prompt/${fallbackPrompt}?width=800&height=400&nologo=true`;
           
@@ -520,7 +520,7 @@ Your Core Capabilities & Guidelines:
             const newMessages = [...prev];
             const lastMsgIdx = newMessages.findLastIndex(m => m.tempImage);
             if (lastMsgIdx !== -1) {
-              const updatedContent = newMessages[lastMsgIdx].content.replace(`\n\n🎨 **Generating high-quality image...**\n`, `\n\n![Fallback Generated Image](${fallbackUrl})\n\n*(Note: Using backup visual engine because DALL-E 3 limit was reached: ${imgErr.message})*`);
+              const updatedContent = newMessages[lastMsgIdx].content.replace(`\n\n🎨 **Generating high-quality image...**\n`, `\n\n![Fallback Generated Image](${fallbackUrl})\n\n*(Note: Using backup visual engine because OpenAI limit was reached: ${imgErr.message})*`);
               newMessages[lastMsgIdx] = { ...newMessages[lastMsgIdx], content: updatedContent };
               delete newMessages[lastMsgIdx].tempImage;
             }
