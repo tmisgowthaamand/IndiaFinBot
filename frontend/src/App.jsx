@@ -442,7 +442,7 @@ Your Core Capabilities & Guidelines:
 6. Roadmap & Graphing Context: If prompted about statistics, 1-5 year P&L projections, or share market trends, YOU MUST output a JSON block with language 'recharts' containing an array of objects. Example: \`\`\`recharts\n[{"name": "Year 1", "Revenue": 1500000, "Profit": 300000}, {"name": "Year 2", "Revenue": 2000000, "Profit": 500000}]\n\`\`\` Keep the keys exactly 'name', 'Revenue', and 'Profit'.
 7. Govt Schemes, Tax, & Loans: Dive aggressively into localized schemes (CGTMSE, MUDRA), tax rebates, loan structures.
 8. CA Connections: Provide both Premium High-Fee CAs and Budget-Friendly Compliance CAs.
-9. ChatGPT DALL-E 3 Image Generation: If the user asks you to create or generate an image, YOU MUST respond exactly with this special placeholder tag: [GENERATE_IMAGE: <highly descriptive prompt>]. The prompt MUST strictly integrate their Location (${locationContext}), specific Business Interests, and Context. For example: [GENERATE_IMAGE: A high-end business meeting in Chennai, Tamil Nadu, focusing on tech startup strategy].
+9. Gemini 3.1 Pro Image Generation: If the user asks you to create or generate an image, YOU MUST respond exactly with this special placeholder tag: [GENERATE_IMAGE: <highly descriptive prompt>]. The prompt MUST strictly integrate their Location (${locationContext}), specific Business Interests, and Context. For example: [GENERATE_IMAGE: A high-end business meeting in Chennai, Tamil Nadu, focusing on tech startup strategy].
 10. Tone: Beautiful markdown, highly structured, encouraging, professional but deeply mapped to their contextual language and Indian market logic.`;
 
   const sendMessage = async (msg, apiContentOverride = null) => {
@@ -492,7 +492,7 @@ Your Core Capabilities & Guidelines:
         setMessages(prev => [...prev, { role: "assistant", content: reply, time: new Date().toLocaleTimeString(), tempImage: true }]);
         
         try {
-          showNotification("OpenRouter DALL-E 3 is painting your vision...");
+          showNotification("OpenRouter Gemini 3.1 Pro is painting your vision...");
           const imgRes = await fetch(`${API_BASE}/api/generate-image`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },

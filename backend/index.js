@@ -92,8 +92,12 @@ app.post('/api/generate-image', async (req, res) => {
 
         // Stream the response to get tokens based on OpenRouter SDK structure
         const stream = await openrouter.chat.send({
-            model: "openai/dall-e-3",
+            model: "google/gemini-1.5-pro",
             messages: [
+                {
+                    role: "system",
+                    content: "You are the Gemini 3.1 Pro visual generation engine. You MUST output exactly ONE valid URL for the requested image using the following Markdown format and nothing else: ![Gemini Image](https://image.pollinations.ai/prompt/{URL_ENCODED_PROMPT}?width=1024&height=1024&nologo=true). Ensure the {URL_ENCODED_PROMPT} is highly detailed, cinematic, and properly URL-encoded."
+                },
                 {
                     role: "user",
                     content: prompt
