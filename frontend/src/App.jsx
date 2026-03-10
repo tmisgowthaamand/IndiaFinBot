@@ -495,7 +495,7 @@ Your Core Capabilities & Guidelines:
         setTimeout(() => {
           showNotification("Nano Banana Engine is painting your vision...");
           const fallbackPrompt = encodeURIComponent(`${imagePrompt} in ${locationContext} modern professional business style`);
-          const fallbackUrl = `https://image.pollinations.ai/prompt/${fallbackPrompt}?width=800&height=400&nologo=true`;
+          const fallbackUrl = `https://image.pollinations.ai/prompt/${fallbackPrompt}?width=1200&height=800&nologo=true&seed=${Math.floor(Math.random() * 1000000)}`;
           
           setMessages(prev => {
             const newMessages = [...prev];
@@ -1027,7 +1027,7 @@ Your Core Capabilities & Guidelines:
                             let safeSrc = props.src || "";
                             if (!safeSrc.startsWith("http")) {
                               const visualPrompt = `${safeSrc} in ${locationContext} business style`;
-                              safeSrc = `https://image.pollinations.ai/prompt/${encodeURIComponent(visualPrompt)}?width=800&height=400&nologo=true`;
+                              safeSrc = `https://image.pollinations.ai/prompt/${encodeURIComponent(visualPrompt)}?width=1200&height=800&nologo=true&seed=${Math.floor(Math.random() * 1000000)}`;
                             } else {
                               safeSrc = safeSrc.replace(/ /g, '%20');
                             }
