@@ -34,7 +34,7 @@ app.post('/api/chat', async (req, res) => {
             return res.status(500).json({ error: { message: "GEMINI_API_KEY is not configured on the backend server." } });
         }
 
-        const models = ["gemini-3.1-pro-preview", "gemini-3.1-flash-lite-preview", "gemini-2.5-pro", "gemini-2.5-flash", "gemini-2.0-flash", "gemini-1.5-pro", "gemini-1.5-flash", "gemini-pro-latest", "gemini-flash-latest"];
+        const models = ["gemini-3.1-flash-lite-preview", "gemini-2.5-flash", "gemini-3.1-pro-preview", "gemini-2.5-pro", "gemini-2.0-flash", "gemini-1.5-pro", "gemini-1.5-flash", "gemini-pro-latest", "gemini-flash-latest"];
         let data = null;
         let lastError = null;
 

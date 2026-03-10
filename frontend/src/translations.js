@@ -1,4 +1,4 @@
-﻿export const translations = {
+export const translations = {
     en: {
         appTitle: "IndiaFin",
         appSubtitle: "End-to-End Accounting AI",
@@ -71,7 +71,7 @@
         prefixUploaded: "📎 Uploaded:",
         prefixCSVUploaded: "📎 CSV Uploaded:",
         msgUploadAnalysis: "**Intelligent Analysis Request:**\nPlease strictly analyze this statement end-to-end without leaving any transaction out.\n- **Verify Balances:** Ensure my debits & credits balance correctly and trace the various paths they used.\n- **Profit to Next Term:** Based on this data, how can we profit to the next term?\n- **Solutions:** Give me concrete solutions and personalized examples mapping to my specific requirements to convert any losses into high gross profits.",
-        notifAnalysisStart: "Gemini 3.1 Pro is analyzing your document end-to-end...",
+        notifAnalysisStart: "Ultra-Fast Gemini Flash is performing end-to-end analysis...",
         notifAnalysisComplete: "End-to-end Analysis Complete!",
         notifPainting: "Nano Banana Engine is painting your vision...",
         notifError: "An error occurred during process.",
@@ -231,7 +231,7 @@
         prefixUploaded: "📎 பதிவேற்றப்பட்டது:",
         prefixCSVUploaded: "📎 CSV பதிவேற்றப்பட்டது:",
         msgUploadAnalysis: "**நுண்ணறிவு பகுப்பாய்வு கோரிக்கை:**\nதயவுசெய்து இந்த அறிக்கையை எந்தவொரு பரிவர்த்தனையையும் விடாமல் முழுமையாக பகுப்பாய்வு செய்யவும்.\n- **இருப்பு சரிபார்ப்பு:** எனது பற்று மற்றும் வரவுகள் சரியாக சமநிலையில் இருப்பதை உறுதிசெய்து, அவை பயன்படுத்திய பல்வேறு வழிகளைக் கண்டறியவும்.\n- **அடுத்த காலத்திற்கான லாபம்:** இந்தத் தரவுகளின் அடிப்படையில், அடுத்த காலத்தில் நாம் எவ்வாறு லாபம் ஈட்ட முடியும்?\n- **தீர்வுகள்:** ஏதேனும் இழப்புகளை அதிக லாபமாக மாற்ற எனது குறிப்பிட்ட தேவைகளுக்கு ஏற்ற உறுதியான தீர்வுகளையும் தனிப்பயனாக்கப்பட்ட எடுத்துக்காட்டுகளையும் வழங்கவும்.",
-        notifAnalysisStart: "Gemini 3.1 Pro உங்கள் ஆவணத்தை பகுப்பாய்வு செய்கிறது...",
+        notifAnalysisStart: "அதிவேக ஜெமினி பிளாஷ் எண்ட்-டு-எண்ட் பகுப்பாய்வைச் செய்கிறது...",
         notifAnalysisComplete: "பகுப்பாய்வு முடிந்தது!",
         notifPainting: "நானோ பனானா எஞ்சின் உங்கள் கற்பனையை உருவாக்குகிறது...",
         notifError: "செயல்பாட்டின் போது பிழை ஏற்பட்டது.",
@@ -311,7 +311,7 @@
         prefixUploaded: "📎 అప్‌లోడ్ చేయబడింది:",
         prefixCSVUploaded: "📎 CSV అప్‌లోడ్ చేయబడింది:",
         msgUploadAnalysis: "**తెలివైన విశ్లేషణ అభ్యర్థన:**\nదయచేసి ఈ ప్రకటనను ఏ ఒక్క లావాదేవీని వదలకుండా ఖచ్చితంగా విశ్లేషించండి.\n- **నిల్వలను ధృవీకరించండి:** నా డెబిట్‌లు & క్రెడిట్‌లు సరిగ్గా బ్యాలెన్స్ అయ్యాయని నిర్ధారించుకోండి మరియు అవి ఉపయోగించిన వివిధ మార్గాలను కనిపెట్టండి.\n- **తదుపరి కాలానికి లాభం:** ఈ డేటా ఆధారంగా, తదుపరి కాలంలో మనం ఎలా లాభం పొందవచ్చు?\n- **పరిష్కారాలు:** నష్టాలను అధిక లాభాలుగా మార్చడానికి నా నిర్దిష్ట అవసరాలకు అనుగుణంగా పరిష్కారాలు మరియు వ్యక్తిగతీకరించిన ఉదాహరణలను ఇవ్వండి.",
-        notifAnalysisStart: "Gemini 3.1 Pro మీ పత్రాన్ని విశ్లేషిస్తోంది...",
+        notifAnalysisStart: "అల్ట్రా-ఫాస్ట్ జెమిని ఫ్లాష్ ఎండ్-టు-ఎండ్ విశ్లేషణ చేస్తోంది...",
         notifAnalysisComplete: "విశ్లేషణ పూర్తయింది!",
         notifPainting: "నానో బనానా ఇంజిన్ చిత్రీకరిస్తోంది...",
         notifError: "ప్రక్రియలో లోపం సంభవించింది.",
@@ -471,7 +471,7 @@
         prefixUploaded: "📎 ಅಪ್‌ಲೋಡ್ ಮಾಡಲಾಗಿದೆ:",
         prefixCSVUploaded: "📎 CSV ಅಪ್‌ಲೋಡ್ ಮಾಡಲಾಗಿದೆ:",
         msgUploadAnalysis: "**ಬುದ್ಧಿವಂತ ವಿಶ್ಲೇಷಣೆ ವಿನಂತಿ:**\nದಯವಿಟ್ಟು ಈ ಹೇಳಿಕೆಯನ್ನು ಯಾವುದೇ ವಹಿವಾಟನ್ನು ಬಿಡದೆ ಸಂಪೂರ್ಣವಾಗಿ ವಿಶ್ಲೇಷಿಸಿ.\n- **ಬ್ಯಾಲೆನ್ಸ್ ಪರಿಶೀಲಿಸಿ:** ಡೆಬಿಟ್ ಮತ್ತು ಕ್ರೆಡಿಟ್‌ಗಳು ಸರಿಯಾಗಿವೆ ಎಂದು ಖಚಿತಪಡಿಸಿಕೊಳ್ಳಿ.\n- **ಮುందಿನ ಅವಧಿಗೆ ಲಾಭ:** ಈ ಡೇಟಾದ ಆಧಾರದ ಮೇಲೆ, ಮುಂದಿನ ಅವಧಿಯಲ್ಲಿ ನಾವು ಹೇಗೆ ಲಾಭ ಗಳಿಸಬಹುದು?\n- **ಪರಿಹಾರಗಳು:** ನಷ್ಟವನ್ನು ಹೆಚ್ಚಿನ ಲಾಭವಾಗಿ ಪರಿವರ್ತಿಸಲು ಪರಿಹಾರಗಳು ಮತ್ತು ಉದಾಹರಣೆಗಳನ್ನು ನೀಡಿ.",
-        notifAnalysisStart: "Gemini 3.1 Pro ನಿಮ್ಮ ಡಾಕ್ಯುಮೆಂಟ್ ಅನ್ನು ವಿಶ್ಲೇಷಿಸುತ್ತಿದೆ...",
+        notifAnalysisStart: "ಅಲ್ಟ್ರಾ-ಫಾಸ್ಟ್ ಜೆಮಿನಿ ಫ್ಲ್ಯಾಶ್ ಎಂಡ್-ಟು-ಎಂಡ್ ವಿಶ್ಲೇಷಣೆ ನಡೆಸುತ್ತಿದೆ...",
         notifAnalysisComplete: "ವಿಶ್ಲೇಷಣೆ ಪೂರ್ಣಗೊಂಡಿದೆ!",
         notifPainting: "ನಾನೋ ಬನಾನಾ ಇಂಜಿನ್ ಪೇಂಟಿಂಗ್ ಮಾಡುತ್ತಿದೆ...",
         notifError: "ಪ್ರಕ್ರಿಯೆಯ ಸಮಯದಲ್ಲಿ ದೋಷ ಸಂಭವಿಸಿದೆ.",
