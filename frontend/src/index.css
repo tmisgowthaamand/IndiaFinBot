@@ -2,4 +2,130 @@ body {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  overflow-x: hidden;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+/* Base Responsive Main Container - Default to Desktop/Laptop */
+.main-container {
+  height: calc(100vh - 85px);
+  overflow: hidden;
+}
+
+.sidebar {
+  width: 340px;
+  height: 100%;
+}
+
+.content-area {
+  flex: 1;
+  height: 100%;
+  overflow-y: auto;
+}
+
+/* --------------------------------------------------------------------------------
+   MEDIA QUERIES FOR SEAMLESS DEVICE SCREEN ALIGNMENT
+   Android, iPhone, iPads, iMacs, Laptops
+-------------------------------------------------------------------------------- */
+
+/* LARGE SCREENS (iMac, Ultra-Wide Laptops - > 1600px) */
+@media (min-width: 1601px) {
+  .main-container {
+    max-width: 1800px;
+  }
+}
+
+/* TABLETS & SMALL LAPTOPS (iPad Pro, Small Macbooks - 1024px to 1200px) */
+@media (max-width: 1200px) {
+  .main-container {
+    height: auto;
+    min-height: calc(100vh - 85px);
+    overflow: visible;
+  }
+}
+
+/* TABLETS (iPad, Android Tablets - 768px to 1023px) */
+@media (max-width: 1023px) {
+  .main-container {
+    flex-direction: column;
+    padding: 15px !important;
+    height: auto !important;
+    overflow: visible !important;
+  }
+  
+  .sidebar {
+    width: 100% !important;
+    height: auto !important;
+    overflow-y: visible !important;
+  }
+  
+  .content-area {
+    width: 100% !important;
+    flex: none !important;
+    height: auto !important;
+    min-height: 500px;
+    overflow-y: visible !important;
+  }
+  
+  /* Make header flex stack nicely */
+  .glass-panel {
+    padding: 15px !important;
+  }
+  
+  /* Buttons and tabs spacing */
+  .nav-tab {
+    padding: 8px 12px !important;
+    font-size: 13px !important;
+  }
+}
+
+/* MOBILE PHONES (iPhone, Android - < 768px) */
+@media (max-width: 767px) {
+  .main-container {
+    gap: 15px !important;
+    padding: 10px !important;
+  }
+
+  .sidebar {
+    padding: 15px !important;
+    border-radius: 12px !important;
+  }
+
+  .content-area {
+    padding: 15px !important;
+    border-radius: 12px !important;
+  }
+
+  /* Chat Messages Specifics for Mobile */
+  .chat-messages-container {
+    padding: 15px !important;
+  }
+
+  /* Make header stack vertically if needed */
+  .glass-panel > div {
+    justify-content: center !important;
+  }
+  
+  /* Hide specific map tabs text to save space */
+  .hide-mobile {
+    display: none !important;
+  }
+  
+  h1 {
+    font-size: 26px !important;
+  }
+  h2 {
+    font-size: 20px !important;
+  }
+  h3 {
+    font-size: 18px !important;
+  }
+
+  /* Loan Calculator grid fallback */
+  input, select, button {
+    font-size: 14px !important;
+  }
 }

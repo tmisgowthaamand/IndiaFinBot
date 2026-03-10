@@ -715,10 +715,10 @@ Your Core Capabilities & Guidelines:
         </div>
       </div>
 
-      <div style={{ position: "relative", zIndex: 5, flex: 1, maxWidth: 1600, margin: "0 auto", width: "100%", padding: "25px 30px", display: "flex", gap: "25px", height: "calc(100vh - 85px)", overflow: "hidden" }}>
+      <div className="main-container" style={{ position: "relative", zIndex: 5, flex: 1, maxWidth: 1600, margin: "0 auto", width: "100%", padding: "25px", display: "flex", gap: "25px" }}>
 
         {/* Universal Left Sidebar: Profile Details */}
-        <div className="glass-panel custom-scrollbar" style={{ width: "340px", borderRadius: "20px", padding: "25px", display: "flex", flexDirection: "column", height: "100%", overflowY: "auto" }}>
+        <div className="sidebar glass-panel custom-scrollbar" style={{ borderRadius: "20px", padding: "25px", display: "flex", flexDirection: "column", overflowY: "auto" }}>
           <h3 style={{ color: "#FFF", margin: "0 0 20px 0", fontSize: "18px", display: "flex", alignItems: "center", gap: 10, fontWeight: 700 }}><span style={{ background: "#FF6B35", padding: "6px", borderRadius: "8px", fontSize: "16px" }}>🚀</span> {t("startupConfig")}</h3>
 
           <div>
@@ -789,9 +789,8 @@ Your Core Capabilities & Guidelines:
           </div>
         </div>
 
-        {/* Dynamic Right Area */}
         {activeTab === "overview" && (
-          <div className="glass-panel custom-scrollbar" style={{ flex: 1, borderRadius: "20px", padding: selectedDetailId ? "20px" : "40px", overflowY: "auto", height: "100%" }}>
+          <div className="content-area glass-panel custom-scrollbar" style={{ borderRadius: "20px", padding: selectedDetailId ? "20px" : "40px" }}>
 
             {!selectedDetailId ? (
               <>
@@ -832,7 +831,7 @@ Your Core Capabilities & Guidelines:
         )}
 
         {activeTab === "inspire" && (
-          <div className="glass-panel custom-scrollbar" style={{ flex: 1, borderRadius: "20px", padding: "40px", overflowY: "auto", height: "100%" }}>
+          <div className="content-area glass-panel custom-scrollbar" style={{ borderRadius: "20px", padding: "40px" }}>
             <h1 style={{ fontSize: "34px", margin: "0 0 30px 0", color: "#FFF", fontWeight: 800 }}>{t("inspireTitle")}</h1>
 
             <h2 style={{ fontSize: "22px", color: "#FFB703", margin: "0 0 20px 0" }}>{t("leadersTitle")}</h2>
@@ -929,7 +928,7 @@ Your Core Capabilities & Guidelines:
 
         {/* Dynamic Govt Schemes Tab Component */}
         {activeTab === "schemes" && (
-          <div className="glass-panel custom-scrollbar" style={{ flex: 1, borderRadius: "20px", padding: "40px", overflowY: "auto", height: "100%" }}>
+          <div className="content-area glass-panel custom-scrollbar" style={{ borderRadius: "20px", padding: "40px" }}>
             <h1 style={{ fontSize: "34px", margin: "0 0 10px 0", color: "#FFF", fontWeight: 800 }}>🏛️ Government Schemes & Pro Research</h1>
             <p style={{ color: "#94a3b8", fontSize: "16px", marginBottom: "40px", maxWidth: "800px", lineHeight: 1.6 }}>Explore end-to-end verified India compensation frameworks, deep research limits, and exact startup subsidy allowances. Match your profile against top-tier MSME programs to unlock direct capital.</p>
 
@@ -964,8 +963,8 @@ Your Core Capabilities & Guidelines:
         )}
 
         {activeTab === "chat" && (
-          <div className="glass-panel" style={{ flex: 1, display: "flex", flexDirection: "column", borderRadius: "20px", overflow: "hidden", position: "relative", height: "100%" }}>
-            <div className="custom-scrollbar" style={{ flex: 1, overflowY: "auto", display: "flex", flexDirection: "column", gap: 18, padding: "30px" }}>
+          <div className="content-area glass-panel" style={{ display: "flex", flexDirection: "column", borderRadius: "20px", overflow: "hidden", position: "relative" }}>
+            <div className="chat-messages-container custom-scrollbar" style={{ flex: 1, overflowY: "auto", display: "flex", flexDirection: "column", gap: 18, padding: "30px" }}>
               {messages.map((msg, idx) => (
                 <div key={idx} style={{ display: "flex", justifyContent: msg.role === "user" ? "flex-end" : "flex-start", width: "100%" }}>
                   {msg.role !== "user" && <div style={{ minWidth: 40, height: 40, borderRadius: 12, background: "linear-gradient(135deg, #FF6B35, #FFB703)", marginRight: 15, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 20, boxShadow: "0 4px 10px rgba(255,107,53,0.3)", flexShrink: 0 }}>🤖</div>}
