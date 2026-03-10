@@ -1,22 +1,33 @@
+/* --------------------------------------------------------------------------------
+   INDIAFINBOT PRO : GLOBAL UI/UX DESIGN SYSTEM
+-------------------------------------------------------------------------------- */
+
+* {
+  box-sizing: border-box;
+  font-family: 'Outfit', sans-serif !important;
+  scroll-behavior: smooth;
+}
+
 body {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
   overflow-x: hidden;
+  background: radial-gradient(circle at 15% 50%, #060c18, #020409 60%, #040914);
+  color: #e2e8f0;
+  -webkit-font-smoothing: antialiased;
 }
 
-* {
-  box-sizing: border-box;
-}
-
-/* Base Responsive Main Container - Default to Desktop/Laptop */
+/* Base Responsive Main Container */
 .main-container {
   height: calc(100vh - 85px);
   overflow: hidden;
+  position: relative;
+  z-index: 10;
 }
 
 .sidebar {
-  width: 340px;
+  width: 360px;
   height: 100%;
 }
 
@@ -24,21 +35,104 @@ body {
   flex: 1;
   height: 100%;
   overflow-y: auto;
+  overflow-x: hidden;
+}
+
+/* --------------------------------------------------------------------------------
+   STUNNING GLASSMORPHISM & CARD COMPONENTS
+-------------------------------------------------------------------------------- */
+.glass-panel {
+  background: rgba(13, 19, 32, 0.45) !important;
+  backdrop-filter: blur(25px) saturate(180%) !important;
+  -webkit-backdrop-filter: blur(25px) saturate(180%) !important;
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.3), inset 0 1px 1px rgba(255, 255, 255, 0.1);
+}
+
+.service-card {
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+}
+
+.service-card::after {
+  content: '';
+  position: absolute;
+  top: 0; left: -100%; width: 50%; height: 100%;
+  background: linear-gradient(to right, rgba(255,255,255,0) 0%, rgba(255,255,255,0.05) 50%, rgba(255,255,255,0) 100%);
+  transform: skewX(-25deg);
+  transition: all 0.6s ease;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.service-card:hover {
+  transform: translateY(-8px) scale(1.02);
+  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5), inset 0 1px 1px rgba(255, 255, 255, 0.15);
+  border-color: rgba(255, 255, 255, 0.15) !important;
+}
+
+.service-card:hover::after {
+  left: 200%;
+}
+
+/* --------------------------------------------------------------------------------
+   EXQUISITE CUSTOM SCROLLBARS
+-------------------------------------------------------------------------------- */
+.custom-scrollbar::-webkit-scrollbar,
+.content-area::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track,
+.content-area::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb,
+.content-area::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 10px;
+  border: 2px solid transparent;
+  background-clip: padding-box;
+  transition: all 0.3s;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover,
+.content-area::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 180, 216, 0.6);
+  border: 2px solid transparent;
+  background-clip: padding-box;
+}
+
+/* --------------------------------------------------------------------------------
+   ANIMATIONS & MICRO-INTERACTIONS
+-------------------------------------------------------------------------------- */
+.pulse-anim {
+  animation: pulse-glow 2s infinite, float-icon 3s ease-in-out infinite;
+}
+
+@keyframes pulse-glow {
+  0% { text-shadow: 0 0 5px rgba(239, 68, 68, 0.5); }
+  50% { text-shadow: 0 0 20px rgba(239, 68, 68, 1); }
+  100% { text-shadow: 0 0 5px rgba(239, 68, 68, 0.5); }
+}
+
+@keyframes float-icon {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-4px); }
 }
 
 /* --------------------------------------------------------------------------------
    MEDIA QUERIES FOR SEAMLESS DEVICE SCREEN ALIGNMENT
-   Android, iPhone, iPads, iMacs, Laptops
 -------------------------------------------------------------------------------- */
-
-/* LARGE SCREENS (iMac, Ultra-Wide Laptops - > 1600px) */
 @media (min-width: 1601px) {
-  .main-container {
-    max-width: 1800px;
-  }
+  .main-container { max-width: 1800px; }
 }
 
-/* TABLETS & SMALL LAPTOPS (iPad Pro, Small Macbooks - 1024px to 1200px) */
 @media (max-width: 1200px) {
   .main-container {
     height: auto;
@@ -47,7 +141,6 @@ body {
   }
 }
 
-/* TABLETS (iPad, Android Tablets - 768px to 1023px) */
 @media (max-width: 1023px) {
   .main-container {
     flex-direction: column;
@@ -70,62 +163,18 @@ body {
     overflow-y: visible !important;
   }
   
-  /* Make header flex stack nicely */
-  .glass-panel {
-    padding: 15px !important;
-  }
-  
-  /* Buttons and tabs spacing */
   .nav-tab {
     padding: 8px 12px !important;
     font-size: 13px !important;
   }
 }
 
-/* MOBILE PHONES (iPhone, Android - < 768px) */
 @media (max-width: 767px) {
-  .main-container {
-    gap: 15px !important;
-    padding: 10px !important;
-  }
-
-  .sidebar {
-    padding: 15px !important;
-    border-radius: 12px !important;
-  }
-
-  .content-area {
-    padding: 15px !important;
-    border-radius: 12px !important;
-  }
-
-  /* Chat Messages Specifics for Mobile */
-  .chat-messages-container {
-    padding: 15px !important;
-  }
-
-  /* Make header stack vertically if needed */
-  .glass-panel > div {
-    justify-content: center !important;
-  }
-  
-  /* Hide specific map tabs text to save space */
-  .hide-mobile {
-    display: none !important;
-  }
-  
-  h1 {
-    font-size: 26px !important;
-  }
-  h2 {
-    font-size: 20px !important;
-  }
-  h3 {
-    font-size: 18px !important;
-  }
-
-  /* Loan Calculator grid fallback */
-  input, select, button {
-    font-size: 14px !important;
-  }
+  .main-container { gap: 15px !important; padding: 10px !important; }
+  .sidebar, .content-area { padding: 15px !important; border-radius: 12px !important; }
+  .chat-messages-container { padding: 15px !important; }
+  .hide-mobile { display: none !important; }
+  h1 { font-size: 26px !important; }
+  h2 { font-size: 20px !important; }
+  h3 { font-size: 18px !important; }
 }
