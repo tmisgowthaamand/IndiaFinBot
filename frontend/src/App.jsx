@@ -993,7 +993,10 @@ Your Core Capabilities & Guidelines:
                           table: ({ node, ...props }) => <div style={{ overflowX: "auto" }}><table style={{ width: "100%", borderCollapse: "collapse", margin: "20px 0", background: "rgba(0,0,0,0.3)", borderRadius: 8 }} {...props} /></div>,
                           th: ({ node, ...props }) => <th style={{ padding: "12px", border: "1px solid rgba(255,255,255,0.1)", background: "rgba(0,180,216,0.1)", color: "#00B4D8", textAlign: "left" }} {...props} />,
                           td: ({ node, ...props }) => <td style={{ padding: "10px 12px", border: "1px solid rgba(255,255,255,0.1)" }} {...props} />,
-                          img: ({ node, ...props }) => <img style={{ maxWidth: "100%", borderRadius: 12, marginTop: 15, border: "1px solid rgba(255,255,255,0.1)", boxShadow: "0 10px 20px rgba(0,0,0,0.3)" }} {...props} />
+                          img: ({ node, ...props }) => {
+                            const safeSrc = props.src ? props.src.replace(/ /g, '%20') : "";
+                            return <img style={{ maxWidth: "100%", borderRadius: 12, marginTop: 15, border: "1px solid rgba(255,255,255,0.1)", boxShadow: "0 10px 20px rgba(0,0,0,0.3)" }} {...props} src={safeSrc} />;
+                          }
                         }}
                       >{msg.content}</ReactMarkdown>
                     )}
