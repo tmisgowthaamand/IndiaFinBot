@@ -397,18 +397,18 @@ function TaxComplianceCalendar({ theme }) {
   );
 }
 
-function QuickToolsGrid({ theme, sendMessage }) {
+function QuickToolsGrid({ theme, sendMessage, t }) {
   return (
     <div style={{ marginTop: "40px", display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))", gap: "25px" }}>
       <div className="glass-panel service-card" style={{ padding: "30px", borderRadius: "16px", border: "1px solid rgba(16,185,129,0.3)", textAlign: "left", display: "flex", flexDirection: "column" }}>
         <h3 style={{ fontSize: "22px", margin: "0 0 10px 0", color: "#10B981" }}>📊 AI Tax Optimizer</h3>
         <p style={{ color: theme === "light" ? "#475569" : "#94a3b8", fontSize: "14px", margin: "0 0 20px 0", lineHeight: 1.6, flex: 1 }}>Automatically scan your transaction data to find hidden deductions and legal loopholes mapped directly to your state.</p>
-        <button onClick={() => sendMessage("Please run the AI Tax Optimizer on my profile. Find all hidden deductions, legal loopholes, and specific tax saving opportunities globally and strictly within my state bounds.")} style={{ padding: "14px 20px", background: "rgba(16,185,129,0.1)", border: "1px solid #10B981", borderRadius: "8px", color: "#10B981", fontWeight: 700, cursor: "pointer", transition: "all 0.2s" }} onMouseOver={e => {e.currentTarget.style.background = "#10B981"; e.currentTarget.style.color = "#FFF"}} onMouseOut={e => {e.currentTarget.style.background = "rgba(16,185,129,0.1)"; e.currentTarget.style.color = "#10B981"}}>Run Optimization Mode →</button>
+        <button onClick={() => sendMessage(t("msgTaxOptimizer"))} style={{ padding: "14px 20px", background: "rgba(16,185,129,0.1)", border: "1px solid #10B981", borderRadius: "8px", color: "#10B981", fontWeight: 700, cursor: "pointer", transition: "all 0.2s" }} onMouseOver={e => {e.currentTarget.style.background = "#10B981"; e.currentTarget.style.color = "#FFF"}} onMouseOut={e => {e.currentTarget.style.background = "rgba(16,185,129,0.1)"; e.currentTarget.style.color = "#10B981"}}>Run Optimization Mode →</button>
       </div>
       <div className="glass-panel service-card" style={{ padding: "30px", borderRadius: "16px", border: "1px solid rgba(0,180,216,0.3)", textAlign: "left", display: "flex", flexDirection: "column" }}>
         <h3 style={{ fontSize: "22px", margin: "0 0 10px 0", color: "#00B4D8" }}>🔗 Fast E-Way Bill</h3>
         <p style={{ color: theme === "light" ? "#475569" : "#94a3b8", fontSize: "14px", margin: "0 0 20px 0", lineHeight: 1.6, flex: 1 }}>Fastest 1-click E-Way bill logistics automation. Linked seamlessly inside your GSTIN compliance pipeline and supply chain.</p>
-        <button onClick={() => sendMessage("Generate an end-to-end E-Way Bill generation logistics blueprint mapped to my exact profile. Guide me through thresholds, physical constraints, and total compliance with my GST returns.")} style={{ padding: "14px 20px", background: "rgba(0,180,216,0.1)", border: "1px solid #00B4D8", borderRadius: "8px", color: "#00B4D8", fontWeight: 700, cursor: "pointer", transition: "all 0.2s" }} onMouseOver={e => {e.currentTarget.style.background = "#00B4D8"; e.currentTarget.style.color = "#FFF"}} onMouseOut={e => {e.currentTarget.style.background = "rgba(0,180,216,0.1)"; e.currentTarget.style.color = "#00B4D8"}}>Gen E-Way Bill Pipeline →</button>
+        <button onClick={() => sendMessage(t("msgEWayBill"))} style={{ padding: "14px 20px", background: "rgba(0,180,216,0.1)", border: "1px solid #00B4D8", borderRadius: "8px", color: "#00B4D8", fontWeight: 700, cursor: "pointer", transition: "all 0.2s" }} onMouseOver={e => {e.currentTarget.style.background = "#00B4D8"; e.currentTarget.style.color = "#FFF"}} onMouseOut={e => {e.currentTarget.style.background = "rgba(0,180,216,0.1)"; e.currentTarget.style.color = "#00B4D8"}}>Gen E-Way Bill Pipeline →</button>
       </div>
     </div>
   );
@@ -473,16 +473,16 @@ export default function IndiaFinBot() {
 
     recognition.onstart = () => {
       setIsListening(true);
-      showNotification("🎙️ Listening... Speak now.");
+      showNotification(t("notifListening"));
     };
     recognition.onresult = (e) => {
       const transcript = e.results[0][0].transcript;
       setInput(transcript);
-      showNotification("✅ Voice captured successfully.");
+      showNotification(t("notifVoiceCaptured"));
     };
     recognition.onerror = () => {
       setIsListening(false);
-      showNotification("❌ Microphone error. Check permissions.");
+      showNotification(t("notifMicError"));
     };
     recognition.onend = () => setIsListening(false);
 
@@ -565,7 +565,7 @@ Your Core Capabilities & Guidelines:
     setMessages(prev => [...prev, userMsg]);
     setInput("");
     setLoading(true);
-    showNotification("Gemini 3.1 Pro is analyzing your document end-to-end...");
+    showNotification(t("notifAnalysisStart"));
     try {
       const history = [...messages, userMsg].map((m) => {
         const role = m.role === "assistant" ? "model" : "user";
@@ -601,7 +601,7 @@ Your Core Capabilities & Guidelines:
         
         // Directly route to Nano Banana Engine (Pollinations) to prevent limit errors
         setTimeout(() => {
-          showNotification("Nano Banana Engine is painting your vision...");
+          showNotification(t("notifPainting"));
           const fallbackPrompt = encodeURIComponent(`${imagePrompt} in ${locationContext} modern professional business style`);
           const fallbackUrl = `https://image.pollinations.ai/prompt/${fallbackPrompt}?width=1200&height=800&nologo=true&seed=${Math.floor(Math.random() * 1000000)}`;
           
@@ -620,10 +620,10 @@ Your Core Capabilities & Guidelines:
         setMessages(prev => [...prev, { role: "assistant", content: reply, time: new Date().toLocaleTimeString() }]);
       }
       
-      showNotification("End-to-end Analysis Complete!");
+      showNotification(t("notifAnalysisComplete"));
     } catch (err) {
       setMessages(prev => [...prev, { role: "assistant", content: `⚠️ Error: ${err.message}`, time: new Date().toLocaleTimeString() }]);
-      showNotification("An error occurred during search.");
+      showNotification(t("notifError"));
     }
     setLoading(false);
   };
@@ -658,14 +658,14 @@ Your Core Capabilities & Guidelines:
 
         setMessages(prev => prev.filter(m => !m.isUploading));
         setLoading(false);
-        const visualMsg = `📎 Uploaded: "${file.name}"\n\n**Intelligent Analysis Request:**\nPlease strictly analyze this statement end-to-end without leaving any transaction out.\n- **Verify Balances:** Ensure my debits & credits balance correctly and trace the various paths they used.\n- **Profit to Next Term:** Based on this data, how can we profit to the next term?\n- **Solutions:** Give me concrete solutions and personalized examples mapping to my specific requirements to convert any losses into high gross profits.`;
+        const visualMsg = `${t("prefixUploaded")} "${file.name}"\n\n${t("msgUploadAnalysis")}`;
         
         await sendMessage(visualMsg, apiContent);
       } else if (isCSV) {
         const text = await file.text();
         setMessages(prev => prev.filter(m => !m.isUploading));
         setLoading(false);
-        const visualMsg = `📎 CSV Uploaded: "${file.name}"\n\n**Intelligent Analysis Request:**\nPlease strictly analyze this statement end-to-end without leaving any transaction out.\n- **Verify Balances:** Ensure my debits & credits balance correctly and trace the various paths they used.\n- **Profit to Next Term:** Based on this data, how can we profit to the next term?\n- **Solutions:** Give me concrete solutions and personalized examples mapping to my specific requirements to convert any losses into high gross profits.`;
+        const visualMsg = `${t("prefixCSVUploaded")} "${file.name}"\n\n${t("msgUploadAnalysis")}`;
         
         await sendMessage(visualMsg, `Here is my CSV financial statement data: \n\n${text.slice(0, 4000)}...\n\nCRITICAL INSTRUCTIONS FOR ANALYSIS:\n1. Analyze this statement strictly end-to-end for my business in ${locationContext} without leaving any single transaction out.\n2. Trace and explain the paths of my debits and credits.\n3. Calculate and verify my balance correctly.\n4. NEXT TERM PROFITABILITY: Formulate a concrete roadmap on how I can generate strong profits in the NEXT term based on these transaction patterns.\n5. Give me highly personalized, practical examples mapping to my specific requirements to convert losses into high gross profits.\n\nBe highly intelligent, proactive, and provide clear step-by-step solutions.`);
       } else {
@@ -883,7 +883,10 @@ Your Core Capabilities & Guidelines:
           </div>
 
           <button
-            onClick={() => sendMessage(`I am based in ${locationContext}.\nMy Available Investment: ${investment ? '₹' + investment : 'Not specified'}\nMy Business Interests/Vertical: ${interests || 'Not specified'}\nMy Founder Skills/Background: ${skills || 'Not specified'}\n\nPlease provide a full end-to-end structural breakdown and market blueprint for a startup matching this specific profile. Detail specific Government taxes, local state-specific schemes, Bank Loan models, and Fund Investment pipelines relevant to my capital bounds. Include exact 1-to-5 year Profit/Loss probability models and categorize my roadmap alongside Top-Tier, Mid-Cap, and Small-Scale company operations in my region.`)}
+            onClick={() => {
+              const fullMsg = `${t("prefixLocation")} ${locationContext}.\n${t("prefixInvestment")} ${investment ? '₹' + investment : 'Not specified'}\n${t("prefixInterests")} ${interests || 'Not specified'}\n${t("prefixSkills")} ${skills || 'Not specified'}\n\n${t("msgRunAnalysis")}`;
+              sendMessage(fullMsg);
+            }}
             style={{ padding: "15px", marginTop: "10px", borderRadius: "12px", background: "linear-gradient(135deg, #FF6B35, #FFB703)", color: "#111", border: "none", cursor: "pointer", fontWeight: 800, fontSize: "15px", boxShadow: "0 8px 25px rgba(255,107,53,0.4)", transition: "transform 0.2s" }}
             onMouseOver={e => e.currentTarget.style.transform = "translateY(-2px)"} onMouseOut={e => e.currentTarget.style.transform = "translateY(0)"}>
             {t("runAnalysisBtn")}
@@ -990,7 +993,7 @@ Your Core Capabilities & Guidelines:
 
                 <TaxComplianceCalendar theme={theme} />
 
-                <QuickToolsGrid theme={theme} sendMessage={sendMessage} />
+                <QuickToolsGrid theme={theme} sendMessage={sendMessage} t={t} />
               </>
             ) : (
               renderInteractiveDashboard(OVERVIEW_CARDS.find(c => c.id === selectedDetailId))
