@@ -824,13 +824,13 @@ Your Core Capabilities & Guidelines:
       <StockTicker />
 
       {/* Modern Header */}
-      <div className="glass-panel" style={{ position: "sticky", top: 0, zIndex: 50, borderBottom: "1px solid rgba(0, 180, 216, 0.2)", padding: "15px 30px" }}>
-        <div style={{ maxWidth: 1600, margin: "0 auto", display: "flex", alignItems: "center", justifyContent: "space-between", flexWrap: "wrap", gap: 15 }}>
+      <div className="glass-panel" style={{ position: "sticky", top: 0, zIndex: 50, borderBottom: "1px solid rgba(0, 180, 216, 0.2)", padding: "10px 20px" }}>
+        <div className="nav-header" style={{ maxWidth: "100%", margin: "0 auto", display: "flex", alignItems: "center", justifyContent: "space-between", flexWrap: "wrap", gap: 10 }}>
 
-          <div style={{ display: "flex", alignItems: "center", gap: 16 }}>
-            <div style={{ width: 50, height: 50, borderRadius: 14, background: "linear-gradient(135deg, #FF6B35, #FFB703)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 26, boxShadow: "0 0 20px rgba(255,107,53,0.3)" }}>🇮🇳</div>
+          <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
+            <div style={{ width: 42, height: 42, borderRadius: 12, background: "linear-gradient(135deg, #FF6B35, #FFB703)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 24, boxShadow: "0 0 15px rgba(255,107,53,0.3)" }}>🇮🇳</div>
             <div>
-              <div style={{ fontSize: 24, fontWeight: 900, color: "#FFF", letterSpacing: "-0.5px", textShadow: "0 2px 10px rgba(0,0,0,0.5)" }}>IndiaFin<span style={{ color: "#00B4D8" }}>Bot</span></div>
+              <div style={{ fontSize: 22, fontWeight: 900, color: "#FFF", letterSpacing: "-0.5px" }}>IndiaFin<span style={{ color: "#00B4D8" }}>Bot</span></div>
             </div>
           </div>
 
@@ -870,18 +870,18 @@ Your Core Capabilities & Guidelines:
         </div>
       </div>
 
-      <div className="main-container" style={{ position: "relative", zIndex: 5, flex: 1, maxWidth: 1800, margin: "0 auto", width: "100%", padding: "25px", display: "flex", gap: "25px" }}>
+      <div className="main-container">
         
         <button 
           onClick={() => setSidebarVisible(!sidebarVisible)} 
-          style={{ position: "absolute", left: sidebarVisible ? "355px" : "15px", top: "15px", zIndex: 100, background: "rgba(0,180,216,0.2)", border: "1px solid #00B4D8", color: "#00B4D8", width: "40px", height: "40px", borderRadius: "10px", cursor: "pointer", backdropFilter: "blur(10px)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "20px", fontWeight: "bold", transition: "all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275)" }}
+          style={{ position: "absolute", left: sidebarVisible ? "355px" : "10px", top: "10px", zIndex: 100, background: "rgba(0,180,216,0.3)", border: "1px solid #00B4D8", color: "#00B4D8", width: "36px", height: "36px", borderRadius: "10px", cursor: "pointer", backdropFilter: "blur(10px)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "18px", fontWeight: "bold", transition: "all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275)" }}
           title={sidebarVisible ? "Hide Sidebar" : "Show Sidebar"}
         >
           {sidebarVisible ? "«" : "»"}
         </button>
 
         {/* Universal Left Sidebar: Profile Details */}
-        <div className={`sidebar glass-panel custom-scrollbar ${!sidebarVisible ? 'hide-sidebar' : ''}`} style={{ borderRadius: "20px", padding: sidebarVisible ? "25px" : "0px", display: "flex", flexDirection: "column", overflowY: "auto", width: sidebarVisible ? "360px" : "0px", opacity: sidebarVisible ? 1 : 0, border: sidebarVisible ? "1px solid rgba(255,255,255,0.08)" : "none", transition: "all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275)", flexShrink: 0 }}>
+        <div className={`sidebar glass-panel custom-scrollbar ${!sidebarVisible ? 'hide-sidebar' : ''}`} style={{ borderRadius: "20px", display: "flex", flexDirection: "column" }}>
           {sidebarVisible && (
             <>
               <h3 style={{ color: "#FFF", margin: "0 0 20px 0", fontSize: "18px", display: "flex", alignItems: "center", gap: 10, fontWeight: 700, whiteSpace: "nowrap" }}><span style={{ background: "#FF6B35", padding: "6px", borderRadius: "8px", fontSize: "16px" }}>🚀</span> {t("startupConfig")}</h3>
@@ -988,7 +988,7 @@ Your Core Capabilities & Guidelines:
     </div>
 
         {activeTab === "overview" && (
-          <div className="content-area glass-panel custom-scrollbar" style={{ borderRadius: "20px", padding: selectedDetailId ? "20px" : "40px" }}>
+          <div className="content-area glass-panel custom-scrollbar" style={{ borderRadius: "20px", padding: "30px" }}>
 
             {!selectedDetailId ? (
               <>
@@ -1033,7 +1033,7 @@ Your Core Capabilities & Guidelines:
         )}
 
         {activeTab === "inspire" && (
-          <div className="content-area glass-panel custom-scrollbar" style={{ borderRadius: "20px", padding: "40px" }}>
+          <div className="content-area glass-panel custom-scrollbar" style={{ borderRadius: "20px", padding: "30px" }}>
             <h1 style={{ fontSize: "34px", margin: "0 0 30px 0", color: "#FFF", fontWeight: 800 }}>{t("inspireTitle")}</h1>
 
             <h2 style={{ fontSize: "22px", color: "#FFB703", margin: "0 0 20px 0" }}>{t("leadersTitle")}</h2>
@@ -1130,7 +1130,7 @@ Your Core Capabilities & Guidelines:
 
         {/* Dynamic Govt Schemes Tab Component */}
         {activeTab === "schemes" && (
-          <div className="content-area glass-panel custom-scrollbar" style={{ borderRadius: "20px", padding: "40px" }}>
+          <div className="content-area glass-panel custom-scrollbar" style={{ borderRadius: "20px", padding: "30px" }}>
             <h1 style={{ fontSize: "34px", margin: "0 0 10px 0", color: "#FFF", fontWeight: 800 }}>🏛️ Government Schemes & Pro Research</h1>
             <p style={{ color: "#94a3b8", fontSize: "16px", marginBottom: "40px", maxWidth: "800px", lineHeight: 1.6 }}>Explore end-to-end verified India compensation frameworks, deep research limits, and exact startup subsidy allowances. Match your profile against top-tier MSME programs to unlock direct capital.</p>
 
