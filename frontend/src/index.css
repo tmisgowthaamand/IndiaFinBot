@@ -31,6 +31,14 @@ body {
   height: 100%;
 }
 
+.sidebar.hide-sidebar {
+  width: 0;
+  padding: 0 !important;
+  margin: 0 !important;
+  opacity: 0;
+  pointer-events: none;
+}
+
 .content-area {
   flex: 1;
   height: 100%;
