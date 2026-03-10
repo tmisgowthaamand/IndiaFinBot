@@ -337,18 +337,18 @@ function LoanCalculator({ theme }) {
         <p style={{ margin: 0, color: theme === "light" ? "#475569" : "#94a3b8", fontSize: "15px" }}>Calculate precise MSME & MUDRA loan monthly repayments instantly.</p>
       </div>
 
-      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))", gap: "25px" }}>
-        <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: "25px" }}>
+        <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
           <label style={{ color: theme === "light" ? "#0f172a" : "#9BF6FF", fontWeight: 700, fontSize: "14px" }}>Loan Amount (₹)</label>
-          <input type="number" value={loanAmount} onChange={e => setLoanAmount(e.target.value)} style={{ padding: "12px 15px", borderRadius: "8px", background: "rgba(0,0,0,0.4)", border: "1px solid rgba(255,255,255,0.1)", color: "#FFF", fontSize: "16px", outline: "none" }} />
+          <input type="number" value={loanAmount} onChange={e => setLoanAmount(e.target.value)} style={{ padding: "14px 18px", borderRadius: "10px", background: "rgba(0,0,0,0.45)", border: "1px solid rgba(255,255,255,0.1)", color: "#FFF", fontSize: "17px", outline: "none", transition: "all 0.2s" }} onFocus={e => e.target.style.borderColor = "#10B981"} onBlur={e => e.target.style.borderColor = "rgba(255,255,255,0.1)"} />
         </div>
-        <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+        <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
           <label style={{ color: theme === "light" ? "#0f172a" : "#9BF6FF", fontWeight: 700, fontSize: "14px" }}>Interest Rate (p.a %)</label>
-          <input type="number" step="0.1" value={interestRate} onChange={e => setInterestRate(e.target.value)} style={{ padding: "12px 15px", borderRadius: "8px", background: "rgba(0,0,0,0.4)", border: "1px solid rgba(255,255,255,0.1)", color: "#FFF", fontSize: "16px", outline: "none" }} />
+          <input type="number" step="0.1" value={interestRate} onChange={e => setInterestRate(e.target.value)} style={{ padding: "14px 18px", borderRadius: "10px", background: "rgba(0,0,0,0.45)", border: "1px solid rgba(255,255,255,0.1)", color: "#FFF", fontSize: "17px", outline: "none", transition: "all 0.2s" }} onFocus={e => e.target.style.borderColor = "#10B981"} onBlur={e => e.target.style.borderColor = "rgba(255,255,255,0.1)"} />
         </div>
-        <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+        <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
           <label style={{ color: theme === "light" ? "#0f172a" : "#9BF6FF", fontWeight: 700, fontSize: "14px" }}>Tenure (Years)</label>
-          <input type="number" value={tenureYears} onChange={e => setTenureYears(e.target.value)} style={{ padding: "12px 15px", borderRadius: "8px", background: "rgba(0,0,0,0.4)", border: "1px solid rgba(255,255,255,0.1)", color: "#FFF", fontSize: "16px", outline: "none" }} />
+          <input type="number" value={tenureYears} onChange={e => setTenureYears(e.target.value)} style={{ padding: "14px 18px", borderRadius: "10px", background: "rgba(0,0,0,0.45)", border: "1px solid rgba(255,255,255,0.1)", color: "#FFF", fontSize: "17px", outline: "none", transition: "all 0.2s" }} onFocus={e => e.target.style.borderColor = "#10B981"} onBlur={e => e.target.style.borderColor = "rgba(255,255,255,0.1)"} />
         </div>
       </div>
 
@@ -874,40 +874,42 @@ Your Core Capabilities & Guidelines:
         
         <button 
           onClick={() => setSidebarVisible(!sidebarVisible)} 
-          style={{ position: "absolute", left: sidebarVisible ? "355px" : "10px", top: "10px", zIndex: 100, background: "rgba(0,180,216,0.3)", border: "1px solid #00B4D8", color: "#00B4D8", width: "36px", height: "36px", borderRadius: "10px", cursor: "pointer", backdropFilter: "blur(10px)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "18px", fontWeight: "bold", transition: "all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275)" }}
+          style={{ position: "absolute", left: sidebarVisible ? "350px" : "12px", top: "12px", zIndex: 100, background: "rgba(0,180,216,0.3)", border: "1px solid #00B4D8", color: "#00B4D8", width: "36px", height: "36px", borderRadius: "10px", cursor: "pointer", backdropFilter: "blur(12px)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "18px", fontWeight: "bold", transition: "all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275)", boxShadow: "0 4px 12px rgba(0,0,0,0.4)" }}
           title={sidebarVisible ? "Hide Sidebar" : "Show Sidebar"}
         >
           {sidebarVisible ? "«" : "»"}
         </button>
 
         {/* Universal Left Sidebar: Profile Details */}
-        <div className={`sidebar glass-panel custom-scrollbar ${!sidebarVisible ? 'hide-sidebar' : ''}`} style={{ borderRadius: "20px", display: "flex", flexDirection: "column" }}>
+        <div className={`sidebar glass-panel custom-scrollbar ${!sidebarVisible ? 'hide-sidebar' : ''}`} style={{ borderRadius: "20px", display: "flex", flexDirection: "column", padding: sidebarVisible ? "30px 25px" : "0", overflowY: "auto" }}>
           {sidebarVisible && (
             <>
               <h3 style={{ color: "#FFF", margin: "0 0 20px 0", fontSize: "18px", display: "flex", alignItems: "center", gap: 10, fontWeight: 700, whiteSpace: "nowrap" }}><span style={{ background: "#FF6B35", padding: "6px", borderRadius: "8px", fontSize: "16px" }}>🚀</span> {t("startupConfig")}</h3>
 
-          <div>
-            <label style={labelStyle}>{t("investmentLabel")}</label>
-            <select value={investment} onChange={e => setInvestment(e.target.value)} style={inputStyle} onFocus={e => e.target.style.borderColor = "#00B4D8"} onBlur={e => e.target.style.borderColor = "rgba(255,255,255,0.1)"}>
-              <option value="" style={{ background: "#060913", color: "#666" }}>{t("investmentPlaceholder")}</option>
-              {INVESTMENT_RANGES.map((r, i) => <option key={i} value={r} style={{ background: "#060913", color: "#fff" }}>{r}</option>)}
-            </select>
-          </div>
+          <div style={{ display: "flex", flexDirection: "column", gap: 15 }}>
+            <div>
+              <label style={labelStyle}>{t("investmentLabel")}</label>
+              <select value={investment} onChange={e => setInvestment(e.target.value)} style={inputStyle}>
+                <option value="" style={{ background: "#060913", color: "#666" }}>{t("investmentPlaceholder")}</option>
+                {INVESTMENT_RANGES.map((r, i) => <option key={i} value={r} style={{ background: "#060913", color: "#fff" }}>{r}</option>)}
+              </select>
+            </div>
 
-          <div>
-            <label style={labelStyle}>{t("interestsLabel")}</label>
-            <select value={interests} onChange={e => setInterests(e.target.value)} style={inputStyle} onFocus={e => e.target.style.borderColor = "#00B4D8"} onBlur={e => e.target.style.borderColor = "rgba(255,255,255,0.1)"}>
-              <option value="" style={{ background: "#060913", color: "#666" }}>{t("interestsPlaceholder")}</option>
-              {BUSINESS_VERTICALS.map((v, i) => <option key={i} value={v} style={{ background: "#060913", color: "#fff" }}>{v}</option>)}
-            </select>
-          </div>
+            <div>
+              <label style={labelStyle}>{t("interestsLabel")}</label>
+              <select value={interests} onChange={e => setInterests(e.target.value)} style={inputStyle}>
+                <option value="" style={{ background: "#060913", color: "#666" }}>{t("interestsPlaceholder")}</option>
+                {BUSINESS_VERTICALS.map((v, i) => <option key={i} value={v} style={{ background: "#060913", color: "#fff" }}>{v}</option>)}
+              </select>
+            </div>
 
-          <div>
-            <label style={labelStyle}>{t("skillsLabel")}</label>
-            <select value={skills} onChange={e => setSkills(e.target.value)} style={inputStyle} onFocus={e => e.target.style.borderColor = "#00B4D8"} onBlur={e => e.target.style.borderColor = "rgba(255,255,255,0.1)"}>
-              <option value="" style={{ background: "#060913", color: "#666" }}>{t("skillsPlaceholder")}</option>
-              {FOUNDER_SKILLS.map((s, i) => <option key={i} value={s} style={{ background: "#060913", color: "#fff" }}>{s}</option>)}
-            </select>
+            <div>
+              <label style={labelStyle}>{t("skillsLabel")}</label>
+              <select value={skills} onChange={e => setSkills(e.target.value)} style={inputStyle}>
+                <option value="" style={{ background: "#060913", color: "#666" }}>{t("skillsPlaceholder")}</option>
+                {FOUNDER_SKILLS.map((s, i) => <option key={i} value={s} style={{ background: "#060913", color: "#fff" }}>{s}</option>)}
+              </select>
+            </div>
           </div>
 
           <button
