@@ -462,11 +462,11 @@ Your Core Capabilities & Guidelines:
         return { role, parts };
       });
 
-      const globalKey = "csk-v2c3ycvv9dk4x22k9vf24rwhfyyeexkh3phcfhnyv58hjcnf";
-      const apiKey = import.meta.env.VITE_GEMINI_API_KEY || globalKey;
+      // Use the Render backend URL in production, or localhost during development
+      const API_BASE = import.meta.env.MODE === "development" ? "http://localhost:5000" : "https://indiafinbot.onrender.com";
 
-      // Fully upgraded to Gemini 3.1 Pro Endpoint with Nano Banana Hooks
-      const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-3.1-pro:generateContent?key=${apiKey}`, {
+      // Call our secure Backend API instead of exposing Gemini tokens
+      const res = await fetch(`${API_BASE}/api/chat`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -474,8 +474,9 @@ Your Core Capabilities & Guidelines:
           contents: history,
         })
       });
+
       const data = await res.json();
-      if (data.error) throw new Error(data.error.message);
+      if (data.error) throw new Error(data.error.message || JSON.stringify(data.error));
       const reply = data.candidates?.[0]?.content?.parts?.[0]?.text || "Sorry, I had trouble responding.";
       setMessages(prev => [...prev, { role: "assistant", content: reply, time: new Date().toLocaleTimeString() }]);
       showNotification("End-to-end Analysis Complete!");
