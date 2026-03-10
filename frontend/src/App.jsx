@@ -491,28 +491,9 @@ Your Core Capabilities & Guidelines:
         reply = reply.replace(imageMatch[0], `\n\n🎨 **Generating high-quality image...**\n`);
         setMessages(prev => [...prev, { role: "assistant", content: reply, time: new Date().toLocaleTimeString(), tempImage: true }]);
         
-        try {
-          showNotification("OpenRouter Gemini 3.1 Pro is painting your vision...");
-          const imgRes = await fetch(`${API_BASE}/api/generate-image`, {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ prompt: imagePrompt })
-          });
-          const imgData = await imgRes.json();
-          if (imgData.error) throw new Error(imgData.error.message);
-          
-          setMessages(prev => {
-            const newMessages = [...prev];
-            const lastMsgIdx = newMessages.findLastIndex(m => m.tempImage);
-            if (lastMsgIdx !== -1) {
-              const updatedContent = newMessages[lastMsgIdx].content.replace(`\n\n🎨 **Generating high-quality image...**\n`, `\n\n![User Generated Image](${imgData.imageUrl})\n`);
-              newMessages[lastMsgIdx] = { ...newMessages[lastMsgIdx], content: updatedContent };
-              delete newMessages[lastMsgIdx].tempImage;
-            }
-            return newMessages;
-          });
-        } catch (imgErr) {
-          showNotification("OpenRouter limit reached. Falling back to Nano Banana Engine...");
+        // Directly route to Nano Banana Engine (Pollinations) to prevent limit errors
+        setTimeout(() => {
+          showNotification("Nano Banana Engine is painting your vision...");
           const fallbackPrompt = encodeURIComponent(`${imagePrompt} in ${locationContext} modern professional business style`);
           const fallbackUrl = `https://image.pollinations.ai/prompt/${fallbackPrompt}?width=800&height=400&nologo=true`;
           
@@ -520,13 +501,13 @@ Your Core Capabilities & Guidelines:
             const newMessages = [...prev];
             const lastMsgIdx = newMessages.findLastIndex(m => m.tempImage);
             if (lastMsgIdx !== -1) {
-              const updatedContent = newMessages[lastMsgIdx].content.replace(`\n\n🎨 **Generating high-quality image...**\n`, `\n\n![Fallback Generated Image](${fallbackUrl})\n\n*(Note: Using backup visual engine because OpenAI limit was reached: ${imgErr.message})*`);
+              const updatedContent = newMessages[lastMsgIdx].content.replace(`\n\n🎨 **Generating high-quality image...**\n`, `\n\n![Generated Image](${fallbackUrl})\n`);
               newMessages[lastMsgIdx] = { ...newMessages[lastMsgIdx], content: updatedContent };
               delete newMessages[lastMsgIdx].tempImage;
             }
             return newMessages;
           });
-        }
+        }, 1500); // Simulate brief loading for UX
       } else {
         setMessages(prev => [...prev, { role: "assistant", content: reply, time: new Date().toLocaleTimeString() }]);
       }
