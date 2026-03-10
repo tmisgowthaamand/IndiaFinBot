@@ -34,7 +34,7 @@ app.post('/api/chat', async (req, res) => {
             return res.status(500).json({ error: { message: "GEMINI_API_KEY is not configured on the backend server." } });
         }
 
-        const models = ["gemini-1.5-flash", "gemini-2.0-flash", "gemini-2.5-flash", "gemini-1.5-pro"];
+        const models = ["gemini-3.1-pro", "gemini-3.1-flash", "gemini-2.5-flash", "gemini-1.5-pro", "gemini-1.5-flash"];
         let data = null;
         let lastError = null;
 
@@ -92,7 +92,7 @@ app.post('/api/generate-image', async (req, res) => {
 
         // Stream the response to get tokens based on OpenRouter SDK structure
         const stream = await openrouter.chat.send({
-            model: "google/gemini-1.5-pro",
+            model: "google/gemini-3.1-pro",
             messages: [
                 {
                     role: "system",
