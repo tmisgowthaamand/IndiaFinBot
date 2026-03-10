@@ -512,7 +512,7 @@ Your Core Capabilities & Guidelines:
 
         const apiContent = [
           { inlineData: { mimeType: file.type, data: base64 } },
-          { text: `I have uploaded my ${isImage ? "image" : "document (bank statement etc)"}: "${file.name}". Please analyze this statement strictly end-to-end for my business in ${locationContext} without leaving any transaction out. Analyze every single debit and credit, showing the various paths my money took, and ensure balances are calculated completely correctly. Based on my past spending/income patterns, tell me exactly how I can generate strong profits in the NEXT term. Give me concrete, actionable solutions to convert losses into high gross profits going forward. Reply strictly in the language format chosen before.` }
+          { text: `I have uploaded my ${isImage ? "image" : "document (bank statement etc)"}: "${file.name}". \n\nCRITICAL INSTRUCTIONS FOR ANALYSIS:\n1. Analyze this statement strictly end-to-end for my business in ${locationContext} without leaving any single transaction out.\n2. Trace and explain the paths of my debits (where did money leak/flow?) and credits (where are the strong income sources?).\n3. Calculate and verify my balance correctly.\n4. NEXT TERM PROFITABILITY: Based precisely on my past spending/income patterns in this document, formulate a concrete, intelligent roadmap on how I can generate strong profits in the NEXT term.\n5. Give me highly personalized, practical examples mapping to my specific requirements to convert losses into high gross profits.\n\nBe highly intelligent, structured, and reply strictly in the language format chosen before.` }
         ];
 
         setMessages(prev => prev.filter(m => !m.isUploading));
@@ -522,7 +522,7 @@ Your Core Capabilities & Guidelines:
         const text = await file.text();
         setMessages(prev => prev.filter(m => !m.isUploading));
         setLoading(false);
-        await sendMessage(`📎 CSV Uploaded: "${file.name}"`, `Here is my CSV financial statement data: \n\n${text.slice(0, 4000)}... Analyze this statement strictly end-to-end for my business in ${locationContext} without leaving any transaction out. Analyze every single debit and credit, showing the various paths my money took, and ensure balances are calculated completely correctly. Based on my past spending/income patterns, tell me exactly how I can generate strong profits in the NEXT term. Give me concrete, actionable solutions to convert losses into high gross profits. Detail a roadmap for growth and provide practical next steps.`);
+        await sendMessage(`📎 CSV Uploaded: "${file.name}"`, `Here is my CSV financial statement data: \n\n${text.slice(0, 4000)}...\n\nCRITICAL INSTRUCTIONS FOR ANALYSIS:\n1. Analyze this statement strictly end-to-end for my business in ${locationContext} without leaving any single transaction out.\n2. Trace and explain the paths of my debits and credits.\n3. Calculate and verify my balance correctly.\n4. NEXT TERM PROFITABILITY: Formulate a concrete roadmap on how I can generate strong profits in the NEXT term based on these transaction patterns.\n5. Give me highly personalized, practical examples mapping to my specific requirements to convert losses into high gross profits.\n\nBe highly intelligent, proactive, and provide clear step-by-step solutions.`);
       } else {
         setMessages(prev => prev.filter(m => !m.isUploading));
         setLoading(false);
