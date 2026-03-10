@@ -492,7 +492,7 @@ Your Core Capabilities & Guidelines:
         setMessages(prev => [...prev, { role: "assistant", content: reply, time: new Date().toLocaleTimeString(), tempImage: true }]);
         
         try {
-          showNotification("ChatGPT DALL-E 3 is painting your vision...");
+          showNotification("OpenRouter DALL-E 3 is painting your vision...");
           const imgRes = await fetch(`${API_BASE}/api/generate-image`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
@@ -512,7 +512,7 @@ Your Core Capabilities & Guidelines:
             return newMessages;
           });
         } catch (imgErr) {
-          showNotification("OpenAI limit reached. Falling back to Nano Banana Engine...");
+          showNotification("OpenRouter limit reached. Falling back to Nano Banana Engine...");
           const fallbackPrompt = encodeURIComponent(`${imagePrompt} in ${locationContext} modern professional business style`);
           const fallbackUrl = `https://image.pollinations.ai/prompt/${fallbackPrompt}?width=800&height=400&nologo=true`;
           

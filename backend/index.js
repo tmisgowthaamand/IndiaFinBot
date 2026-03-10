@@ -1,6 +1,7 @@
 import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
+import { OpenRouter } from "@openrouter/sdk";
 
 // Load environment variables 
 dotenv.config();
@@ -77,27 +78,32 @@ app.post('/api/chat', async (req, res) => {
         res.status(500).json({ error: { message: "Failed to generate response dynamically." } });
     }
 });
-// Securely proxy the OpenAI Dall-E 3 call for rendering Pro images
+// Securely proxy the OpenRouter Dall-E 3 call for rendering Pro images
 app.post('/api/generate-image', async (req, res) => {
     try {
         const { prompt } = req.body;
-        const apiKey = process.env.OPENAI_API_KEY;
+        const apiKey = process.env.OPENROUTER_API_KEY;
         
         if (!apiKey) {
-            return res.status(500).json({ error: { message: "OPENAI_API_KEY is not configured. Please add your key to the .env file!" } });
+            return res.status(500).json({ error: { message: "OPENROUTER_API_KEY is not configured. Please add your key to the .env file!" } });
         }
 
-        const response = await fetch("https://api.openai.com/v1/images/generations", {
+        const response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
             method: "POST",
             headers: { 
                 "Content-Type": "application/json",
-                "Authorization": `Bearer ${apiKey}`
+                "Authorization": `Bearer ${apiKey}`,
+                "HTTP-Referer": process.env.FRONTEND_URL || "http://localhost:5173",
+                "X-Title": "IndiaFinBot"
             },
             body: JSON.stringify({
-                model: "dall-e-3",
-                prompt: prompt,
-                n: 1,
-                size: "1024x1024"
+                model: "openai/dall-e-3",
+                messages: [
+                    {
+                        role: "user",
+                        content: prompt
+                    }
+                ]
             })
         });
 
@@ -106,11 +112,20 @@ app.post('/api/generate-image', async (req, res) => {
         if (data.error) {
             return res.status(500).json({ error: { message: data.error.message } });
         }
+
+        const replyContent = data.choices[0]?.message?.content || "";
         
-        res.json({ imageUrl: data.data[0].url });
+        // OpenRouter's DALL-E 3 usually returns markdown with the image URL, e.g., ![image](https://...)
+        const urlMatch = replyContent.match(/https?:\/\/[^\s\)]+/);
+        
+        if (!urlMatch) {
+            return res.status(500).json({ error: { message: `Image Generation Failed: Invalid response received from OpenRouter.` } });
+        }
+        
+        res.json({ imageUrl: urlMatch[0] });
     } catch (error) {
         console.error("Image Gen Error:", error);
-        res.status(500).json({ error: { message: "Failed to generate OpenAI image dynamically." } });
+        res.status(500).json({ error: { message: "Failed to generate OpenRouter image dynamically." } });
     }
 });
 
