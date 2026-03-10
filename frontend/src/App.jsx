@@ -442,7 +442,7 @@ Your Core Capabilities & Guidelines:
 6. Roadmap & Graphing Context: If prompted about statistics, generate markdown tables outlining 1 to 5 year Profit & Loss margins.
 7. Govt Schemes, Tax, & Loans: Dive aggressively into localized schemes (CGTMSE, MUDRA), tax rebates, loan structures.
 8. CA Connections: Provide both Premium High-Fee CAs and Budget-Friendly Compliance CAs.
-9. Nano Banana Image Generation: If the user asks you to create or generate an image, YOU MUST respond with a markdown image linked to \`https://image.pollinations.ai/prompt/{URL_ENCODED_PROMPT}?width=800&height=400&nologo=true\` where {URL_ENCODED_PROMPT} is a descriptive prompt for the image. Use the Nano Banana Engine to satisfy visual queries!
+9. Nano Banana Image Generation: If the user asks you to create or generate an image, YOU MUST respond with a markdown image linked to \`https://image.pollinations.ai/prompt/{URL_ENCODED_PROMPT}?width=800&height=400&nologo=true\` where {URL_ENCODED_PROMPT} is a highly descriptive prompt for the image that strictly integrates their Location (${locationContext}), Business Interests, and Context. Use the Nano Banana Engine to satisfy visual queries!
 10. Tone: Beautiful markdown, highly structured, encouraging, professional but deeply mapped to their contextual language and Indian market logic.`;
 
   const sendMessage = async (msg, apiContentOverride = null) => {
@@ -994,7 +994,14 @@ Your Core Capabilities & Guidelines:
                           th: ({ node, ...props }) => <th style={{ padding: "12px", border: "1px solid rgba(255,255,255,0.1)", background: "rgba(0,180,216,0.1)", color: "#00B4D8", textAlign: "left" }} {...props} />,
                           td: ({ node, ...props }) => <td style={{ padding: "10px 12px", border: "1px solid rgba(255,255,255,0.1)" }} {...props} />,
                           img: ({ node, ...props }) => {
-                            const safeSrc = props.src ? props.src.replace(/ /g, '%20') : "";
+                            let safeSrc = props.src || "";
+                            if (!safeSrc.startsWith("http")) {
+                              // If AI outputs just text instead of a URL, actively construct the pollinations URL with location context!
+                              const visualPrompt = `${safeSrc} in ${locationContext} business style`;
+                              safeSrc = `https://image.pollinations.ai/prompt/${encodeURIComponent(visualPrompt)}?width=800&height=400&nologo=true`;
+                            } else {
+                              safeSrc = safeSrc.replace(/ /g, '%20');
+                            }
                             return <img style={{ maxWidth: "100%", borderRadius: 12, marginTop: 15, border: "1px solid rgba(255,255,255,0.1)", boxShadow: "0 10px 20px rgba(0,0,0,0.3)" }} {...props} src={safeSrc} />;
                           }
                         }}
