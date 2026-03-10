@@ -612,7 +612,7 @@ Your Core Capabilities & Guidelines:
           const seed = Math.floor(Math.random() * 1000000);
           const promptSuffix = `cinematic, high quality, professional business photography, ${locationContext}`;
           const fallbackPrompt = encodeURIComponent(`${imagePrompt}, ${promptSuffix}`);
-          const fallbackUrl = `https://pollinations.ai/p/${fallbackPrompt}?width=1024&height=1024&seed=${seed}&model=flux&nologo=true`;
+          const fallbackUrl = `https://image.pollinations.ai/prompt/${fallbackPrompt}?width=1024&height=1024&seed=${seed}&nologo=true`;
           
           setMessages(prev => {
             const newMessages = [...prev];
@@ -1250,11 +1250,9 @@ Your Core Capabilities & Guidelines:
                           img: ({ node, ...props }) => {
                             let safeSrc = props.src || "";
                             if (!safeSrc.startsWith("http")) {
-                              const visualPrompt = `${safeSrc} in ${locationContext} business style`;
+                              const visualPrompt = `${safeSrc} in ${locationContext} business style, cinematic, high quality, professional photography`;
                               safeSrc = `https://image.pollinations.ai/prompt/${encodeURIComponent(visualPrompt)}?width=1200&height=800&nologo=true&seed=${Math.floor(Math.random() * 1000000)}`;
-                            } else {
-                              safeSrc = safeSrc.replace(/ /g, '%20');
-                            }
+                            } 
                             return <img style={{ maxWidth: "100%", borderRadius: 12, marginTop: 15, border: "1px solid rgba(255,255,255,0.1)", boxShadow: "0 10px 20px rgba(0,0,0,0.3)" }} {...props} src={safeSrc} />;
                           },
                           code: ({ node, inline, className, children, ...props }) => {
