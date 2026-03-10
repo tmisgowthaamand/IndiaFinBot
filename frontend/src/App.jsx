@@ -499,6 +499,7 @@ export default function IndiaFinBot() {
   const [investment, setInvestment] = useState("");
   const [interests, setInterests] = useState("");
   const [skills, setSkills] = useState("");
+  const [sidebarVisible, setSidebarVisible] = useState(true);
 
   const messagesEndRef = useRef(null);
   const fileInputRef = useRef(null);
@@ -723,7 +724,7 @@ Your Core Capabilities & Guidelines:
         <div className="glass-panel" style={{ flex: 1, minWidth: "400px", height: "350px", padding: "20px", borderRadius: "16px" }}>
           <h3 style={{ color: "#00B4D8", textAlign: "center", marginBottom: "15px" }}>{t("chartTitle2")}</h3>
           <ResponsiveContainer width="100%" height="90%">
-            <LineChart data={MARKET_DATA_5Y} margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
+            <LineChart data={MARKET_DATA_5Y} margin={{ top: 5, right: 30, left: 60, bottom: 5 }}>
               <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.05)" />
               <XAxis dataKey="year" stroke="#94a3b8" />
               <YAxis stroke="#94a3b8" />
@@ -740,7 +741,7 @@ Your Core Capabilities & Guidelines:
         <div className="glass-panel" style={{ flex: 1, minWidth: "400px", height: "350px", padding: "20px", borderRadius: "16px" }}>
           <h3 style={{ color: "#10B981", textAlign: "center", marginBottom: "15px" }}>{t("chartTitle3")}</h3>
           <ResponsiveContainer width="100%" height="90%">
-            <BarChart data={MARKET_DATA_5Y} margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
+            <BarChart data={MARKET_DATA_5Y} margin={{ top: 5, right: 30, left: 60, bottom: 5 }}>
               <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.05)" />
               <XAxis dataKey="year" stroke="#94a3b8" />
               <YAxis stroke="#94a3b8" />
@@ -869,11 +870,21 @@ Your Core Capabilities & Guidelines:
         </div>
       </div>
 
-      <div className="main-container" style={{ position: "relative", zIndex: 5, flex: 1, maxWidth: 1600, margin: "0 auto", width: "100%", padding: "25px", display: "flex", gap: "25px" }}>
+      <div className="main-container" style={{ position: "relative", zIndex: 5, flex: 1, maxWidth: 1800, margin: "0 auto", width: "100%", padding: "25px", display: "flex", gap: "25px" }}>
+        
+        <button 
+          onClick={() => setSidebarVisible(!sidebarVisible)} 
+          style={{ position: "absolute", left: sidebarVisible ? "355px" : "15px", top: "15px", zIndex: 100, background: "rgba(0,180,216,0.2)", border: "1px solid #00B4D8", color: "#00B4D8", width: "40px", height: "40px", borderRadius: "10px", cursor: "pointer", backdropFilter: "blur(10px)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "20px", fontWeight: "bold", transition: "all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275)" }}
+          title={sidebarVisible ? "Hide Sidebar" : "Show Sidebar"}
+        >
+          {sidebarVisible ? "«" : "»"}
+        </button>
 
         {/* Universal Left Sidebar: Profile Details */}
-        <div className="sidebar glass-panel custom-scrollbar" style={{ borderRadius: "20px", padding: "25px", display: "flex", flexDirection: "column", overflowY: "auto" }}>
-          <h3 style={{ color: "#FFF", margin: "0 0 20px 0", fontSize: "18px", display: "flex", alignItems: "center", gap: 10, fontWeight: 700 }}><span style={{ background: "#FF6B35", padding: "6px", borderRadius: "8px", fontSize: "16px" }}>🚀</span> {t("startupConfig")}</h3>
+        <div className={`sidebar glass-panel custom-scrollbar ${!sidebarVisible ? 'hide-sidebar' : ''}`} style={{ borderRadius: "20px", padding: sidebarVisible ? "25px" : "0px", display: "flex", flexDirection: "column", overflowY: "auto", width: sidebarVisible ? "360px" : "0px", opacity: sidebarVisible ? 1 : 0, border: sidebarVisible ? "1px solid rgba(255,255,255,0.08)" : "none", transition: "all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275)", flexShrink: 0 }}>
+          {sidebarVisible && (
+            <>
+              <h3 style={{ color: "#FFF", margin: "0 0 20px 0", fontSize: "18px", display: "flex", alignItems: "center", gap: 10, fontWeight: 700, whiteSpace: "nowrap" }}><span style={{ background: "#FF6B35", padding: "6px", borderRadius: "8px", fontSize: "16px" }}>🚀</span> {t("startupConfig")}</h3>
 
           <div>
             <label style={labelStyle}>{t("investmentLabel")}</label>
@@ -972,7 +983,9 @@ Your Core Capabilities & Guidelines:
               </div>
             </div>
           </div>
-        </div>
+        </>
+      )}
+    </div>
 
         {activeTab === "overview" && (
           <div className="content-area glass-panel custom-scrollbar" style={{ borderRadius: "20px", padding: selectedDetailId ? "20px" : "40px" }}>
@@ -1252,7 +1265,7 @@ Your Core Capabilities & Guidelines:
                                 return (
                                   <div style={{ width: "100%", height: 350, background: "rgba(0,0,0,0.3)", borderRadius: 12, padding: "20px 20px 20px 0", marginTop: 25 }}>
                                     <ResponsiveContainer width="100%" height="100%">
-                                      <BarChart data={data} margin={{ top: 10, right: 10, left: 10, bottom: 0 }}>
+                                      <BarChart data={data} margin={{ top: 10, right: 10, left: 60, bottom: 0 }}>
                                         <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.1)" />
                                         <XAxis dataKey="name" stroke="#00B4D8" />
                                         <YAxis stroke="#00B4D8" />
