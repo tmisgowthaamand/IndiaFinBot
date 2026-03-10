@@ -517,15 +517,19 @@ export default function IndiaFinBot() {
   const locationContext = selectedState ? `${selectedDistrict || 'Any District'}, ${selectedState}` : 'India';
 
   const formatLanguageInstruction = () => {
+    let targetLanguage = "English";
     switch (lang) {
-      case "hi": return "Respond exclusively in beautiful Hindi (Devanagari script) language.";
-      case "ta": return "Respond exclusively in fluent Tamil language.";
-      case "te": return "Respond exclusively in fluent Telugu language.";
-      case "ml": return "Respond exclusively in fluent Malayalam language.";
-      case "kn": return "Respond exclusively in fluent Kannada language.";
-      default: return "Respond exclusively in English.";
+      case "hi": targetLanguage = "Hindi (Devanagari script)"; break;
+      case "ta": targetLanguage = "Tamil"; break;
+      case "te": targetLanguage = "Telugu"; break;
+      case "ml": targetLanguage = "Malayalam"; break;
+      case "kn": targetLanguage = "Kannada"; break;
+      default: targetLanguage = "English"; break;
     }
+    
+    return `CRITICAL INSTRUCTION: You MUST process the user's request and respond ENTIRELY and EXCLUSIVELY in the ${targetLanguage} language. Even if the user explicitly types their prompt in English, your final output, all headers, analysis, and text MUST be strictly written natively in ${targetLanguage}. Ensure perfect grammar, formatting, and correct vocabulary in ${targetLanguage}. DO NOT mix languages.`;
   }
+
 
   const systemPrompt = `You are IndiaFinBot, highly advanced AI Accounting & Business Advisor for India.
 ${formatLanguageInstruction()} 
