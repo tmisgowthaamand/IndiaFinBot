@@ -512,7 +512,7 @@ Your Core Capabilities & Guidelines:
 
         const apiContent = [
           { inlineData: { mimeType: file.type, data: base64 } },
-          { text: `I have uploaded my ${isImage ? "image" : "document (bank statement etc)"}: "${file.name}". Please analyze this end-to-end for my business in ${locationContext}. Provide a deep financial overview, 1 to 5 year growth vs loss projection, fund investment viability, tax optimization schemes, and business planning insights. REply strictly in the language format chosen before.` }
+          { text: `I have uploaded my ${isImage ? "image" : "document (bank statement etc)"}: "${file.name}". Please analyze this statement strictly end-to-end for my business in ${locationContext} without leaving any transaction out. Analyze every single debit and credit, showing the various paths my money took, and ensure balances are calculated completely correctly. Based on my past spending/income patterns, tell me exactly how I can generate strong profits in the NEXT term. Give me concrete, actionable solutions to convert losses into high gross profits going forward. Reply strictly in the language format chosen before.` }
         ];
 
         setMessages(prev => prev.filter(m => !m.isUploading));
@@ -522,7 +522,7 @@ Your Core Capabilities & Guidelines:
         const text = await file.text();
         setMessages(prev => prev.filter(m => !m.isUploading));
         setLoading(false);
-        await sendMessage(`📎 CSV Uploaded: "${file.name}"`, `Here is my CSV financial statement data: \n\n${text.slice(0, 4000)}... Analyze this end-to-end for my business in ${locationContext}. Give me exactly the content I want to know for the next term: specifically, how we can overcome any losses and convert them to a high gross profit. Detail a roadmap for growth, identify structural losses, and provide practical next steps.`);
+        await sendMessage(`📎 CSV Uploaded: "${file.name}"`, `Here is my CSV financial statement data: \n\n${text.slice(0, 4000)}... Analyze this statement strictly end-to-end for my business in ${locationContext} without leaving any transaction out. Analyze every single debit and credit, showing the various paths my money took, and ensure balances are calculated completely correctly. Based on my past spending/income patterns, tell me exactly how I can generate strong profits in the NEXT term. Give me concrete, actionable solutions to convert losses into high gross profits. Detail a roadmap for growth and provide practical next steps.`);
       } else {
         setMessages(prev => prev.filter(m => !m.isUploading));
         setLoading(false);
