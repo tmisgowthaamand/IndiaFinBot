@@ -1343,7 +1343,7 @@ Your Core Capabilities & Guidelines:
             </div>
 
             <div style={{ padding: "20px 30px", background: "rgba(0,0,0,0.5)", borderTop: "1px solid rgba(0,180,216,0.2)", backdropFilter: "blur(20px)" }}>
-              <div style={{ display: "flex", gap: 15, alignItems: "center" }}>
+              <div style={{ display: "flex", gap: 15, alignItems: "center", flexWrap: "wrap" }}>
                 <input type="file" ref={fileInputRef} onChange={handleFileUpload} accept=".pdf,.csv,.xlsx,.xls,.png,.jpg,.jpeg" style={{ display: "none" }} />
                 <button
                   onClick={() => fileInputRef.current.click()}
@@ -1357,7 +1357,7 @@ Your Core Capabilities & Guidelines:
                   onChange={e => setInput(e.target.value)}
                   onKeyDown={e => e.key === "Enter" && sendMessage(input)}
                   placeholder={isListening ? "🎙️ Listening..." : t("chatPlaceholder")}
-                  style={{ flex: 1, padding: "16px 22px", borderRadius: 12, border: "1px solid rgba(255,255,255,0.1)", background: "rgba(15,23,42,0.8)", color: "#fff", fontSize: "15px", outline: "none", boxShadow: "inset 0 2px 5px rgba(0,0,0,0.5)", transition: "border 0.3s" }}
+                  style={{ flex: "1 1 200px", padding: "16px 22px", borderRadius: 12, border: "1px solid rgba(255,255,255,0.1)", background: "rgba(15,23,42,0.8)", color: "#fff", fontSize: "15px", outline: "none", boxShadow: "inset 0 2px 5px rgba(0,0,0,0.5)", transition: "border 0.3s" }}
                   onFocus={e => e.target.style.borderColor = "#FF6B35"}
                   onBlur={e => e.target.style.borderColor = "rgba(255,255,255,0.1)"}
                 />
