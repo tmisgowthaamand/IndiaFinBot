@@ -1270,33 +1270,43 @@ Your Core Capabilities & Guidelines:
                           th: ({ node, ...props }) => <th style={{ padding: "12px", border: "1px solid rgba(255,255,255,0.1)", background: "rgba(0,180,216,0.1)", color: "#00B4D8", textAlign: "left" }} {...props} />,
                           td: ({ node, ...props }) => <td style={{ padding: "10px 12px", border: "1px solid rgba(255,255,255,0.1)" }} {...props} />,
                           img: ({ node, ...props }) => {
+                            const [imgSrc, setImgSrc] = useState(() => {
+                              let safeSrc = props.src || "";
+                              if (!safeSrc.startsWith("http")) {
+                                const visualPrompt = `${safeSrc} in ${locationContext} business style`;
+                                return `https://image.pollinations.ai/prompt/${encodeURIComponent(visualPrompt)}?width=1200&height=800&nologo=true&seed=${Math.floor(Math.random() * 1000000)}`;
+                              }
+                              return safeSrc.replace(/ /g, '%20');
+                            });
                             const [errorCount, setErrorCount] = useState(0);
-                            let safeSrc = props.src || "";
-                            if (!safeSrc.startsWith("http")) {
-                              const visualPrompt = `${safeSrc} in ${locationContext} business style`;
-                              safeSrc = `https://image.pollinations.ai/prompt/${encodeURIComponent(visualPrompt)}?width=1200&height=800&nologo=true&seed=${Math.floor(Math.random() * 1000000)}`;
-                            } else {
-                              safeSrc = safeSrc.replace(/ /g, '%20');
-                            }
 
-                            const handleError = (e) => {
+                            const handleError = () => {
                               if (errorCount < 3) {
-                                const urlObj = new URL(e.target.src);
-                                urlObj.searchParams.set("seed", Math.floor(Math.random() * 1000000));
-                                e.target.src = urlObj.toString();
+                                let newSrc;
+                                if (imgSrc.includes('pollinations.ai')) {
+                                  newSrc = `${imgSrc.split('&seed=')[0]}&seed=${Math.floor(Math.random() * 1000000)}`;
+                                } else {
+                                  // For non-pollinations URLs, append a random hash to break browser cache
+                                  newSrc = `${imgSrc.split('?')[0]}?retry=${Math.floor(Math.random() * 10000)}`;
+                                }
+                                setImgSrc(newSrc);
                                 setErrorCount(prev => prev + 1);
+                              } else if (errorCount === 3) {
+                                // Final fallback: use picsum for guaranteed display
+                                setImgSrc(`https://picsum.photos/seed/${Math.floor(Math.random() * 1000000)}/1200/800`);
+                                setErrorCount(4);
                               }
                             };
 
                             return (
-                              <div style={{ position: "relative", width: "100%", minHeight: safeSrc ? 200 : 0 }}>
+                              <div style={{ position: "relative", width: "100%", minHeight: 200 }}>
                                 <img 
-                                  style={{ maxWidth: "100%", borderRadius: 12, marginTop: 15, border: "1px solid rgba(255,255,255,0.1)", boxShadow: "0 10px 20px rgba(0,0,0,0.3)", display: "block" }} 
+                                  style={{ maxWidth: "100%", borderRadius: 12, marginTop: 15, border: "1px solid rgba(255,255,255,0.1)", boxShadow: "0 10px 20px rgba(0,0,0,0.3)", display: "block", minHeight: "200px", background: "rgba(0,0,0,0.2)" }} 
                                   {...props} 
-                                  src={safeSrc} 
+                                  src={imgSrc} 
                                   onError={handleError}
                                 />
-                                {errorCount >= 3 && <div style={{ color: "#FF6B35", fontSize: "12px", marginTop: 10 }}>⚠️ Image service busy. Try refreshing the chat.</div>}
+                                {errorCount >= 4 && <div style={{ color: "#94a3b8", fontSize: "12px", marginTop: 10, fontStyle: "italic" }}>💡 Placeholder visual displayed due to high network load.</div>}
                               </div>
                             );
                           },
