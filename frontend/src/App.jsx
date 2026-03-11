@@ -248,30 +248,16 @@ const MAPS_API_KEY = import.meta.env.VITE_GOOGLE_MAPS_API_KEY || "AIzaSyAm0Ux8ho
 const MAP_OPTIONS = { disableDefaultUI: true, zoomControl: true, restriction: { latLngBounds: { north: 37.0902, south: 8.0863, east: 97.3956, west: 68.1862 }, strictBounds: true }, styles: [{ stylers: [{ saturation: -100 }, { lightness: 20 }] }, { elementType: "labels.text.fill", stylers: [{ color: "#ffffff" }] }, { elementType: "geometry", stylers: [{ color: "#060913" }] }, { featureType: "water", stylers: [{ color: "#00B4D8" }] }] };
 
 function IndiaMapZone({ stateCode, theme }) {
-  const { isLoaded } = useJsApiLoader({ id: 'google-map-script', googleMapsApiKey: MAPS_API_KEY });
   const [mapType, setMapType] = useState("CA"); // CA, MSME, LOAN, COMP
-  const [activeMarker, setActiveMarker] = useState(null);
 
-  const center = stateCode && INDIA_STATES[stateCode] ? INDIA_STATES[stateCode].coords : { lat: 20.5937, lng: 78.9629 };
+  const centerLat = stateCode && INDIA_STATES[stateCode] ? INDIA_STATES[stateCode].coords.lat : 20.5937;
+  const centerLng = stateCode && INDIA_STATES[stateCode] ? INDIA_STATES[stateCode].coords.lng : 78.9629;
+  const zoomLevel = stateCode ? 6 : 4;
 
-  const generateMocks = (centerLat, centerLng, type) => {
-    return Array.from({ length: 8 }).map((_, i) => {
-      const latOffset = (Math.random() - 0.5) * 2;
-      const lngOffset = (Math.random() - 0.5) * 2;
-      return {
-        id: i, lat: centerLat + latOffset, lng: centerLng + lngOffset,
-        title: type === "CA" ? `Verified Tax Partner ${i + 1}` : type === "MSME" ? `SEZ Govt Tech Park ${i + 1}` : type === "LOAN" ? `Approved MUDRA Bank Branch` : `Local Competitor Business`,
-        desc: type === "CA" ? `Fee: ₹5K/mo | GST Filing` : type === "LOAN" ? `Interest: 8.5% | Fast Approval` : type === "MSME" ? `Subsidized IT & Agri Plot` : `High Density Market`
-      };
-    });
-  };
-
-  const markers = generateMocks(center.lat, center.lng, mapType);
-
-  if (!isLoaded) return <div style={{ height: "400px", display: "flex", alignItems: "center", justifyContent: "center", background: "rgba(0,0,0,0.4)" }}><TypingDots /></div>;
+  const mapIframeUrl = `https://maps.google.com/maps?q=${centerLat},${centerLng}&t=&z=${zoomLevel}&ie=UTF8&iwloc=&output=embed`;
 
   return (
-    <div className="glass-panel" style={{ borderRadius: "16px", padding: "20px", display: "flex", flexDirection: "column", gap: "20px", height: "600px", border: "1px solid rgba(0,180,216,0.3)" }}>
+    <div className="glass-panel" style={{ borderRadius: "16px", padding: "20px", display: "flex", flexDirection: "column", gap: "20px", height: "600px", minHeight: "350px", border: "1px solid rgba(0,180,216,0.3)" }}>
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: 10 }}>
         <div>
           <h2 style={{ margin: "0 0 5px 0", color: theme === "light" ? "#0f172a" : "#FFF", fontSize: "22px", display: "flex", alignItems: "center", gap: 8 }}>📍 Live Market Intel Radar</h2>
@@ -287,25 +273,23 @@ function IndiaMapZone({ stateCode, theme }) {
         </div>
       </div>
 
-      <div style={{ flex: 1, borderRadius: "12px", overflow: "hidden", position: "relative" }}>
-        <GoogleMap mapContainerStyle={{ width: "100%", height: "100%" }} center={center} zoom={stateCode ? 7 : 5} options={MAP_OPTIONS} onClick={() => setActiveMarker(null)}>
-          <Circle center={center} radius={150000} options={{ strokeColor: "#00B4D8", strokeOpacity: 0.8, strokeWeight: 2, fillColor: "#00B4D8", fillOpacity: 0.1 }} />
-          {markers.map(m => (
-            <Marker key={m.id} position={{ lat: m.lat, lng: m.lng }} onClick={() => setActiveMarker(m)}
-              icon={{ url: mapType === "CA" ? 'https://maps.google.com/mapfiles/ms/icons/blue-dot.png' : mapType === "MSME" ? 'https://maps.google.com/mapfiles/ms/icons/green-dot.png' : mapType === "LOAN" ? 'https://maps.google.com/mapfiles/ms/icons/yellow-dot.png' : 'https://maps.google.com/mapfiles/ms/icons/red-dot.png' }}
-            >
-              {activeMarker?.id === m.id && (
-                <InfoWindow position={{ lat: m.lat, lng: m.lng }} onCloseClick={() => setActiveMarker(null)}>
-                  <div style={{ padding: "5px 10px", color: "#111" }}>
-                    <h4 style={{ margin: "0 0 5px 0", fontSize: "15px", fontWeight: 800 }}>{m.title}</h4>
-                    <p style={{ margin: "0 0 10px 0", fontSize: "13px" }}>{m.desc}</p>
-                    <button onClick={() => window.open(`https://www.google.com/maps/dir/?api=1&destination=${m.lat},${m.lng}`, "_blank")} style={{ padding: "6px 12px", background: "#00B4D8", color: "#FFF", border: "none", borderRadius: "4px", fontSize: "12px", fontWeight: 700, cursor: "pointer" }}>Get Directions ↗</button>
-                  </div>
-                </InfoWindow>
-              )}
-            </Marker>
-          ))}
-        </GoogleMap>
+      <div style={{ flex: 1, borderRadius: "12px", overflow: "hidden", position: "relative", minHeight: "250px" }}>
+        <iframe
+          width="100%"
+          height="100%"
+          frameBorder="0"
+          scrolling="no"
+          marginHeight="0"
+          marginWidth="0"
+          src={mapIframeUrl}
+          style={{ filter: theme === "dark" || !theme ? "invert(90%) hue-rotate(180deg)" : "none", transition: "filter 0.3s", minHeight: "100%" }}
+        />
+        <div style={{ position: "absolute", bottom: "10px", right: "10px", background: "rgba(15,23,42,0.9)", padding: "10px 15px", borderRadius: "8px", border: "1px solid rgba(0,180,216,0.3)", zIndex: 10, backdropFilter: "blur(5px)" }}>
+           <h4 style={{ color: "#9BF6FF", margin: "0 0 5px 0", fontSize: "13px" }}>{mapType === "CA" ? "Top CA Penetration" : mapType === "MSME" ? "Govt Subsidized Zones" : mapType === "LOAN" ? "Active Loan Sanction Nodes" : "High Competition"}</h4>
+           <div style={{ display: "flex", gap: "10px", fontSize: "12px" }}>
+             <span style={{ color: "#e2e8f0" }}>Active: <strong style={{ color: "#10B981" }}>High</strong></span>
+           </div>
+        </div>
       </div>
     </div>
   );
