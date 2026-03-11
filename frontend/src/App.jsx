@@ -1274,7 +1274,7 @@ Your Core Capabilities & Guidelines:
                             const [imgSrc, setImgSrc] = useState(() => {
                               let safeSrc = props.src || "";
                               if (!safeSrc.startsWith("http")) {
-                                const visualPrompt = `${safeSrc} in ${locationContext} business style`;
+                                const visualPrompt = `${safeSrc} accounting finance professional business style in ${locationContext}`;
                                 return `https://image.pollinations.ai/prompt/${encodeURIComponent(visualPrompt)}?width=1200&height=800&nologo=true&seed=${Math.floor(Math.random() * 1000000)}`;
                               }
                               return safeSrc.replace(/ /g, '%20');
