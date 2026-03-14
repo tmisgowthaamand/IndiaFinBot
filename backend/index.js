@@ -59,7 +59,18 @@ app.post('/api/chat', async (req, res) => {
             return res.status(500).json({ error: { message: "GEMINI_API_KEY is not configured on the backend server." } });
         }
 
-        const models = ["gemini-3.1-flash-lite-preview", "gemini-2.5-flash", "gemini-3.1-pro-preview", "gemini-2.5-pro", "gemini-2.0-flash", "gemini-1.5-pro", "gemini-1.5-flash", "gemini-pro-latest", "gemini-flash-latest"];
+        const models = [
+            "gemini-2.0-flash-exp",
+            "gemini-exp-1206", 
+            "gemini-2.0-flash-thinking-exp-1219",
+            "gemini-exp-1121",
+            "gemini-2.0-flash-thinking-exp",
+            "gemini-2.0-flash",
+            "gemini-1.5-pro-latest",
+            "gemini-1.5-flash-latest",
+            "gemini-1.5-pro",
+            "gemini-1.5-flash"
+        ];
         let data = null;
         let lastError = null;
 
@@ -71,6 +82,19 @@ app.post('/api/chat', async (req, res) => {
                     body: JSON.stringify({
                         systemInstruction: systemInstruction,
                         contents: contents,
+                        generationConfig: {
+                            temperature: 0.7,
+                            topK: 40,
+                            topP: 0.95,
+                            maxOutputTokens: 8192,
+                            responseMimeType: "text/plain"
+                        },
+                        safetySettings: [
+                            { category: "HARM_CATEGORY_HARASSMENT", threshold: "BLOCK_NONE" },
+                            { category: "HARM_CATEGORY_HATE_SPEECH", threshold: "BLOCK_NONE" },
+                            { category: "HARM_CATEGORY_SEXUALLY_EXPLICIT", threshold: "BLOCK_NONE" },
+                            { category: "HARM_CATEGORY_DANGEROUS_CONTENT", threshold: "BLOCK_NONE" }
+                        ]
                     })
                 });
 
