@@ -599,7 +599,7 @@ Your Core Capabilities & Guidelines:
       });
 
       // Use the Render backend URL in production, or localhost during development
-      const API_BASE = import.meta.env.MODE === "development" ? "http://localhost:5000" : "https://indiafinbot.onrender.com";
+      const API_BASE = import.meta.env.MODE === "development" ? "http://localhost:5000" : "https://indiafinbot-4cef.onrender.com";
 
       // Call our secure Backend API instead of exposing Gemini tokens
       const res = await fetch(`${API_BASE}/api/chat`, {
