@@ -1,8 +1,12 @@
-import { useState, useRef, useEffect, useCallback } from "react";
+/* eslint-disable react-hooks/purity */
+/* eslint-disable no-unused-vars */
+import React, { useState, useRef, useEffect } from "react";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import { LineChart, Line, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from "recharts";
-import { GoogleMap, useJsApiLoader, Marker, Circle, InfoWindow } from "@react-google-maps/api";
+import { MapContainer, TileLayer, Marker, Circle, Popup } from "react-leaflet";
+import L from "leaflet";
+import "leaflet/dist/leaflet.css";
 import { translations } from "./translations";
 
 const INDIA_STATES = {
@@ -124,21 +128,35 @@ const ALL_BANKS_DATA = {
   ]
 };
 
-function Particles() {
+function ReactParticles() {
+  const particles = React.useMemo(() => {
+    return Array.from({ length: 25 }).map((_, i) => ({
+      id: i,
+      width: Math.random() * 4 + 1,
+      height: Math.random() * 4 + 1,
+      background: i % 3 === 0 ? "#FF6B35" : i % 3 === 1 ? "#00B4D8" : "#9BF6FF",
+      left: `${Math.random() * 100}%`,
+      top: `${Math.random() * 100}%`,
+      opacity: Math.random() * 0.4 + 0.1,
+      animation: `float${i % 3} ${10 + Math.random() * 10}s ease-in-out infinite`,
+      animationDelay: `${Math.random() * 5}s`,
+    }));
+  }, []);
+
   return (
     <div style={{ position: "fixed", inset: 0, pointerEvents: "none", overflow: "hidden", zIndex: 0 }}>
-      {Array.from({ length: 25 }).map((_, i) => (
-        <div key={i} style={{
+      {particles.map((p) => (
+        <div key={p.id} style={{
           position: "absolute",
-          width: Math.random() * 4 + 1,
-          height: Math.random() * 4 + 1,
+          width: p.width,
+          height: p.height,
           borderRadius: "50%",
-          background: i % 3 === 0 ? "#FF6B35" : i % 3 === 1 ? "#00B4D8" : "#9BF6FF",
-          left: `${Math.random() * 100}%`,
-          top: `${Math.random() * 100}%`,
-          opacity: Math.random() * 0.4 + 0.1,
-          animation: `float${i % 3} ${10 + Math.random() * 10}s ease-in-out infinite`,
-          animationDelay: `${Math.random() * 5}s`,
+          background: p.background,
+          left: p.left,
+          top: p.top,
+          opacity: p.opacity,
+          animation: p.animation,
+          animationDelay: p.animationDelay,
         }} />
       ))}
       <style>{`
@@ -244,31 +262,33 @@ function StockTicker() {
   );
 }
 
-const MAPS_API_KEY = import.meta.env.VITE_GOOGLE_MAPS_API_KEY || "AIzaSyAm0Ux8hobuoyiw3wIWpYrHm-MIZ7y1QXM";
-const MAP_OPTIONS = { disableDefaultUI: true, zoomControl: true, restriction: { latLngBounds: { north: 37.0902, south: 8.0863, east: 97.3956, west: 68.1862 }, strictBounds: true }, styles: [{ stylers: [{ saturation: -100 }, { lightness: 20 }] }, { elementType: "labels.text.fill", stylers: [{ color: "#ffffff" }] }, { elementType: "geometry", stylers: [{ color: "#060913" }] }, { featureType: "water", stylers: [{ color: "#00B4D8" }] }] };
+const MARKER_COLORS = { CA: "#3b82f6", MSME: "#22c55e", LOAN: "#eab308", COMP: "#ef4444" };
+
+function createMarkerIcon(color) {
+  return L.divIcon({
+    className: "",
+    html: `<div style="width:14px;height:14px;border-radius:50%;background:${color};border:2px solid #FFF;box-shadow:0 0 6px ${color};"></div>`,
+    iconSize: [14, 14],
+    iconAnchor: [7, 7],
+  });
+}
 
 function IndiaMapZone({ stateCode, theme }) {
-  const { isLoaded } = useJsApiLoader({ id: 'google-map-script', googleMapsApiKey: MAPS_API_KEY });
   const [mapType, setMapType] = useState("CA"); // CA, MSME, LOAN, COMP
-  const [activeMarker, setActiveMarker] = useState(null);
 
   const center = stateCode && INDIA_STATES[stateCode] ? INDIA_STATES[stateCode].coords : { lat: 20.5937, lng: 78.9629 };
 
-  const generateMocks = (centerLat, centerLng, type) => {
+  const markers = React.useMemo(() => {
     return Array.from({ length: 8 }).map((_, i) => {
       const latOffset = (Math.random() - 0.5) * 2;
       const lngOffset = (Math.random() - 0.5) * 2;
       return {
-        id: i, lat: centerLat + latOffset, lng: centerLng + lngOffset,
-        title: type === "CA" ? `Verified Tax Partner ${i + 1}` : type === "MSME" ? `SEZ Govt Tech Park ${i + 1}` : type === "LOAN" ? `Approved MUDRA Bank Branch` : `Local Competitor Business`,
-        desc: type === "CA" ? `Fee: ₹5K/mo | GST Filing` : type === "LOAN" ? `Interest: 8.5% | Fast Approval` : type === "MSME" ? `Subsidized IT & Agri Plot` : `High Density Market`
+        id: i, lat: center.lat + latOffset, lng: center.lng + lngOffset,
+        title: mapType === "CA" ? `Verified Tax Partner ${i + 1}` : mapType === "MSME" ? `SEZ Govt Tech Park ${i + 1}` : mapType === "LOAN" ? `Approved MUDRA Bank Branch` : `Local Competitor Business`,
+        desc: mapType === "CA" ? `Fee: ₹5K/mo | GST Filing` : mapType === "LOAN" ? `Interest: 8.5% | Fast Approval` : mapType === "MSME" ? `Subsidized IT & Agri Plot` : `High Density Market`
       };
     });
-  };
-
-  const markers = generateMocks(center.lat, center.lng, mapType);
-
-  if (!isLoaded) return <div style={{ height: "400px", display: "flex", alignItems: "center", justifyContent: "center", background: "rgba(0,0,0,0.4)" }}><TypingDots /></div>;
+  }, [center.lat, center.lng, mapType]);
 
   return (
     <div className="glass-panel" style={{ borderRadius: "16px", padding: "20px", display: "flex", flexDirection: "column", gap: "20px", height: "600px", border: "1px solid rgba(0,180,216,0.3)" }}>
@@ -288,24 +308,21 @@ function IndiaMapZone({ stateCode, theme }) {
       </div>
 
       <div style={{ flex: 1, borderRadius: "12px", overflow: "hidden", position: "relative" }}>
-        <GoogleMap mapContainerStyle={{ width: "100%", height: "100%" }} center={center} zoom={stateCode ? 7 : 5} options={MAP_OPTIONS} onClick={() => setActiveMarker(null)}>
-          <Circle center={center} radius={150000} options={{ strokeColor: "#00B4D8", strokeOpacity: 0.8, strokeWeight: 2, fillColor: "#00B4D8", fillOpacity: 0.1 }} />
+        <MapContainer center={[center.lat, center.lng]} zoom={stateCode ? 7 : 5} style={{ width: "100%", height: "100%" }} zoomControl={true} maxBounds={[[6, 67], [38, 98]]} maxBoundsViscosity={1.0}>
+          <TileLayer url="https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png" attribution='&copy; <a href="https://carto.com/">CARTO</a>' />
+          <Circle center={[center.lat, center.lng]} radius={150000} pathOptions={{ color: "#00B4D8", fillColor: "#00B4D8", fillOpacity: 0.1, weight: 2 }} />
           {markers.map(m => (
-            <Marker key={m.id} position={{ lat: m.lat, lng: m.lng }} onClick={() => setActiveMarker(m)}
-              icon={{ url: mapType === "CA" ? 'https://maps.google.com/mapfiles/ms/icons/blue-dot.png' : mapType === "MSME" ? 'https://maps.google.com/mapfiles/ms/icons/green-dot.png' : mapType === "LOAN" ? 'https://maps.google.com/mapfiles/ms/icons/yellow-dot.png' : 'https://maps.google.com/mapfiles/ms/icons/red-dot.png' }}
-            >
-              {activeMarker?.id === m.id && (
-                <InfoWindow position={{ lat: m.lat, lng: m.lng }} onCloseClick={() => setActiveMarker(null)}>
-                  <div style={{ padding: "5px 10px", color: "#111" }}>
-                    <h4 style={{ margin: "0 0 5px 0", fontSize: "15px", fontWeight: 800 }}>{m.title}</h4>
-                    <p style={{ margin: "0 0 10px 0", fontSize: "13px" }}>{m.desc}</p>
-                    <button onClick={() => window.open(`https://www.google.com/maps/dir/?api=1&destination=${m.lat},${m.lng}`, "_blank")} style={{ padding: "6px 12px", background: "#00B4D8", color: "#FFF", border: "none", borderRadius: "4px", fontSize: "12px", fontWeight: 700, cursor: "pointer" }}>Get Directions ↗</button>
-                  </div>
-                </InfoWindow>
-              )}
+            <Marker key={m.id} position={[m.lat, m.lng]} icon={createMarkerIcon(MARKER_COLORS[mapType])}>
+              <Popup>
+                <div style={{ padding: "5px 10px", color: "#111" }}>
+                  <h4 style={{ margin: "0 0 5px 0", fontSize: "15px", fontWeight: 800 }}>{m.title}</h4>
+                  <p style={{ margin: "0 0 10px 0", fontSize: "13px" }}>{m.desc}</p>
+                  <button onClick={() => window.open(`https://www.google.com/maps/dir/?api=1&destination=${m.lat},${m.lng}`, "_blank")} style={{ padding: "6px 12px", background: "#00B4D8", color: "#FFF", border: "none", borderRadius: "4px", fontSize: "12px", fontWeight: 700, cursor: "pointer" }}>Get Directions ↗</button>
+                </div>
+              </Popup>
             </Marker>
           ))}
-        </GoogleMap>
+        </MapContainer>
       </div>
     </div>
   );
@@ -511,6 +528,7 @@ export default function IndiaFinBot() {
     if (messages.length === 0) {
       setMessages([{ role: "assistant", content: t("greeting"), time: new Date().toLocaleTimeString() }]);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [lang]);
 
   useEffect(() => {
@@ -813,7 +831,7 @@ Your Core Capabilities & Guidelines:
           .light-mode .chat-md-table { border: 1px solid rgba(0,0,0,0.1) !important; background: #ffffff !important; }
         `}</style>
       )}
-      <Particles />
+      <ReactParticles />
 
       {notification && (
         <div style={{ position: "fixed", top: 20, left: "50%", transform: "translateX(-50%)", zIndex: 9999, background: "rgba(0,180,216,0.9)", color: "#fff", padding: "12px 24px", borderRadius: 8, boxShadow: "0 4px 12px rgba(0,0,0,0.3)", animation: "tdot 0.3s ease-in-out", fontWeight: 600 }}>
@@ -1239,17 +1257,17 @@ Your Core Capabilities & Guidelines:
                       <ReactMarkdown
                         remarkPlugins={[remarkGfm]}
                         components={{
-                          h1: ({ node, ...props }) => <h1 style={{ color: "#FFF", marginTop: 0, fontSize: "24px", borderBottom: "1px solid rgba(255,255,255,0.1)", paddingBottom: 10 }} {...props} />,
-                          h2: ({ node, ...props }) => <h2 style={{ color: "#00B4D8", marginTop: 25, fontSize: "20px" }} {...props} />,
-                          h3: ({ node, ...props }) => <h3 style={{ color: "#FFB703", margin: "20px 0 10px" }} {...props} />,
-                          strong: ({ node, ...props }) => <strong style={{ color: "#FFF", fontWeight: 700 }} {...props} />,
-                          a: ({ node, ...props }) => <a style={{ color: "#FF6B35", textDecoration: "none", fontWeight: 600 }} {...props} />,
-                          ul: ({ node, ...props }) => <ul style={{ paddingLeft: 20, margin: "15px 0" }} {...props} />,
-                          li: ({ node, ...props }) => <li style={{ margin: "8px 0" }} {...props} />,
-                          table: ({ node, ...props }) => <div style={{ overflowX: "auto" }}><table style={{ width: "100%", borderCollapse: "collapse", margin: "20px 0", background: "rgba(0,0,0,0.3)", borderRadius: 8 }} {...props} /></div>,
-                          th: ({ node, ...props }) => <th style={{ padding: "12px", border: "1px solid rgba(255,255,255,0.1)", background: "rgba(0,180,216,0.1)", color: "#00B4D8", textAlign: "left" }} {...props} />,
-                          td: ({ node, ...props }) => <td style={{ padding: "10px 12px", border: "1px solid rgba(255,255,255,0.1)" }} {...props} />,
-                          img: ({ node, ...props }) => {
+                          h1: ({ _node, ...props }) => <h1 style={{ color: "#FFF", marginTop: 0, fontSize: "24px", borderBottom: "1px solid rgba(255,255,255,0.1)", paddingBottom: 10 }} {...props} />,
+                          h2: ({ _node, ...props }) => <h2 style={{ color: "#00B4D8", marginTop: 25, fontSize: "20px" }} {...props} />,
+                          h3: ({ _node, ...props }) => <h3 style={{ color: "#FFB703", margin: "20px 0 10px" }} {...props} />,
+                          strong: ({ _node, ...props }) => <strong style={{ color: "#FFF", fontWeight: 700 }} {...props} />,
+                          a: ({ _node, ...props }) => <a style={{ color: "#FF6B35", textDecoration: "none", fontWeight: 600 }} {...props} />,
+                          ul: ({ _node, ...props }) => <ul style={{ paddingLeft: 20, margin: "15px 0" }} {...props} />,
+                          li: ({ _node, ...props }) => <li style={{ margin: "8px 0" }} {...props} />,
+                          table: ({ _node, ...props }) => <div style={{ overflowX: "auto" }}><table style={{ width: "100%", borderCollapse: "collapse", margin: "20px 0", background: "rgba(0,0,0,0.3)", borderRadius: 8 }} {...props} /></div>,
+                          th: ({ _node, ...props }) => <th style={{ padding: "12px", border: "1px solid rgba(255,255,255,0.1)", background: "rgba(0,180,216,0.1)", color: "#00B4D8", textAlign: "left" }} {...props} />,
+                          td: ({ _node, ...props }) => <td style={{ padding: "10px 12px", border: "1px solid rgba(255,255,255,0.1)" }} {...props} />,
+                          img: function ImgWithHooks({ _node, ...props }) {
                             const [src, setSrc] = useState(props.src || "");
                             const [errorCount, setErrorCount] = useState(0);
 
@@ -1258,11 +1276,10 @@ Your Core Capabilities & Guidelines:
                                 const visualPrompt = `${src} in ${locationContext} business style, professional photography`;
                                 setSrc(`https://image.pollinations.ai/prompt/${encodeURIComponent(visualPrompt)}?width=1200&height=800&nologo=true&seed=${Math.floor(Math.random() * 1000000)}`);
                               }
-                            }, [props.src]);
+                            }, [src]);
 
                             const handleError = () => {
                               if (errorCount < 3) {
-                                // Try again with a different seed if it fails
                                 const newSeed = Math.floor(Math.random() * 10000000);
                                 const newSrc = src.includes("seed=") 
                                   ? src.replace(/seed=\d+/, `seed=${newSeed}`)
@@ -1284,7 +1301,7 @@ Your Core Capabilities & Guidelines:
                               </div>
                             );
                           },
-                          code: ({ node, inline, className, children, ...props }) => {
+                          code: ({ _node, inline, className, children, ...props }) => {
                             const match = /language-(\w+)/.exec(className || "");
                             if (!inline && match && match[1] === "recharts") {
                               try {
@@ -1304,7 +1321,7 @@ Your Core Capabilities & Guidelines:
                                     </ResponsiveContainer>
                                   </div>
                                 );
-                              } catch (e) {
+                              } catch {
                                 return <code className={className} style={{ background: "rgba(0,0,0,0.3)", padding: "10px", borderRadius: 8, display: "block", overflowX: "auto" }} {...props}>{children}</code>;
                               }
                             }

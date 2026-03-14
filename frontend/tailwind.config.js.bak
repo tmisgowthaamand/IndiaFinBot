@@ -1,0 +1,49 @@
+/** @type {import('tailwindcss').Config} */
+export default {
+  content: [
+    "./index.html",
+    "./src/**/*.{js,ts,jsx,tsx}",
+  ],
+  theme: {
+    extend: {
+      colors: {
+        background: '#0B0F19',
+        card: '#111827',
+        primary: '#F5B841',
+        primaryHover: '#facc15',
+        'neon-green': '#10B981',
+        'neon-blue': '#22d3ee',
+        'border-glass': 'rgba(255, 255, 255, 0.08)'
+      },
+      fontFamily: {
+        sans: ['Inter', 'Satoshi', 'sans-serif'],
+      },
+      boxShadow: {
+        'glass': '0 8px 32px 0 rgba(0, 0, 0, 0.37)',
+        'glass-hover': '0 12px 40px 0 rgba(0, 0, 0, 0.5)',
+        'glow-primary': '0 0 20px rgba(245, 184, 65, 0.25)',
+      },
+      animation: {
+        'float': 'float 6s ease-in-out infinite',
+        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+        'chart-load': 'chartLoad 1.5s ease-out forwards',
+        'card-lift': 'cardLift 0.3s ease-out forwards',
+      },
+      keyframes: {
+        float: {
+          '0%, 100%': { transform: 'translateY(0)' },
+          '50%': { transform: 'translateY(-10px)' },
+        },
+        chartLoad: {
+          '0%': { strokeDasharray: '0, 1000' },
+          '100%': { strokeDasharray: '1000, 0' },
+        },
+        cardLift: {
+          '0%': { transform: 'translateY(0)', boxShadow: '0 8px 32px 0 rgba(0, 0, 0, 0.37)' },
+          '100%': { transform: 'translateY(-5px)', boxShadow: '0 12px 40px 0 rgba(0, 0, 0, 0.5)' },
+        }
+      }
+    },
+  },
+  plugins: [],
+}

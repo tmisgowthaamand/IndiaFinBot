@@ -20,15 +20,28 @@ body {
 
 /* Base Responsive Main Container */
 .main-container {
+  display: flex;
+  gap: 20px;
+  padding: 20px;
   height: calc(100vh - 85px);
   overflow: hidden;
   position: relative;
   z-index: 10;
+  max-width: 1600px;
+  margin: 0 auto;
 }
 
 .sidebar {
   width: 360px;
   height: 100%;
+}
+
+.sidebar.hide-sidebar {
+  width: 0 !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  opacity: 0;
+  pointer-events: none;
 }
 
 .content-area {
