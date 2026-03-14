@@ -1011,28 +1011,27 @@ Please provide a comprehensive, structured analysis in ${lang === 'en' ? 'Englis
         <div className="nav-header" style={{ maxWidth: "100%", margin: "0 auto", display: "flex", alignItems: "center", justifyContent: "space-between", flexWrap: "wrap", gap: 10 }}>
 
           <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
-            <div style={{ width: 42, height: 42, borderRadius: 12, background: "linear-gradient(135deg, #FF6B35, #FFB703)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 24, boxShadow: "0 0 15px rgba(255,107,53,0.3)" }}>🇮🇳</div>
+            <div style={{ width: 42, height: 42, borderRadius: 12, background: "linear-gradient(135deg, #3B82F6, #06B6D4)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 24, boxShadow: "0 0 20px rgba(59, 130, 246, 0.3)", border: "1px solid rgba(255,255,255,0.1)" }}>🇮🇳</div>
             <div>
-              <div style={{ fontSize: 22, fontWeight: 900, color: "#FFF", letterSpacing: "-0.5px" }}>IndiaFin<span style={{ color: "#00B4D8" }}>Bot</span></div>
+              <div style={{ fontSize: 24, fontWeight: 900, color: "#FFF", letterSpacing: "-1px" }}>IndiaFin<span style={{ color: "#06B6D4" }}>Bot</span></div>
             </div>
           </div>
 
-          <div style={{ display: "flex", background: "rgba(15,23,42,0.6)", borderRadius: "16px", padding: "8px", border: "1px solid rgba(255,255,255,0.08)", gap: "8px", flexWrap: "wrap", justifyContent: "center", boxShadow: "inset 0 2px 10px rgba(0,0,0,0.5)" }}>
-            <button onClick={() => { setActiveTab("overview"); setSelectedDetailId(null); }} className="nav-tab fade-in-up" style={{ animationDelay: "0.1s", background: activeTab === "overview" ? "linear-gradient(135deg, rgba(0, 180, 216, 0.3), rgba(0, 180, 216, 0.1))" : "transparent", color: activeTab === "overview" ? "#00B4D8" : "#94a3b8", padding: "10px 24px", borderRadius: "12px", border: "1px solid", borderColor: activeTab === "overview" ? "rgba(0,180,216,0.4)" : "transparent", cursor: "pointer", fontWeight: 700, fontSize: "14px", whiteSpace: "nowrap", transition: "all 0.3s cubic-bezier(0.16, 1, 0.3, 1)", display: "flex", alignItems: "center", gap: "8px", boxShadow: activeTab === "overview" ? "0 4px 15px rgba(0,180,216,0.2)" : "none" }}>📊 Overview & Scale</button>
-            <button onClick={() => setActiveTab("schemes")} className="nav-tab fade-in-up" style={{ animationDelay: "0.2s", background: activeTab === "schemes" ? "linear-gradient(135deg, rgba(16, 185, 129, 0.3), rgba(16, 185, 129, 0.1))" : "transparent", color: activeTab === "schemes" ? "#10B981" : "#94a3b8", padding: "10px 24px", borderRadius: "12px", border: "1px solid", borderColor: activeTab === "schemes" ? "rgba(16,185,129,0.4)" : "transparent", cursor: "pointer", fontWeight: 700, fontSize: "14px", whiteSpace: "nowrap", display: "flex", alignItems: "center", gap: "8px", transition: "all 0.3s cubic-bezier(0.16, 1, 0.3, 1)", boxShadow: activeTab === "schemes" ? "0 4px 15px rgba(16,185,129,0.2)" : "none" }}>🏛️ Schemes & Pro</button>
-            <button onClick={() => setActiveTab("chat")} className="nav-tab fade-in-up" style={{ animationDelay: "0.3s", background: activeTab === "chat" ? "linear-gradient(135deg, rgba(255, 107, 53, 0.3), rgba(255, 107, 53, 0.1))" : "transparent", color: activeTab === "chat" ? "#FF6B35" : "#94a3b8", padding: "10px 24px", borderRadius: "12px", border: "1px solid", borderColor: activeTab === "chat" ? "rgba(255,107,53,0.4)" : "transparent", cursor: "pointer", fontWeight: 700, fontSize: "14px", whiteSpace: "nowrap", display: "flex", alignItems: "center", gap: "8px", transition: "all 0.3s cubic-bezier(0.16, 1, 0.3, 1)", boxShadow: activeTab === "chat" ? "0 4px 15px rgba(255,107,53,0.2)" : "none" }}>🤖 AI Smart Analysis</button>
-            <button onClick={() => setActiveTab("inspire")} className="nav-tab fade-in-up" style={{ animationDelay: "0.4s", background: activeTab === "inspire" ? "linear-gradient(135deg, rgba(255, 183, 3, 0.3), rgba(255, 183, 3, 0.1))" : "transparent", color: activeTab === "inspire" ? "#FFB703" : "#94a3b8", padding: "10px 24px", borderRadius: "12px", border: "1px solid", borderColor: activeTab === "inspire" ? "rgba(255,183,3,0.4)" : "transparent", cursor: "pointer", fontWeight: 700, fontSize: "14px", whiteSpace: "nowrap", display: "flex", alignItems: "center", gap: "8px", transition: "all 0.3s cubic-bezier(0.16, 1, 0.3, 1)", boxShadow: activeTab === "inspire" ? "0 4px 15px rgba(255,183,3,0.2)" : "none" }}>🌟 Leaders & Market</button>
+          <div style={{ display: "flex", background: "rgba(255,255,255,0.03)", borderRadius: "12px", padding: "6px", border: "1px solid rgba(255,255,255,0.05)", gap: "4px", flexWrap: "wrap", justifyContent: "center", backdropFilter: "blur(10px)" }}>
+            <button onClick={() => { setActiveTab("overview"); setSelectedDetailId(null); }} className="nav-tab fade-in-up" style={{ animationDelay: "0.1s", background: activeTab === "overview" ? "rgba(255,255,255,0.1)" : "transparent", color: activeTab === "overview" ? "#FFF" : "#A1A1AA", padding: "8px 20px", borderRadius: "8px", border: "none", cursor: "pointer", fontWeight: 600, fontSize: "14px", whiteSpace: "nowrap", transition: "all 0.2s", display: "flex", alignItems: "center", gap: "8px" }}>📊 Overview</button>
+            <button onClick={() => setActiveTab("schemes")} className="nav-tab fade-in-up" style={{ animationDelay: "0.2s", background: activeTab === "schemes" ? "rgba(255,255,255,0.1)" : "transparent", color: activeTab === "schemes" ? "#FFF" : "#A1A1AA", padding: "8px 20px", borderRadius: "8px", border: "none", cursor: "pointer", fontWeight: 600, fontSize: "14px", whiteSpace: "nowrap", display: "flex", alignItems: "center", gap: "8px", transition: "all 0.2s" }}>🏛️ Schemes</button>
+            <button onClick={() => setActiveTab("chat")} className="nav-tab fade-in-up" style={{ animationDelay: "0.3s", background: activeTab === "chat" ? "linear-gradient(135deg, rgba(59, 130, 246, 0.2), rgba(6, 182, 212, 0.2))" : "transparent", color: activeTab === "chat" ? "#FFF" : "#A1A1AA", padding: "8px 20px", borderRadius: "8px", border: "1px solid", borderColor: activeTab === "chat" ? "rgba(59,130,246,0.3)" : "transparent", cursor: "pointer", fontWeight: 600, fontSize: "14px", whiteSpace: "nowrap", display: "flex", alignItems: "center", gap: "8px", transition: "all 0.2s", textShadow: activeTab === "chat" ? "0 0 10px rgba(255,255,255,0.2)" : "none" }}>🤖 AI Smart Analysis</button>
+            <button onClick={() => setActiveTab("inspire")} className="nav-tab fade-in-up" style={{ animationDelay: "0.4s", background: activeTab === "inspire" ? "rgba(255,255,255,0.1)" : "transparent", color: activeTab === "inspire" ? "#FFF" : "#A1A1AA", padding: "8px 20px", borderRadius: "8px", border: "none", cursor: "pointer", fontWeight: 600, fontSize: "14px", whiteSpace: "nowrap", display: "flex", alignItems: "center", gap: "8px", transition: "all 0.2s" }}>🌟 Markets</button>
           </div>
 
           <div style={{ display: "flex", gap: 12, flexWrap: "wrap", justifyContent: "center" }}>
             <button
               onClick={() => setTheme(prev => prev === "light" ? "dark" : "light")}
-              style={{ padding: "10px 15px", borderRadius: 10, background: theme === "light" ? "rgba(2,132,199,0.1)" : "rgba(255,255,255,0.1)", color: theme === "light" ? "#0284c7" : "#FFF", border: theme === "light" ? "1px solid rgba(2,132,199,0.2)" : "1px solid rgba(255,255,255,0.2)", cursor: "pointer", outline: "none", fontWeight: 700, backdropFilter: "blur(5px)", display: "flex", alignItems: "center", gap: "6px" }}
+              style={{ padding: "8px 12px", borderRadius: 8, background: "rgba(255,255,255,0.03)", color: "#FFF", border: "1px solid rgba(255,255,255,0.08)", cursor: "pointer", outline: "none", fontWeight: 600, fontSize: "13px", display: "flex", alignItems: "center", gap: "6px" }}
             >
               {theme === "light" ? "🌙 Dark" : "☀️ Light"}
             </button>
-            {/* Language Dropdown */}
-            <select value={lang} onChange={(e) => setLang(e.target.value)} style={{ padding: "10px 15px", borderRadius: 10, background: "rgba(255,107,53,0.1)", color: "#FF6B35", border: "1px solid rgba(255,107,53,0.3)", cursor: "pointer", outline: "none", fontWeight: 700, backdropFilter: "blur(5px)" }}>
+            <select value={lang} onChange={(e) => setLang(e.target.value)} style={{ padding: "8px 12px", borderRadius: 8, background: "rgba(255,255,255,0.03)", color: "#FFF", border: "1px solid rgba(255,255,255,0.08)", cursor: "pointer", outline: "none", fontWeight: 600, fontSize: "13px" }}>
               <option value="en">English</option>
               <option value="hi">हिन्दी</option>
               <option value="ta">தமிழ்</option>
@@ -1041,11 +1040,11 @@ Please provide a comprehensive, structured analysis in ${lang === 'en' ? 'Englis
               <option value="kn">ಕನ್ನಡ</option>
             </select>
 
-            <select value={selectedState} onChange={(e) => { setSelectedState(e.target.value); setSelectedDistrict(""); }} style={{ padding: "10px 15px", borderRadius: 10, background: "rgba(0,0,0,0.5)", color: "#FFF", border: "1px solid rgba(0,180,216,0.3)", cursor: "pointer", outline: "none", fontWeight: 500, backdropFilter: "blur(5px)", maxWidth: "100%" }}>
+            <select value={selectedState} onChange={(e) => { setSelectedState(e.target.value); setSelectedDistrict(""); }} style={{ padding: "8px 12px", borderRadius: 8, background: "rgba(255,255,255,0.03)", color: "#FFF", border: "1px solid rgba(255,255,255,0.08)", cursor: "pointer", outline: "none", fontWeight: 600, fontSize: "13px", maxWidth: "100%" }}>
               <option value="">{t("selectState")}</option>
               {Object.keys(INDIA_STATES).map(state => <option key={state} value={state}>{state}</option>)}
             </select>
-            <select value={selectedDistrict} onChange={(e) => setSelectedDistrict(e.target.value)} disabled={!selectedState} style={{ padding: "10px 15px", borderRadius: 10, background: "rgba(0,0,0,0.5)", color: "#FFF", border: "1px solid rgba(0,180,216,0.3)", opacity: !selectedState ? 0.4 : 1, cursor: "pointer", outline: "none", fontWeight: 500, maxWidth: "100%" }}>
+            <select value={selectedDistrict} onChange={(e) => setSelectedDistrict(e.target.value)} disabled={!selectedState} style={{ padding: "8px 12px", borderRadius: 8, background: "rgba(255,255,255,0.03)", color: "#FFF", border: "1px solid rgba(255,255,255,0.08)", opacity: !selectedState ? 0.4 : 1, cursor: "pointer", outline: "none", fontWeight: 600, fontSize: "13px", maxWidth: "100%" }}>
               <option value="">{t("selectDistrict")}</option>
               {selectedState && INDIA_STATES[selectedState].dists.map(dist => <option key={dist} value={dist}>{dist}</option>)}
             </select>
@@ -1057,7 +1056,7 @@ Please provide a comprehensive, structured analysis in ${lang === 'en' ? 'Englis
         
         <button 
           onClick={() => setSidebarVisible(!sidebarVisible)} 
-          style={{ position: "absolute", left: sidebarVisible ? "358px" : "10px", top: "10px", zIndex: 100, background: "rgba(0,180,216,0.35)", border: "1px solid #00B4D8", color: "#00B4D8", width: "42px", height: "42px", borderRadius: "12px", cursor: "pointer", backdropFilter: "blur(15px)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "20px", fontWeight: "bold", transition: "all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275)", boxShadow: "0 5px 15px rgba(0,0,0,0.5)" }}
+          style={{ position: "absolute", left: sidebarVisible ? "392px" : "12px", top: "12px", zIndex: 100, background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.1)", color: "#FFF", width: "40px", height: "40px", borderRadius: "10px", cursor: "pointer", backdropFilter: "blur(10px)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "18px", fontWeight: "bold", transition: "all 0.3s cubic-bezier(0.16, 1, 0.3, 1)", boxShadow: "0 4px 12px rgba(0,0,0,0.5)" }}
           title={sidebarVisible ? "Hide Sidebar" : "Show Sidebar"}
         >
           {sidebarVisible ? "«" : "»"}
@@ -1067,30 +1066,30 @@ Please provide a comprehensive, structured analysis in ${lang === 'en' ? 'Englis
         <div className={`sidebar glass-panel custom-scrollbar ${!sidebarVisible ? 'hide-sidebar' : ''}`} style={{ borderRadius: "20px", display: "flex", flexDirection: "column", padding: sidebarVisible ? "35px 25px" : "0", overflowY: "auto" }}>
           {sidebarVisible && (
             <>
-              <h3 style={{ color: "#FFF", margin: "0 0 20px 0", fontSize: "18px", display: "flex", alignItems: "center", gap: 10, fontWeight: 700, whiteSpace: "nowrap" }}><span style={{ background: "#FF6B35", padding: "6px", borderRadius: "8px", fontSize: "16px" }}>🚀</span> {t("startupConfig")}</h3>
+              <h3 style={{ color: "#FFF", margin: "0 0 20px 0", fontSize: "16px", display: "flex", alignItems: "center", gap: 10, fontWeight: 700, whiteSpace: "nowrap" }}><span style={{ background: "rgba(59, 130, 246, 0.2)", color: "#3B82F6", padding: "6px", borderRadius: "8px", fontSize: "16px" }}>🚀</span> {t("startupConfig")}</h3>
 
           <div style={{ display: "flex", flexDirection: "column", gap: 15 }}>
             <div>
               <label style={labelStyle}>{t("investmentLabel")}</label>
-              <select value={investment} onChange={e => setInvestment(e.target.value)} style={inputStyle}>
-                <option value="" style={{ background: "#060913", color: "#666" }}>{t("investmentPlaceholder")}</option>
-                {INVESTMENT_RANGES.map((r, i) => <option key={i} value={r} style={{ background: "#060913", color: "#fff" }}>{r}</option>)}
+              <select value={investment} onChange={e => setInvestment(e.target.value)} style={{...inputStyle, background: "rgba(255, 255, 255, 0.02)", border: "1px solid rgba(255, 255, 255, 0.08)", color: "#FFF"}}>
+                <option value="" style={{ background: "#111216", color: "#A1A1AA" }}>{t("investmentPlaceholder")}</option>
+                {INVESTMENT_RANGES.map((r, i) => <option key={i} value={r} style={{ background: "#111216", color: "#fff" }}>{r}</option>)}
               </select>
             </div>
 
             <div>
               <label style={labelStyle}>{t("interestsLabel")}</label>
-              <select value={interests} onChange={e => setInterests(e.target.value)} style={inputStyle}>
-                <option value="" style={{ background: "#060913", color: "#666" }}>{t("interestsPlaceholder")}</option>
-                {BUSINESS_VERTICALS.map((v, i) => <option key={i} value={v} style={{ background: "#060913", color: "#fff" }}>{v}</option>)}
+              <select value={interests} onChange={e => setInterests(e.target.value)} style={{...inputStyle, background: "rgba(255, 255, 255, 0.02)", border: "1px solid rgba(255, 255, 255, 0.08)", color: "#FFF"}}>
+                <option value="" style={{ background: "#111216", color: "#A1A1AA" }}>{t("interestsPlaceholder")}</option>
+                {BUSINESS_VERTICALS.map((v, i) => <option key={i} value={v} style={{ background: "#111216", color: "#fff" }}>{v}</option>)}
               </select>
             </div>
 
             <div>
               <label style={labelStyle}>{t("skillsLabel")}</label>
-              <select value={skills} onChange={e => setSkills(e.target.value)} style={inputStyle}>
-                <option value="" style={{ background: "#060913", color: "#666" }}>{t("skillsPlaceholder")}</option>
-                {FOUNDER_SKILLS.map((s, i) => <option key={i} value={s} style={{ background: "#060913", color: "#fff" }}>{s}</option>)}
+              <select value={skills} onChange={e => setSkills(e.target.value)} style={{...inputStyle, background: "rgba(255, 255, 255, 0.02)", border: "1px solid rgba(255, 255, 255, 0.08)", color: "#FFF"}}>
+                <option value="" style={{ background: "#111216", color: "#A1A1AA" }}>{t("skillsPlaceholder")}</option>
+                {FOUNDER_SKILLS.map((s, i) => <option key={i} value={s} style={{ background: "#111216", color: "#fff" }}>{s}</option>)}
               </select>
             </div>
           </div>
@@ -1100,17 +1099,17 @@ Please provide a comprehensive, structured analysis in ${lang === 'en' ? 'Englis
               const fullMsg = `${t("prefixLocation")} ${locationContext}.\n${t("prefixInvestment")} ${investment || 'Not specified'}\n${t("prefixInterests")} ${interests || 'Not specified'}\n${t("prefixSkills")} ${skills || 'Not specified'}\n\n${t("msgRunAnalysis")}`;
               sendMessage(fullMsg);
             }}
-            style={{ padding: "15px", marginTop: "10px", borderRadius: "12px", background: "linear-gradient(135deg, #FF6B35, #FFB703)", color: "#111", border: "none", cursor: "pointer", fontWeight: 800, fontSize: "15px", boxShadow: "0 8px 25px rgba(255,107,53,0.4)", transition: "transform 0.2s" }}
+            style={{ padding: "14px", marginTop: "20px", borderRadius: "8px", background: "linear-gradient(135deg, #3B82F6, #06B6D4)", color: "#FFF", border: "1px solid rgba(255,255,255,0.1)", cursor: "pointer", fontWeight: 600, fontSize: "14px", boxShadow: "0 8px 25px rgba(59, 130, 246, 0.3)", transition: "transform 0.2s" }}
             onMouseOver={e => e.currentTarget.style.transform = "translateY(-2px)"} onMouseOut={e => e.currentTarget.style.transform = "translateY(0)"}>
             {t("runAnalysisBtn")}
           </button>
 
-          <div style={{ marginTop: "35px", borderTop: "1px solid rgba(255,255,255,0.1)", paddingTop: "25px" }}>
-            <h4 style={{ color: "#9BF6FF", margin: "0 0 15px 0", fontSize: "13px", textTransform: "uppercase", letterSpacing: "1px", fontWeight: 700 }}>{t("govtPortals")}</h4>
-            <div style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
-              <a href="https://www.gst.gov.in" target="_blank" rel="noreferrer" style={{ color: "#e2e8f0", textDecoration: "none", padding: "12px 16px", background: "rgba(0,0,0,0.4)", borderRadius: "10px", fontSize: "14px", border: "1px solid rgba(255,255,255,0.05)", display: "flex", justifyContent: "space-between", alignItems: "center", transition: "all 0.2s", fontWeight: 500 }} onMouseOver={e => { e.currentTarget.style.background = "rgba(0,180,216,0.15)"; e.currentTarget.style.borderColor = "#00B4D8"; }} onMouseOut={e => { e.currentTarget.style.background = "rgba(0,0,0,0.4)"; e.currentTarget.style.borderColor = "rgba(255,255,255,0.05)"; }}><span>🧾 {t("gstPortal")}</span> <span>↗</span></a>
-              <a href="https://udyamregistration.gov.in" target="_blank" rel="noreferrer" style={{ color: "#e2e8f0", textDecoration: "none", padding: "12px 16px", background: "rgba(0,0,0,0.4)", borderRadius: "10px", fontSize: "14px", border: "1px solid rgba(255,255,255,0.05)", display: "flex", justifyContent: "space-between", alignItems: "center", transition: "all 0.2s", fontWeight: 500 }} onMouseOver={e => { e.currentTarget.style.background = "rgba(0,180,216,0.15)"; e.currentTarget.style.borderColor = "#00B4D8"; }} onMouseOut={e => { e.currentTarget.style.background = "rgba(0,0,0,0.4)"; e.currentTarget.style.borderColor = "rgba(255,255,255,0.05)"; }}><span>🏢 {t("msmePortal")}</span> <span>↗</span></a>
-              <a href="https://www.startupindia.gov.in" target="_blank" rel="noreferrer" style={{ color: "#e2e8f0", textDecoration: "none", padding: "12px 16px", background: "rgba(0,0,0,0.4)", borderRadius: "10px", fontSize: "14px", border: "1px solid rgba(255,255,255,0.05)", display: "flex", justifyContent: "space-between", alignItems: "center", transition: "all 0.2s", fontWeight: 500 }} onMouseOver={e => { e.currentTarget.style.background = "rgba(0,180,216,0.15)"; e.currentTarget.style.borderColor = "#00B4D8"; }} onMouseOut={e => { e.currentTarget.style.background = "rgba(0,0,0,0.4)"; e.currentTarget.style.borderColor = "rgba(255,255,255,0.05)"; }}><span>🚀 {t("startupPortal")}</span> <span>↗</span></a>
+          <div style={{ marginTop: "32px", borderTop: "1px solid rgba(255,255,255,0.05)", paddingTop: "24px" }}>
+            <h4 style={{ color: "#71717A", margin: "0 0 12px 0", fontSize: "12px", textTransform: "uppercase", letterSpacing: "1px", fontWeight: 700 }}>{t("govtPortals")}</h4>
+            <div style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
+              <a href="https://www.gst.gov.in" target="_blank" rel="noreferrer" style={{ color: "#F4F4F5", textDecoration: "none", padding: "10px 14px", background: "rgba(255,255,255,0.02)", borderRadius: "8px", fontSize: "13px", border: "1px solid rgba(255,255,255,0.05)", display: "flex", justifyContent: "space-between", alignItems: "center", transition: "all 0.2s", fontWeight: 500 }} onMouseOver={e => { e.currentTarget.style.background = "rgba(255,255,255,0.05)"; e.currentTarget.style.borderColor = "rgba(255,255,255,0.1)"; }} onMouseOut={e => { e.currentTarget.style.background = "rgba(255,255,255,0.02)"; e.currentTarget.style.borderColor = "rgba(255,255,255,0.05)"; }}><span>🧾 {t("gstPortal")}</span> <span style={{ color: "#71717A" }}>↗</span></a>
+              <a href="https://udyamregistration.gov.in" target="_blank" rel="noreferrer" style={{ color: "#F4F4F5", textDecoration: "none", padding: "10px 14px", background: "rgba(255,255,255,0.02)", borderRadius: "8px", fontSize: "13px", border: "1px solid rgba(255,255,255,0.05)", display: "flex", justifyContent: "space-between", alignItems: "center", transition: "all 0.2s", fontWeight: 500 }} onMouseOver={e => { e.currentTarget.style.background = "rgba(255,255,255,0.05)"; e.currentTarget.style.borderColor = "rgba(255,255,255,0.1)"; }} onMouseOut={e => { e.currentTarget.style.background = "rgba(255,255,255,0.02)"; e.currentTarget.style.borderColor = "rgba(255,255,255,0.05)"; }}><span>🏢 {t("msmePortal")}</span> <span style={{ color: "#71717A" }}>↗</span></a>
+              <a href="https://www.startupindia.gov.in" target="_blank" rel="noreferrer" style={{ color: "#F4F4F5", textDecoration: "none", padding: "10px 14px", background: "rgba(255,255,255,0.02)", borderRadius: "8px", fontSize: "13px", border: "1px solid rgba(255,255,255,0.05)", display: "flex", justifyContent: "space-between", alignItems: "center", transition: "all 0.2s", fontWeight: 500 }} onMouseOver={e => { e.currentTarget.style.background = "rgba(255,255,255,0.05)"; e.currentTarget.style.borderColor = "rgba(255,255,255,0.1)"; }} onMouseOut={e => { e.currentTarget.style.background = "rgba(255,255,255,0.02)"; e.currentTarget.style.borderColor = "rgba(255,255,255,0.05)"; }}><span>🚀 {t("startupPortal")}</span> <span style={{ color: "#71717A" }}>↗</span></a>
             </div>
           </div>
 
@@ -1132,20 +1131,17 @@ Please provide a comprehensive, structured analysis in ${lang === 'en' ? 'Englis
             </div>
           </div>
 
-          <div style={{ marginTop: "25px", borderTop: "1px solid rgba(255,255,255,0.1)", paddingTop: "25px" }}>
-            <h4 style={{ color: "#9BF6FF", margin: "0 0 15px 0", fontSize: "13px", textTransform: "uppercase", letterSpacing: "1px", fontWeight: 700 }}>Live Bank Loans ('25-'26)</h4>
-            <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
-              <p style={{ margin: "0 0 5px 0", color: "#94a3b8", fontSize: "12px", fontWeight: 600 }}>🏦 Govt & Public Banks</p>
-              {ALL_BANKS_DATA.govt.map((bank, i) => (
-                <a key={`govt-${i}`} href={bank.link} target="_blank" rel="noreferrer" style={{ color: "#e2e8f0", textDecoration: "none", padding: "12px 14px", background: "rgba(0,0,0,0.4)", borderRadius: "8px", fontSize: "13px", border: "1px solid rgba(255,255,255,0.05)", display: "flex", justifyContent: "space-between", alignItems: "center", transition: "all 0.2s" }} onMouseOver={e => { e.currentTarget.style.background = "rgba(0,180,216,0.15)"; e.currentTarget.style.borderColor = "#00B4D8"; }} onMouseOut={e => { e.currentTarget.style.background = "rgba(0,0,0,0.4)"; e.currentTarget.style.borderColor = "rgba(255,255,255,0.05)"; }}>
-                  <div style={{ display: "flex", flexDirection: "column" }}><span style={{ fontWeight: 700, color: "#9BF6FF", marginBottom: 4 }}>{bank.name} {bank.abbr && `(${bank.abbr})`}</span><span style={{ fontSize: "11px", color: "#94a3b8" }}>MSME/Biz: <strong style={{color:"#10B981"}}>{bank.rate}</strong></span></div> <span>↗</span>
+          <div style={{ marginTop: "32px", borderTop: "1px solid rgba(255,255,255,0.05)", paddingTop: "24px", paddingBottom: "24px" }}>
+            <h4 style={{ color: "#71717A", margin: "0 0 12px 0", fontSize: "12px", textTransform: "uppercase", letterSpacing: "1px", fontWeight: 700 }}>Live Bank Loans ('25-'26)</h4>
+            <div style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
+              {ALL_BANKS_DATA.govt.slice(0, 3).map((bank, i) => (
+                <a key={`govt-${i}`} href={bank.link} target="_blank" rel="noreferrer" style={{ color: "#F4F4F5", textDecoration: "none", padding: "10px 14px", background: "rgba(255,255,255,0.02)", borderRadius: "8px", fontSize: "13px", border: "1px solid rgba(255,255,255,0.05)", display: "flex", justifyContent: "space-between", alignItems: "center", transition: "all 0.2s", fontWeight: 500 }} onMouseOver={e => { e.currentTarget.style.background = "rgba(255,255,255,0.05)"; e.currentTarget.style.borderColor = "rgba(255,255,255,0.1)"; }} onMouseOut={e => { e.currentTarget.style.background = "rgba(255,255,255,0.02)"; e.currentTarget.style.borderColor = "rgba(255,255,255,0.05)"; }}>
+                   <div style={{ display: "flex", flexDirection: "column" }}><span style={{ fontWeight: 600, color: "#E4E4E7", marginBottom: 2 }}>{bank.name}</span><span style={{ fontSize: "11px", color: "#A1A1AA" }}>MSME/Biz: <strong style={{color:"#3B82F6", fontWeight: 700}}>{bank.rate}</strong></span></div> <span style={{ color: "#71717A" }}>↗</span>
                 </a>
               ))}
-
-              <p style={{ margin: "10px 0 5px 0", color: "#94a3b8", fontSize: "12px", fontWeight: 600 }}>🏛️ Top Private Banks</p>
-              {ALL_BANKS_DATA.private.map((bank, i) => (
-                <a key={`pvt-${i}`} href={bank.link} target="_blank" rel="noreferrer" style={{ color: "#e2e8f0", textDecoration: "none", padding: "12px 14px", background: "rgba(0,0,0,0.4)", borderRadius: "8px", fontSize: "13px", border: "1px solid rgba(255,255,255,0.05)", display: "flex", justifyContent: "space-between", alignItems: "center", transition: "all 0.2s" }} onMouseOver={e => { e.currentTarget.style.background = "rgba(0,180,216,0.15)"; e.currentTarget.style.borderColor = "#00B4D8"; }} onMouseOut={e => { e.currentTarget.style.background = "rgba(0,0,0,0.4)"; e.currentTarget.style.borderColor = "rgba(255,255,255,0.05)"; }}>
-                   <div style={{ display: "flex", flexDirection: "column" }}><span style={{ fontWeight: 700, color: "#FFB703", marginBottom: 4 }}>{bank.name}</span><span style={{ fontSize: "11px", color: "#94a3b8" }}>Startup/Biz: <strong style={{color:"#10B981"}}>{bank.rate}</strong></span></div> <span>↗</span>
+              {ALL_BANKS_DATA.private.slice(0, 3).map((bank, i) => (
+                <a key={`pvt-${i}`} href={bank.link} target="_blank" rel="noreferrer" style={{ color: "#F4F4F5", textDecoration: "none", padding: "10px 14px", background: "rgba(255,255,255,0.02)", borderRadius: "8px", fontSize: "13px", border: "1px solid rgba(255,255,255,0.05)", display: "flex", justifyContent: "space-between", alignItems: "center", transition: "all 0.2s", fontWeight: 500 }} onMouseOver={e => { e.currentTarget.style.background = "rgba(255,255,255,0.05)"; e.currentTarget.style.borderColor = "rgba(255,255,255,0.1)"; }} onMouseOut={e => { e.currentTarget.style.background = "rgba(255,255,255,0.02)"; e.currentTarget.style.borderColor = "rgba(255,255,255,0.05)"; }}>
+                   <div style={{ display: "flex", flexDirection: "column" }}><span style={{ fontWeight: 600, color: "#E4E4E7", marginBottom: 2 }}>{bank.name}</span><span style={{ fontSize: "11px", color: "#A1A1AA" }}>Startup/Biz: <strong style={{color:"#10B981", fontWeight: 700}}>{bank.rate}</strong></span></div> <span style={{ color: "#71717A" }}>↗</span>
                 </a>
               ))}
             </div>
@@ -1194,9 +1190,9 @@ Please provide a comprehensive, structured analysis in ${lang === 'en' ? 'Englis
                   ))}
                 </div>
 
-                <div className="glass-panel" style={{ marginTop: "40px", padding: "30px", borderRadius: "16px", background: "rgba(0,180,216,0.05)", borderLeft: "4px solid #00B4D8" }}>
-                  <h3 style={{ color: "#FFF", marginTop: 0 }}>{t("regionalLogic")} <span style={{ color: "#00B4D8" }}>{locationContext}</span></h3>
-                  <p style={{ color: "#94a3b8", lineHeight: 1.6, margin: 0 }}>{t("regionalLogicDesc")}</p>
+                <div className="glass-panel" style={{ marginTop: "40px", padding: "30px", borderRadius: "16px", background: "rgba(59, 130, 246, 0.05)", borderLeft: "4px solid #3B82F6" }}>
+                  <h3 style={{ color: "#FFF", margin: "0 0 10px 0" }}>{t("regionalLogic")} <span style={{ color: "#3B82F6", fontWeight: 800 }}>{locationContext}</span></h3>
+                  <p style={{ color: "#A1A1AA", lineHeight: 1.6, margin: 0 }}>{t("regionalLogicDesc")}</p>
                 </div>
 
                 {/* Massive Interactive Map Section Loading Here */}
@@ -1221,28 +1217,28 @@ Please provide a comprehensive, structured analysis in ${lang === 'en' ? 'Englis
           <div className="content-area glass-panel custom-scrollbar fade-in-up" style={{ borderRadius: "20px", padding: "35px" }}>
             <h1 style={{ fontSize: "40px", margin: "0 0 35px 0", color: "#FFF", fontWeight: 900, letterSpacing: "-1px" }} className="gradient-text">{t("inspireTitle")}</h1>
 
-            <h2 style={{ fontSize: "26px", color: "#FFF", margin: "0 0 25px 0", fontWeight: 800 }}>🌟 <span style={{ color: "#FFB703" }}>{t("leadersTitle")}</span></h2>
+            <h2 style={{ fontSize: "26px", color: "#FFF", margin: "0 0 25px 0", fontWeight: 800 }}>🌟 <span style={{ color: "#06B6D4" }}>{t("leadersTitle")}</span></h2>
             <div className="grid-cards" style={{ marginBottom: "50px" }}>
               {SECTOR_LEADERS.map((leader, i) => (
-                <div key={i} className="glass-panel float-hover fade-in-up" style={{ animationDelay: `${i*0.1}s`, borderRadius: "20px", padding: "25px", border: "1px solid rgba(255,183,3,0.3)", position: "relative", overflow: "hidden" }}>
-                  <div style={{ position: "absolute", top: -30, right: -30, width: 100, height: 100, background: "rgba(255,183,3,0.1)", borderRadius: "50%", filter: "blur(20px)" }}></div>
-                  <img src={leader.image} alt={leader.name} style={{ width: "90px", height: "90px", borderRadius: "50%", objectFit: "cover", marginBottom: "20px", border: "3px solid #FFB703", boxShadow: "0 10px 20px rgba(0,0,0,0.5)" }} />
+                <div key={i} className="glass-panel float-hover fade-in-up" style={{ animationDelay: `${i*0.1}s`, borderRadius: "20px", padding: "25px", border: "1px solid rgba(255,255,255,0.05)", position: "relative", overflow: "hidden" }}>
+                  <div style={{ position: "absolute", top: -30, right: -30, width: 100, height: 100, background: "rgba(6,182,212,0.1)", borderRadius: "50%", filter: "blur(20px)" }}></div>
+                  <img src={leader.image} alt={leader.name} style={{ width: "90px", height: "90px", borderRadius: "50%", objectFit: "cover", marginBottom: "20px", border: "2px solid rgba(255,255,255,0.1)", boxShadow: "0 10px 20px rgba(0,0,0,0.5)" }} />
                   <h3 style={{ margin: "0 0 5px 0", fontSize: "20px", color: "#FFF" }}>{leader.name}</h3>
-                  <p style={{ margin: "0 0 15px 0", color: "#9BF6FF", fontSize: "13px", fontWeight: 600 }}>{leader.company} | {leader.role}</p>
-                  <p style={{ margin: 0, fontStyle: "italic", color: "#cbd5e1", fontSize: "14px", lineHeight: 1.5 }}>"{leader.quote}"</p>
+                  <p style={{ margin: "0 0 15px 0", color: "#3B82F6", fontSize: "14px", fontWeight: 600 }}>{leader.company} | {leader.role}</p>
+                  <p style={{ margin: 0, fontStyle: "italic", color: "#71717A", fontSize: "14px", lineHeight: 1.5 }}>"{leader.quote}"</p>
                 </div>
               ))}
             </div>
 
             <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "30px" }}>
               <div>
-                <h2 style={{ fontSize: "22px", color: "#00B4D8", margin: "0 0 20px 0" }}>{t("mediaTitle")}</h2>
+                <h2 style={{ fontSize: "22px", color: "#3B82F6", margin: "0 0 20px 0", fontWeight: 700 }}>{t("mediaTitle")}</h2>
                 <div style={{ display: "flex", flexDirection: "column", gap: "15px" }}>
                   {YOUTUBE_CHANNELS.map((ch, i) => (
-                    <div key={i} className="glass-panel" style={{ padding: "15px 20px", borderRadius: "12px", borderLeft: "3px solid #00B4D8" }}>
-                      <h4 style={{ margin: "0 0 5px 0", color: "#FFF", fontSize: "16px" }}>{ch.name} <span style={{ color: "#e2e8f0", fontSize: "13px", fontWeight: "normal" }}>({ch.handle})</span></h4>
-                      <p style={{ margin: "0 0 10px 0", color: "#94a3b8", fontSize: "13px", lineHeight: 1.4 }}>{ch.desc}</p>
-                      <a href={ch.link} target="_blank" rel="noreferrer" style={{ color: "#00B4D8", textDecoration: "none", fontSize: "13px", fontWeight: 600 }}>Watch & Learn →</a>
+                    <div key={i} className="glass-panel focus-lift" style={{ padding: "20px", borderRadius: "12px", borderLeft: "4px solid #3B82F6", transition: "all 0.2s" }}>
+                      <h4 style={{ margin: "0 0 8px 0", color: "#FFF", fontSize: "16px", fontWeight: 700 }}>{ch.name} <span style={{ color: "#71717A", fontSize: "13px", fontWeight: "normal" }}>({ch.handle})</span></h4>
+                      <p style={{ margin: "0 0 15px 0", color: "#A1A1AA", fontSize: "14px", lineHeight: 1.5 }}>{ch.desc}</p>
+                      <a href={ch.link} target="_blank" rel="noreferrer" style={{ color: "#3B82F6", textDecoration: "none", fontSize: "14px", fontWeight: 600 }}>Watch & Learn →</a>
                     </div>
                   ))}
                 </div>
@@ -1322,12 +1318,12 @@ Please provide a comprehensive, structured analysis in ${lang === 'en' ? 'Englis
 
             <div className="grid-cards fade-in-up" style={{ animationDelay: "0.2s", marginBottom: "50px" }}>
               {GOVERNMENT_SCHEMES.map((scheme, i) => (
-                <div key={i} className="glass-panel float-hover fade-in-up" style={{ animationDelay: `${i*0.1}s`, borderRadius: "20px", padding: "30px", border: "1px solid rgba(0,180,216,0.3)", position: "relative", overflow: "hidden" }}>
-                  <div style={{ position: "absolute", top: -20, right: -20, fontSize: "80px", opacity: 0.1 }}>{scheme.icon}</div>
-                  <div style={{ width: 50, height: 50, borderRadius: 12, background: "rgba(0,180,216,0.1)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 24, marginBottom: 15, border: "1px solid rgba(0,180,216,0.3)" }}>
+                <div key={i} className="glass-panel float-hover fade-in-up" style={{ animationDelay: `${i*0.1}s`, borderRadius: "20px", padding: "30px", border: "1px solid rgba(255,255,255,0.05)", position: "relative", overflow: "hidden" }}>
+                  <div style={{ position: "absolute", top: -20, right: -20, fontSize: "80px", opacity: 0.05 }}>{scheme.icon}</div>
+                  <div style={{ width: 50, height: 50, borderRadius: 12, background: "rgba(255,255,255,0.03)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 24, marginBottom: 15, border: "1px solid rgba(255,255,255,0.05)" }}>
                     {scheme.icon}
                   </div>
-                  <h3 style={{ margin: "0 0 10px 0", fontSize: "20px", color: "#FFF" }}>{scheme.title}</h3>
+                  <h3 style={{ margin: "0 0 10px 0", fontSize: "20px", color: "#FFF", fontWeight: 700 }}>{scheme.title}</h3>
                   <p style={{ margin: "0 0 20px 0", color: "#94a3b8", fontSize: "14px", lineHeight: 1.6 }}>{scheme.desc}</p>
 
                   <div style={{ background: "rgba(16,185,129,0.1)", border: "1px solid rgba(16,185,129,0.2)", padding: "10px", borderRadius: "8px", marginBottom: "20px" }}>
@@ -1352,7 +1348,7 @@ Please provide a comprehensive, structured analysis in ${lang === 'en' ? 'Englis
 
         {activeTab === "privacy" && (
           <div className="content-area glass-panel custom-scrollbar fade-in-up" style={{ borderRadius: "20px", padding: "40px" }}>
-            <button onClick={() => setActiveTab("overview")} style={{ marginBottom: "30px", padding: "12px 20px", background: "rgba(16,185,129,0.1)", color: "#10B981", border: "1px solid #10B981", borderRadius: "8px", cursor: "pointer", display: "flex", gap: "8px", alignItems: "center", fontWeight: 700, transition: "all 0.2s" }} onMouseOver={e => {e.currentTarget.style.background="#10B981"; e.currentTarget.style.color="#FFF"}} onMouseOut={e => {e.currentTarget.style.background="rgba(16,185,129,0.1)"; e.currentTarget.style.color="#10B981"}}>← Back to Home</button>
+            <button onClick={() => setActiveTab("overview")} style={{ marginBottom: "30px", padding: "10px 18px", background: "rgba(255,255,255,0.05)", color: "#E4E4E7", border: "1px solid rgba(255,255,255,0.1)", borderRadius: "8px", cursor: "pointer", display: "flex", gap: "8px", alignItems: "center", fontWeight: 600, transition: "all 0.2s" }} onMouseOver={e => {e.currentTarget.style.background="rgba(255,255,255,0.1)"}} onMouseOut={e => {e.currentTarget.style.background="rgba(255,255,255,0.05)"}}>← Back to Home</button>
             <h1 style={{ fontSize: "38px", color: "#FFF", marginBottom: "20px", fontWeight: 800 }}>Privacy Policy</h1>
             <div style={{ color: "#94a3b8", lineHeight: 1.8, fontSize: "16px", display: "flex", flexDirection: "column", gap: "20px" }}>
               <p>Your privacy is important to us. This Privacy Policy outlines how your data is collected, used, and protected when you use IndiaFinBot.</p>
@@ -1373,7 +1369,7 @@ Please provide a comprehensive, structured analysis in ${lang === 'en' ? 'Englis
 
         {activeTab === "terms" && (
           <div className="content-area glass-panel custom-scrollbar fade-in-up" style={{ borderRadius: "20px", padding: "40px" }}>
-            <button onClick={() => setActiveTab("overview")} style={{ marginBottom: "30px", padding: "12px 20px", background: "rgba(0,180,216,0.1)", color: "#00B4D8", border: "1px solid #00B4D8", borderRadius: "8px", cursor: "pointer", display: "flex", gap: "8px", alignItems: "center", fontWeight: 700, transition: "all 0.2s" }} onMouseOver={e => {e.currentTarget.style.background="#00B4D8"; e.currentTarget.style.color="#FFF"}} onMouseOut={e => {e.currentTarget.style.background="rgba(0,180,216,0.1)"; e.currentTarget.style.color="#00B4D8"}}>← Back to Home</button>
+            <button onClick={() => setActiveTab("overview")} style={{ marginBottom: "30px", padding: "10px 18px", background: "rgba(255,255,255,0.05)", color: "#E4E4E7", border: "1px solid rgba(255,255,255,0.1)", borderRadius: "8px", cursor: "pointer", display: "flex", gap: "8px", alignItems: "center", fontWeight: 600, transition: "all 0.2s" }} onMouseOver={e => {e.currentTarget.style.background="rgba(255,255,255,0.1)"}} onMouseOut={e => {e.currentTarget.style.background="rgba(255,255,255,0.05)"}}>← Back to Home</button>
             <h1 style={{ fontSize: "38px", color: "#FFF", marginBottom: "20px", fontWeight: 800 }}>Terms of Service</h1>
             <div style={{ color: "#94a3b8", lineHeight: 1.8, fontSize: "16px", display: "flex", flexDirection: "column", gap: "20px" }}>
               <p>By using IndiaFinBot Pro, you agree to these Terms of Service. Please read them carefully.</p>
@@ -1390,7 +1386,7 @@ Please provide a comprehensive, structured analysis in ${lang === 'en' ? 'Englis
 
         {activeTab === "help" && (
           <div className="content-area glass-panel custom-scrollbar fade-in-up" style={{ borderRadius: "20px", padding: "40px" }}>
-            <button onClick={() => setActiveTab("overview")} style={{ marginBottom: "30px", padding: "12px 20px", background: "rgba(255,107,53,0.1)", color: "#FF6B35", border: "1px solid #FF6B35", borderRadius: "8px", cursor: "pointer", display: "flex", gap: "8px", alignItems: "center", fontWeight: 700, transition: "all 0.2s" }} onMouseOver={e => {e.currentTarget.style.background="#FF6B35"; e.currentTarget.style.color="#FFF"}} onMouseOut={e => {e.currentTarget.style.background="rgba(255,107,53,0.1)"; e.currentTarget.style.color="#FF6B35"}}>← Back to Home</button>
+            <button onClick={() => setActiveTab("overview")} style={{ marginBottom: "30px", padding: "10px 18px", background: "rgba(255,255,255,0.05)", color: "#E4E4E7", border: "1px solid rgba(255,255,255,0.1)", borderRadius: "8px", cursor: "pointer", display: "flex", gap: "8px", alignItems: "center", fontWeight: 600, transition: "all 0.2s" }} onMouseOver={e => {e.currentTarget.style.background="rgba(255,255,255,0.1)"}} onMouseOut={e => {e.currentTarget.style.background="rgba(255,255,255,0.05)"}}>← Back to Home</button>
             <h1 style={{ fontSize: "38px", color: "#FFF", marginBottom: "20px", fontWeight: 800 }}>Help Center & FAQ</h1>
             <div style={{ color: "#94a3b8", lineHeight: 1.8, fontSize: "16px", display: "flex", flexDirection: "column", gap: "20px" }}>
               <p>Need support? You can find answers to our most common questions below.</p>
@@ -1415,24 +1411,24 @@ Please provide a comprehensive, structured analysis in ${lang === 'en' ? 'Englis
             <div className="chat-messages-container custom-scrollbar" style={{ flex: 1, overflowY: "auto", display: "flex", flexDirection: "column", gap: 18, padding: "30px" }}>
               {messages.map((msg, idx) => (
                 <div key={idx} style={{ display: "flex", justifyContent: msg.role === "user" ? "flex-end" : "flex-start", width: "100%" }}>
-                  {msg.role !== "user" && <div style={{ minWidth: 40, height: 40, borderRadius: 12, background: "linear-gradient(135deg, #FF6B35, #FFB703)", marginRight: 15, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 20, boxShadow: "0 4px 10px rgba(255,107,53,0.3)", flexShrink: 0 }}>🤖</div>}
-                  <div className={msg.role === "user" ? "chat-user" : "chat-bot"} style={{ background: msg.role === "user" ? "linear-gradient(135deg, #1e293b, #0f172a)" : "rgba(0,0,0,0.4)", border: msg.role === "user" ? "1px solid rgba(255,255,255,0.1)" : "1px solid rgba(0,180,216,0.15)", padding: "20px 25px", borderRadius: "16px", borderTopRightRadius: msg.role === "user" ? 4 : 16, borderTopLeftRadius: msg.role !== "user" ? 4 : 16, maxWidth: "80%", lineHeight: 1.7, fontSize: "15px", color: "#e2e8f0", boxShadow: "0 10px 30px rgba(0,0,0,0.2)", overflowX: "auto" }}>
+                  {msg.role !== "user" && <div style={{ minWidth: 40, height: 40, borderRadius: 12, background: "linear-gradient(135deg, #3B82F6, #06B6D4)", marginRight: 15, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 20, boxShadow: "0 4px 10px rgba(59, 130, 246, 0.3)", flexShrink: 0 }}>🤖</div>}
+                  <div className={msg.role === "user" ? "chat-user" : "chat-bot"} style={{ padding: "20px 25px", borderRadius: "16px", borderTopRightRadius: msg.role === "user" ? 4 : 16, borderTopLeftRadius: msg.role !== "user" ? 4 : 16, maxWidth: "80%", lineHeight: 1.7, fontSize: "15px", overflowX: "auto" }}>
                     {msg.isUploading ? (
                       <div><TypingDots /> <span style={{ marginLeft: 10, color: "#00B4D8" }}>{msg.content}</span></div>
                     ) : (
                       <ReactMarkdown
                         remarkPlugins={[remarkGfm]}
                         components={{
-                          h1: ({ _node, ...props }) => <h1 style={{ color: "#FFF", marginTop: 0, fontSize: "24px", borderBottom: "1px solid rgba(255,255,255,0.1)", paddingBottom: 10 }} {...props} />,
-                          h2: ({ _node, ...props }) => <h2 style={{ color: "#00B4D8", marginTop: 25, fontSize: "20px" }} {...props} />,
-                          h3: ({ _node, ...props }) => <h3 style={{ color: "#FFB703", margin: "20px 0 10px" }} {...props} />,
+                          h1: ({ _node, ...props }) => <h1 style={{ color: "#FFF", marginTop: 0, fontSize: "24px", fontWeight: 800, borderBottom: "1px solid rgba(255,255,255,0.1)", paddingBottom: 10 }} {...props} />,
+                          h2: ({ _node, ...props }) => <h2 style={{ color: "#3B82F6", marginTop: 25, fontSize: "20px", fontWeight: 700 }} {...props} />,
+                          h3: ({ _node, ...props }) => <h3 style={{ color: "#E4E4E7", margin: "20px 0 10px", fontWeight: 600 }} {...props} />,
                           strong: ({ _node, ...props }) => <strong style={{ color: "#FFF", fontWeight: 700 }} {...props} />,
-                          a: ({ _node, ...props }) => <a style={{ color: "#FF6B35", textDecoration: "none", fontWeight: 600 }} {...props} />,
+                          a: ({ _node, ...props }) => <a style={{ color: "#06B6D4", textDecoration: "none", fontWeight: 600 }} {...props} />,
                           ul: ({ _node, ...props }) => <ul style={{ paddingLeft: 20, margin: "15px 0" }} {...props} />,
                           li: ({ _node, ...props }) => <li style={{ margin: "8px 0" }} {...props} />,
-                          table: ({ _node, ...props }) => <div style={{ overflowX: "auto" }}><table style={{ width: "100%", borderCollapse: "collapse", margin: "20px 0", background: "rgba(0,0,0,0.3)", borderRadius: 8 }} {...props} /></div>,
-                          th: ({ _node, ...props }) => <th style={{ padding: "12px", border: "1px solid rgba(255,255,255,0.1)", background: "rgba(0,180,216,0.1)", color: "#00B4D8", textAlign: "left" }} {...props} />,
-                          td: ({ _node, ...props }) => <td style={{ padding: "10px 12px", border: "1px solid rgba(255,255,255,0.1)" }} {...props} />,
+                          table: ({ _node, ...props }) => <div style={{ overflowX: "auto" }}><table style={{ width: "100%", borderCollapse: "collapse", margin: "20px 0", background: "rgba(255,255,255,0.02)", borderRadius: 8 }} {...props} /></div>,
+                          th: ({ _node, ...props }) => <th style={{ padding: "12px", border: "1px solid rgba(255,255,255,0.05)", background: "rgba(255,255,255,0.05)", color: "#E4E4E7", textAlign: "left" }} {...props} />,
+                          td: ({ _node, ...props }) => <td style={{ padding: "10px 12px", border: "1px solid rgba(255,255,255,0.05)" }} {...props} />,
                           img: function ImgWithHooks({ _node, ...props }) {
                             const [src, setSrc] = useState(props.src || "");
                             const [errorCount, setErrorCount] = useState(0);
@@ -1502,44 +1498,44 @@ Please provide a comprehensive, structured analysis in ${lang === 'en' ? 'Englis
               ))}
               {loading && (
                 <div style={{ display: "flex", justifyContent: "flex-start", width: "100%" }}>
-                  <div style={{ minWidth: 40, height: 40, borderRadius: 12, background: "linear-gradient(135deg, #FF6B35, #FFB703)", marginRight: 15, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 20, boxShadow: "0 4px 10px rgba(255,107,53,0.3)", flexShrink: 0 }}>🤖</div>
-                  <div className="chat-bot" style={{ background: "rgba(0,0,0,0.4)", border: "1px solid rgba(0,180,216,0.15)", padding: "15px 25px", borderRadius: "16px", borderTopLeftRadius: 4 }}><TypingDots /></div>
+                  <div style={{ minWidth: 40, height: 40, borderRadius: 12, background: "linear-gradient(135deg, #3B82F6, #06B6D4)", marginRight: 15, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 20, boxShadow: "0 4px 10px rgba(59, 130, 246, 0.3)", flexShrink: 0 }}>🤖</div>
+                  <div className="chat-bot" style={{ padding: "15px 25px", borderRadius: "16px", borderTopLeftRadius: 4 }}><TypingDots /></div>
                 </div>
               )}
               <div ref={messagesEndRef} />
             </div>
 
-            <div style={{ padding: "20px 30px", background: "rgba(0,0,0,0.5)", borderTop: "1px solid rgba(0,180,216,0.2)", backdropFilter: "blur(20px)" }}>
+            <div style={{ padding: "20px 30px", background: "rgba(10, 11, 14, 0.8)", borderTop: "1px solid rgba(255,255,255,0.05)", backdropFilter: "blur(20px)" }}>
               <div style={{ display: "flex", gap: 15, alignItems: "center" }}>
                 <input type="file" ref={fileInputRef} onChange={handleFileUpload} accept=".pdf,.csv,.xlsx,.xls,.png,.jpg,.jpeg" style={{ display: "none" }} />
                 <button
                   onClick={() => fileInputRef.current.click()}
-                  style={{ background: "rgba(0,180,216,0.1)", border: "1px solid #00B4D8", color: "#00B4D8", padding: "15px 20px", borderRadius: 12, cursor: "pointer", fontWeight: "bold", display: "flex", alignItems: "center", gap: 8, transition: "all 0.2s", whiteSpace: "nowrap" }}
-                  onMouseOver={e => { e.currentTarget.style.background = "rgba(0,180,216,0.2)"; e.currentTarget.style.transform = "scale(1.02)"; }}
-                  onMouseOut={e => { e.currentTarget.style.background = "rgba(0,180,216,0.1)"; e.currentTarget.style.transform = "scale(1)"; }}>
-                  <span style={{ fontSize: "18px" }}>📊</span> {t("uploadBtn")}
+                  style={{ background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.1)", color: "#E4E4E7", padding: "14px 20px", borderRadius: 12, cursor: "pointer", fontWeight: "600", display: "flex", alignItems: "center", gap: 8, transition: "all 0.2s", whiteSpace: "nowrap" }}
+                  onMouseOver={e => { e.currentTarget.style.background = "rgba(255,255,255,0.1)"; e.currentTarget.style.transform = "scale(1.02)"; }}
+                  onMouseOut={e => { e.currentTarget.style.background = "rgba(255,255,255,0.05)"; e.currentTarget.style.transform = "scale(1)"; }}>
+                  <span style={{ fontSize: "18px" }}>📈</span> {t("uploadBtn")}
                 </button>
                 <input
                   value={input}
                   onChange={e => setInput(e.target.value)}
                   onKeyDown={e => e.key === "Enter" && sendMessage(input)}
-                  placeholder={isListening ? "🎙️ Listening..." : t("chatPlaceholder")}
-                  style={{ flex: 1, padding: "16px 22px", borderRadius: 12, border: "1px solid rgba(255,255,255,0.1)", background: "rgba(15,23,42,0.8)", color: "#fff", fontSize: "15px", outline: "none", boxShadow: "inset 0 2px 5px rgba(0,0,0,0.5)", transition: "border 0.3s" }}
-                  onFocus={e => e.target.style.borderColor = "#FF6B35"}
+                  placeholder={isListening ? "🎙️ Listening..." : "Ask IndiaFinBot a question..."}
+                  style={{ flex: 1, padding: "16px 22px", borderRadius: 12, border: "1px solid rgba(255,255,255,0.1)", background: "rgba(255,255,255,0.02)", color: "#fff", fontSize: "15px", outline: "none", transition: "border 0.3s" }}
+                  onFocus={e => e.target.style.borderColor = "#3B82F6"}
                   onBlur={e => e.target.style.borderColor = "rgba(255,255,255,0.1)"}
                 />
                 <button
                   onClick={toggleMic}
-                  style={{ background: isListening ? "rgba(239, 68, 68, 0.2)" : "rgba(0,180,216,0.1)", border: `1px solid ${isListening ? "#ef4444" : "#00B4D8"}`, color: isListening ? "#ef4444" : "#00B4D8", padding: "15px", borderRadius: 12, cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center", transition: "all 0.2s" }}
+                  style={{ background: isListening ? "rgba(239, 68, 68, 0.2)" : "rgba(255,255,255,0.05)", border: `1px solid ${isListening ? "#ef4444" : "rgba(255,255,255,0.1)"}`, color: isListening ? "#ef4444" : "#E4E4E7", padding: "15px", borderRadius: 12, cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center", transition: "all 0.2s" }}
                   title="Voice Input"
                 >
                   <span className={isListening ? "pulse-anim" : ""} style={{ fontSize: "18px" }}>🎙️</span>
                 </button>
                 <button
                   onClick={() => sendMessage(input)}
-                  style={{ padding: "16px 35px", borderRadius: 12, background: "linear-gradient(135deg, #FF6B35, #FFB703)", color: "#111", border: "none", cursor: input.trim() ? "pointer" : "default", fontWeight: 900, fontSize: "16px", boxShadow: "0 5px 15px rgba(255,107,53,0.4)", transition: "transform 0.2s" }}
+                  style={{ padding: "16px 35px", borderRadius: 12, background: "linear-gradient(135deg, #3B82F6, #06B6D4)", color: "#FFF", border: "1px solid rgba(255,255,255,0.1)", cursor: input.trim() ? "pointer" : "default", fontWeight: 700, fontSize: "15px", boxShadow: "0 5px 15px rgba(59, 130, 246, 0.3)", transition: "transform 0.2s" }}
                   onMouseOver={e => e.currentTarget.style.transform = "translateY(-2px)"} onMouseOut={e => e.currentTarget.style.transform = "translateY(0)"}>
-                  {t("launchBtn")}
+                  Launch 🚀
                 </button>
               </div>
             </div>
