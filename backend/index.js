@@ -59,11 +59,11 @@ app.post('/api/chat', async (req, res) => {
             return res.status(500).json({ error: { message: "GEMINI_API_KEY is not configured on the backend server." } });
         }
 
-        // Use exact model names with models/ prefix for v1 API
+        // Use correct model names for Gemini API v1
         const models = [
-            "models/gemini-1.5-pro",
-            "models/gemini-1.5-flash",
-            "models/gemini-pro"
+            "gemini-1.5-pro-latest",
+            "gemini-1.5-flash-latest",
+            "gemini-pro"
         ];
         let data = null;
         let lastError = null;
@@ -87,7 +87,7 @@ app.post('/api/chat', async (req, res) => {
                     ];
                 }
                 
-                const response = await fetch(`https://generativelanguage.googleapis.com/v1/${model}:generateContent?key=${apiKey}`, {
+                const response = await fetch(`https://generativelanguage.googleapis.com/v1/models/${model}:generateContent?key=${apiKey}`, {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
                     body: JSON.stringify({
