@@ -103,53 +103,37 @@ app.post('/api/chat', async (req, res) => {
         res.status(500).json({ error: { message: "Failed to generate response dynamically." } });
     }
 });
-// Securely proxy the OpenRouter Dall-E 3 call for rendering Pro images
+// Securely proxy image generation with multiple fallback services
 app.post('/api/generate-image', async (req, res) => {
     try {
         const { prompt } = req.body;
-        const apiKey = process.env.OPENROUTER_API_KEY;
         
-        if (!apiKey) {
-            return res.status(500).json({ error: { message: "OPENROUTER_API_KEY is not configured. Please add your key to the .env file!" } });
+        if (!prompt) {
+            return res.status(400).json({ error: { message: "Prompt is required" } });
         }
 
-        const openrouter = new OpenRouter({ apiKey });
-
-        // Stream the response to get tokens based on OpenRouter SDK structure
-        const stream = await openrouter.chat.send({
-            model: "google/gemini-2.0-flash-001",
-            messages: [
-                {
-                    role: "system",
-                    content: "You are the Gemini 3.1 Pro visual generation engine. You MUST output exactly ONE valid URL for the requested image using the following Markdown format and nothing else: ![Gemini Image](https://image.pollinations.ai/prompt/{URL_ENCODED_PROMPT}?width=1024&height=1024&nologo=true). Ensure the {URL_ENCODED_PROMPT} is highly detailed, cinematic, and properly URL-encoded."
-                },
-                {
-                    role: "user",
-                    content: prompt
-                }
-            ],
-            stream: true
+        // Use Pollinations.ai directly - it's free and reliable
+        const seed = Math.floor(Math.random() * 1000000);
+        const enhancedPrompt = `${prompt}, high quality, professional, cinematic lighting, detailed, 4k`;
+        const encodedPrompt = encodeURIComponent(enhancedPrompt);
+        
+        // Generate multiple URL options
+        const imageUrls = [
+            `https://image.pollinations.ai/prompt/${encodedPrompt}?width=1024&height=1024&seed=${seed}&nologo=true&enhance=true`,
+            `https://pollinations.ai/p/${encodedPrompt}?width=1024&height=1024&seed=${seed}&nologo=true`,
+            `https://image.pollinations.ai/prompt/${encodedPrompt}?width=1024&height=1024&seed=${seed}`
+        ];
+        
+        // Return the primary URL
+        res.json({ 
+            imageUrl: imageUrls[0],
+            fallbackUrls: imageUrls.slice(1),
+            prompt: enhancedPrompt
         });
-
-        let responseText = "";
-        for await (const chunk of stream) {
-            const content = chunk.choices[0]?.delta?.content;
-            if (content) {
-                responseText += content;
-            }
-        }
         
-        // OpenRouter's DALL-E 3 usually returns markdown with the image URL, e.g., ![image](https://...)
-        const urlMatch = responseText.match(/https?:\/\/[^\s\)]+/);
-        
-        if (!urlMatch) {
-            return res.status(500).json({ error: { message: `Image Generation Failed: Invalid response received from OpenRouter.` } });
-        }
-        
-        res.json({ imageUrl: urlMatch[0] });
     } catch (error) {
         console.error("Image Gen Error:", error);
-        res.status(500).json({ error: { message: "Failed to generate OpenRouter image dynamically." } });
+        res.status(500).json({ error: { message: "Failed to generate image URL." } });
     }
 });
 

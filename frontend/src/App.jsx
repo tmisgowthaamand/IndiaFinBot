@@ -689,19 +689,62 @@ G. NEXT-TERM PROFITABILITY ROADMAP:
         reply = reply.replace(imageMatch[0], `\n\n🎨 **Generating high-quality image...**\n`);
         setMessages(prev => [...prev, { role: "assistant", content: reply, time: new Date().toLocaleTimeString(), tempImage: true }]);
         
-        // Directly route to Nano Banana Engine (Pollinations) to prevent limit errors
-        setTimeout(() => {
+        // Generate image with multiple fallback options
+        setTimeout(async () => {
           showNotification(t("notifPainting"));
           const seed = Math.floor(Math.random() * 1000000);
-          const promptSuffix = `high quality, professional business photography, ${locationContext}`;
-          const fallbackPrompt = encodeURIComponent(`${imagePrompt}. ${promptSuffix}`);
-          const fallbackUrl = `https://image.pollinations.ai/prompt/${fallbackPrompt}?width=1024&height=1024&seed=${seed}&nologo=true`;
+          const promptSuffix = `high quality, professional business photography, cinematic lighting, ${locationContext}, 4k, detailed`;
+          const enhancedPrompt = `${imagePrompt}. ${promptSuffix}`;
+          const encodedPrompt = encodeURIComponent(enhancedPrompt);
+          
+          // Try multiple image generation services with fallbacks
+          const imageUrls = [
+            `https://image.pollinations.ai/prompt/${encodedPrompt}?width=1024&height=1024&seed=${seed}&nologo=true&enhance=true`,
+            `https://pollinations.ai/p/${encodedPrompt}?width=1024&height=1024&seed=${seed}&nologo=true`,
+            `https://image.pollinations.ai/prompt/${encodeURIComponent(imagePrompt)}?width=1024&height=1024&seed=${seed}`
+          ];
+          
+          let workingUrl = imageUrls[0];
+          
+          // Test image loading with timeout
+          const testImageLoad = (url) => {
+            return new Promise((resolve) => {
+              const img = new Image();
+              const timeout = setTimeout(() => {
+                resolve(false);
+              }, 5000);
+              
+              img.onload = () => {
+                clearTimeout(timeout);
+                resolve(true);
+              };
+              
+              img.onerror = () => {
+                clearTimeout(timeout);
+                resolve(false);
+              };
+              
+              img.src = url;
+            });
+          };
+          
+          // Try each URL until one works
+          for (const url of imageUrls) {
+            const loaded = await testImageLoad(url);
+            if (loaded) {
+              workingUrl = url;
+              break;
+            }
+          }
           
           setMessages(prev => {
             const newMessages = [...prev];
             const lastMsgIdx = newMessages.findLastIndex(m => m.tempImage);
             if (lastMsgIdx !== -1) {
-              const updatedContent = newMessages[lastMsgIdx].content.replace(`\n\n🎨 **Generating high-quality image...**\n`, `\n\n![Vision](${fallbackUrl})\n`);
+              const updatedContent = newMessages[lastMsgIdx].content.replace(
+                `\n\n🎨 **Generating high-quality image...**\n`, 
+                `\n\n![Vision](${workingUrl})\n\n*AI-generated visualization based on your business context*\n`
+              );
               newMessages[lastMsgIdx] = { ...newMessages[lastMsgIdx], content: updatedContent };
               delete newMessages[lastMsgIdx].tempImage;
             }
