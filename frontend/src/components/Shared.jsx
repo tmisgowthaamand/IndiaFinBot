@@ -57,11 +57,11 @@ export function StockTicker() {
   useEffect(() => {
     const interval = setInterval(() => {
       setStocks(prev => prev.map(s => {
-        const volatility = s.price * 0.001;
+        const volatility = s.price * 0.0015;
         const changeDiff = (Math.random() - 0.5) * volatility;
         return { ...s, price: s.price + changeDiff, change: s.change + changeDiff, pct: ((s.change + changeDiff) / (s.price - s.change)) * 100 };
       }));
-    }, 3000);
+    }, 800);
     return () => clearInterval(interval);
   }, []);
 
@@ -71,7 +71,7 @@ export function StockTicker() {
         <div className="w-2 h-2 rounded-full bg-neon-green animate-pulse"></div>
         <span className="text-neon-green text-xs font-bold tracking-widest uppercase">Live Market</span>
       </div>
-      <div className="inline-block px-[100%] animate-[chartLoad_40s_linear_infinite]" style={{ animationName: 'marquee', animationDuration: '30s' }}>
+      <div className="inline-block px-[100%]" style={{ animation: 'marquee 15s linear infinite', willChange: 'transform' }}>
         <style>{`@keyframes marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }`}</style>
         {[...stocks, ...stocks].map((s, i) => (
           <span key={i} className="inline-block mr-12 text-sm font-semibold text-gray-200">
