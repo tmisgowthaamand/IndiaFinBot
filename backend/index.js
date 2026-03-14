@@ -59,11 +59,11 @@ app.post('/api/chat', async (req, res) => {
             return res.status(500).json({ error: { message: "GEMINI_API_KEY is not configured on the backend server." } });
         }
 
-        // Use current supported model names for Gemini API v1beta
+        // Use current supported model names for Gemini API v1beta (verified via ListModels March 2026)
         const models = [
+            "gemini-2.5-flash",
             "gemini-2.0-flash",
-            "gemini-1.5-pro",
-            "gemini-1.5-flash"
+            "gemini-2.5-pro"
         ];
         let data = null;
         let lastError = null;
