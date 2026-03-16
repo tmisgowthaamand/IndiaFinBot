@@ -3,7 +3,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
-import { LineChart, Line, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from "recharts";
+import { LineChart, Line, BarChart, Bar, Cell, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from "recharts";
 import { MapContainer, TileLayer, Marker, Circle, Popup } from "react-leaflet";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
@@ -2249,6 +2249,475 @@ function PLIDetailPage({ setActiveTab }) {
   );
 }
 
+function TReDSDetailPage({ setActiveTab }) {
+  const S = {
+    section: { marginBottom: "50px" },
+    h2: { fontSize: "26px", fontWeight: 800, color: "#FFF", margin: "0 0 20px 0", display: "flex", alignItems: "center", gap: "12px" },
+    badge: (color) => ({ display: "inline-block", padding: "4px 12px", borderRadius: "20px", fontSize: "12px", fontWeight: 700, background: `rgba(${color},0.15)`, border: `1px solid rgba(${color},0.3)`, color: `rgb(${color})` }),
+    card: { background: "rgba(255,255,255,0.025)", border: "1px solid rgba(255,255,255,0.06)", borderRadius: "14px", padding: "22px 26px" },
+    infoBox: (c) => ({ background: `rgba(${c},0.07)`, border: `1px solid rgba(${c},0.2)`, borderRadius: "12px", padding: "18px 22px" }),
+    link: { color: "#06B6D4", fontWeight: 600, textDecoration: "none", display: "inline-flex", alignItems: "center", gap: "4px", transition: "opacity 0.2s" },
+  };
+
+  /* ── RBI-Approved TReDS Platforms ── */
+  const PLATFORMS = [
+    { name: "M1xchange", operator: "Mynd Solutions Pvt Ltd", url: "https://www.m1xchange.com", desc: "Largest TReDS platform by transaction volume. Over ₹1.5 Lakh Crore in transactions processed.", icon: "🔵", color: "59,130,246" },
+    { name: "RXIL", operator: "NSE-SIDBI Joint Venture", url: "https://www.rxil.in", desc: "Receivables Exchange of India. ₹80,500 Cr processed in FY25 alone. Strong PSU buyer network.", icon: "🟢", color: "16,185,129" },
+    { name: "Invoicemart (A.TReDS)", operator: "Axis Bank Initiative", url: "https://www.invoicemart.com", desc: "Third major TReDS platform with growing network of buyers and financiers.", icon: "🟠", color: "245,158,11" },
+    { name: "C2TReDS", operator: "C2FO Factoring Solutions", url: "https://www.c2treds.com", desc: "Backed by global working capital platform C2FO. Focus on dynamic discounting.", icon: "🟣", color: "168,85,247" },
+    { name: "DTX (KredX)", operator: "KredX Platform Pvt Ltd", url: "https://www.dtxindia.in", desc: "Latest RBI-approved TReDS platform. Technology-first approach to invoice financing.", icon: "🔴", color: "239,68,68" },
+  ];
+
+  /* ── Required Documents ── */
+  const DOCS = [
+    { icon: "🆔", title: "Udyam Registration Certificate", desc: "Valid MSME Udyam registration is mandatory to participate as a seller on any TReDS platform.", link: "https://udyamregistration.gov.in", ref: "Udyam Portal" },
+    { icon: "📋", title: "PAN Card (Company/Firm)", desc: "Permanent Account Number of the entity. Required for KYC verification and tax compliance.", link: "https://www.incometax.gov.in", ref: "Income Tax Portal" },
+    { icon: "🧾", title: "GST Registration Certificate", desc: "Active GSTIN is essential as invoices uploaded must be GST-compliant trade receivables.", link: "https://www.gst.gov.in", ref: "GST Portal" },
+    { icon: "🏦", title: "Bank Account Details", desc: "Current account details with cancelled cheque for fund settlement. Must be a scheduled commercial bank.", link: "#", ref: "Bank Requirement" },
+    { icon: "🏢", title: "Certificate of Incorporation / Partnership Deed", desc: "For companies: COI from MCA. For partnerships: registered deed. For proprietors: business registration.", link: "https://www.mca.gov.in", ref: "MCA Portal" },
+    { icon: "📄", title: "Board Resolution / Authority Letter", desc: "Authorization from the board/partners to register on TReDS and conduct invoice discounting transactions.", link: "#", ref: "Company Format" },
+    { icon: "📊", title: "Audited Financial Statements", desc: "Last 2 years audited P&L and Balance Sheet. Helps financiers assess creditworthiness for bidding.", link: "#", ref: "CA Certified" },
+    { icon: "📝", title: "KYC of Authorized Signatories", desc: "Identity proof (Aadhaar/Passport), address proof, and signature verification from banker for authorized users.", link: "https://uidai.gov.in", ref: "UIDAI Portal" },
+    { icon: "🧑‍💼", title: "Income Tax Returns (2 Years)", desc: "Filed ITR for last 2 financial years to demonstrate business activity and revenue history.", link: "https://www.incometax.gov.in", ref: "IT Portal" },
+    { icon: "📑", title: "MOA & AOA (For Companies)", desc: "Memorandum and Articles of Association showing authorized business activities of the company.", link: "https://www.mca.gov.in", ref: "MCA Portal" },
+  ];
+
+  /* ── Invoice Discounting Process ── */
+  const STEPS = [
+    { num: "01", title: "Register on a TReDS Platform", detail: "MSME (seller), corporate buyer, and financier register on any RBI-approved TReDS platform with required documents and complete digital KYC.", color: "6,182,212" },
+    { num: "02", title: "MSME Uploads Invoice", detail: "After delivering goods/services, the MSME seller uploads the invoice (Factoring Unit) onto the TReDS platform with details like amount, buyer name, and due date.", color: "59,130,246" },
+    { num: "03", title: "Buyer Accepts Invoice", detail: "The corporate buyer reviews and digitally accepts the uploaded invoice, confirming their payment obligation. This triggers the bidding process.", color: "16,185,129" },
+    { num: "04", title: "Financiers Bid Competitively", detail: "Multiple banks and NBFCs bid to discount the accepted invoice. They offer competitive interest rates based on the buyer's creditworthiness, not the MSME's.", color: "168,85,247" },
+    { num: "05", title: "MSME Accepts Best Bid", detail: "The MSME seller reviews all financier bids and selects the most favorable offer (lowest discount rate). The entire process is transparent.", color: "245,158,11" },
+    { num: "06", title: "Funds Disbursed to MSME", detail: "The selected financier disburses funds to the MSME within 24-48 hours. This is WITHOUT RECOURSE — MSME has no liability if buyer defaults.", color: "22,163,74" },
+    { num: "07", title: "Buyer Pays Financier on Due Date", detail: "On the original invoice due date, the buyer pays the full invoice amount directly to the financier through the platform's settlement mechanism.", color: "239,68,68" },
+  ];
+
+  /* ── Fee Structure ── */
+  const FEES = [
+    { item: "Registration Fee", amount: "₹5,000 – ₹25,000", note: "One-time, non-refundable. Varies by platform.", icon: "📋" },
+    { item: "Annual Subscription", amount: "Nil – ₹10,000", note: "Some platforms charge annual maintenance fees.", icon: "📅" },
+    { item: "Transaction Fee (Seller)", amount: "0.01% – 0.10%", note: "Small % of invoice value. Main cost for MSMEs.", icon: "💰" },
+    { item: "Discount Rate (Interest)", amount: "6% – 9% p.a.", note: "Determined by competitive bidding. Based on buyer credit.", icon: "📉" },
+    { item: "Stamp Duty", amount: "As applicable", note: "Electronic stamp duty on factoring unit. Varies by state.", icon: "📜" },
+    { item: "Platform Charges (Buyer)", amount: "Minimal / Nil", note: "Buyers typically face no or minimal charges.", icon: "🏢" },
+  ];
+
+  /* ── Approval Timeline ── */
+  const TIMELINE = [
+    { phase: "Online Application", duration: "1 Day", icon: "📋" },
+    { phase: "Document Upload", duration: "1–2 Days", icon: "📄" },
+    { phase: "KYC Verification", duration: "2–3 Days", icon: "🔍" },
+    { phase: "Agreement Signing", duration: "1–2 Days", icon: "✍️" },
+    { phase: "Account Activation", duration: "1 Day", icon: "✅" },
+    { phase: "First Invoice Upload", duration: "Same Day", icon: "📤" },
+    { phase: "Fund Disbursement", duration: "24–48 Hours", icon: "💰" },
+    { phase: "Total Onboarding", duration: "2–7 Days", icon: "🏁" },
+  ];
+
+  /* ── Chart Data ── */
+  const transactionData = [
+    { year: "2018-19", volume: 8500 },
+    { year: "2019-20", volume: 17200 },
+    { year: "2020-21", volume: 22500 },
+    { year: "2021-22", volume: 39800 },
+    { year: "2022-23", volume: 62000 },
+    { year: "2023-24", volume: 98500 },
+    { year: "2024-25", volume: 145000 },
+  ];
+
+  const platformShare = [
+    { name: "M1xchange", share: 45 },
+    { name: "RXIL", share: 30 },
+    { name: "Invoicemart", share: 15 },
+    { name: "C2TReDS", share: 6 },
+    { name: "DTX", share: 4 },
+  ];
+
+  const rateComparison = [
+    { source: "TReDS", rate: 7.5 },
+    { source: "Bank OD", rate: 12 },
+    { source: "NBFC", rate: 15 },
+    { source: "Informal", rate: 24 },
+  ];
+
+  const msmeGrowth = [
+    { year: "2019-20", sellers: 8500, buyers: 950, financiers: 45 },
+    { year: "2020-21", sellers: 15200, buyers: 1800, financiers: 52 },
+    { year: "2021-22", sellers: 28000, buyers: 3200, financiers: 60 },
+    { year: "2022-23", sellers: 45000, buyers: 5500, financiers: 68 },
+    { year: "2023-24", sellers: 72000, buyers: 9800, financiers: 75 },
+    { year: "2024-25", sellers: 105000, buyers: 15000, financiers: 82 },
+  ];
+
+  /* ── Related Schemes ── */
+  const RELATED = [
+    { icon: "🏦", name: "CGTMSE Scheme", desc: "Collateral-free credit guarantee up to ₹5 Crore for micro & small enterprises.", link: "#", onClick: () => setActiveTab("cgtmse") },
+    { icon: "🪙", name: "PMMY / MUDRA Loan", desc: "Micro loans up to ₹20L without collateral via Pradhan Mantri Mudra Yojana.", link: "#", onClick: () => setActiveTab("pmmy") },
+    { icon: "🏭", name: "PMEGP Subsidy", desc: "15-35% project cost subsidy for new micro-enterprises via KVIC.", link: "#", onClick: () => setActiveTab("pmegp") },
+    { icon: "⚙️", name: "PLI Scheme", desc: "4-6% incentive on incremental sales for 14 key manufacturing sectors.", link: "#", onClick: () => setActiveTab("pli") },
+    { icon: "👩‍💼", name: "Stand-Up India", desc: "Loans ₹10L to ₹1Cr for SC/ST/Women led greenfield enterprises.", link: "https://www.standupmitra.in" },
+    { icon: "🌐", name: "Udyam Registration", desc: "Free MSME registration required for TReDS seller eligibility.", link: "https://udyamregistration.gov.in" },
+  ];
+
+  return (
+    <div className="content-area glass-panel custom-scrollbar fade-in-up" style={{ borderRadius: "20px", padding: "clamp(20px, 4vw, 45px)" }}>
+
+      {/* Back Button */}
+      <button onClick={() => setActiveTab("schemes")} style={{ marginBottom: "30px", padding: "10px 18px", background: "rgba(255,255,255,0.05)", color: "#E4E4E7", border: "1px solid rgba(255,255,255,0.1)", borderRadius: "8px", cursor: "pointer", display: "flex", gap: "8px", alignItems: "center", fontWeight: 600, transition: "all 0.2s" }} onMouseOver={e => e.currentTarget.style.background = "rgba(255,255,255,0.1)"} onMouseOut={e => e.currentTarget.style.background = "rgba(255,255,255,0.05)"}>
+        ← Back to Schemes
+      </button>
+
+      {/* Hero Banner */}
+      <div style={{ ...S.infoBox("6,182,212"), marginBottom: "40px", display: "flex", flexWrap: "wrap", gap: "20px", alignItems: "flex-start", borderLeft: "5px solid #06B6D4" }}>
+        <div style={{ flex: 1, minWidth: "260px" }}>
+          <div style={{ display: "flex", alignItems: "center", gap: "12px", marginBottom: "12px", flexWrap: "wrap" }}>
+            <span style={{ fontSize: "40px" }}>📜</span>
+            <div>
+              <h1 style={{ fontSize: "clamp(22px, 4vw, 36px)", fontWeight: 900, color: "#FFF", margin: 0, letterSpacing: "-0.5px" }}>TReDS Platform</h1>
+              <p style={{ color: "#71717A", margin: "4px 0 0 0", fontSize: "14px" }}>Trade Receivables Discounting System — RBI Regulated</p>
+            </div>
+          </div>
+          <p style={{ color: "#A1A1AA", lineHeight: 1.8, fontSize: "15px", margin: 0 }}>
+            An <strong style={{ color: "#FFF" }}>RBI-regulated electronic platform</strong> that enables MSMEs to discount their trade receivables (invoices) through competitive bidding by multiple <strong style={{ color: "#06B6D4" }}>banks and NBFCs</strong>. TReDS provides <strong style={{ color: "#FFF" }}>non-recourse financing</strong> — MSMEs get paid within <strong style={{ color: "#06B6D4" }}>24-48 hours</strong> without collateral. Companies with turnover above <strong style={{ color: "#FFF" }}>₹250 Crore must register</strong> on TReDS, ensuring a large buyer network for MSMEs.
+          </p>
+          <div style={{ display: "flex", gap: "10px", flexWrap: "wrap", marginTop: "18px" }}>
+            <span style={S.badge("6,182,212")}>📜 RBI Regulated</span>
+            <span style={S.badge("59,130,246")}>🏦 5 Platforms</span>
+            <span style={S.badge("16,185,129")}>⚡ 24-48hr Payout</span>
+            <span style={S.badge("245,158,11")}>🔒 Non-Recourse</span>
+          </div>
+        </div>
+        <div style={{ background: "rgba(6,182,212,0.1)", borderRadius: "12px", padding: "20px", border: "1px solid rgba(6,182,212,0.2)", minWidth: "200px", textAlign: "center" }}>
+          <div style={{ fontSize: "42px", fontWeight: 900, color: "#06B6D4" }}>₹1.45L Cr</div>
+          <div style={{ color: "#71717A", fontSize: "12px", fontWeight: 600, textTransform: "uppercase", letterSpacing: "1px" }}>FY25 Transaction Volume</div>
+          <div style={{ borderTop: "1px solid rgba(255,255,255,0.05)", margin: "15px 0" }} />
+          <div style={{ fontSize: "30px", fontWeight: 900, color: "#22C55E" }}>1L+</div>
+          <div style={{ color: "#71717A", fontSize: "12px", fontWeight: 600, textTransform: "uppercase", letterSpacing: "1px" }}>MSME Sellers Registered</div>
+          <div style={{ borderTop: "1px solid rgba(255,255,255,0.05)", margin: "15px 0" }} />
+          <a href="https://www.rbi.org.in" target="_blank" rel="noreferrer" style={{ ...S.link, justifyContent: "center", background: "#06B6D4", color: "#111", padding: "10px 18px", borderRadius: "8px", fontWeight: 700 }}>RBI Official Portal ↗</a>
+        </div>
+      </div>
+
+      {/* Quick Stats */}
+      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(155px, 1fr))", gap: "16px", marginBottom: "50px" }}>
+        {[
+          { label: "FY25 Volume", val: "₹1.45L Cr", color: "#06B6D4", icon: "💰" },
+          { label: "Registered MSMEs", val: "1 Lakh+", color: "#22C55E", icon: "🏭" },
+          { label: "Payout Speed", val: "24-48 Hrs", color: "#3B82F6", icon: "⚡" },
+          { label: "Avg Discount Rate", val: "6-9% p.a.", color: "#F59E0B", icon: "📉" },
+          { label: "RBI Platforms", val: "5 Approved", color: "#A78BFA", icon: "🏦" },
+        ].map((stat, i) => (
+          <div key={i} style={{ ...S.card, textAlign: "center" }}>
+            <div style={{ fontSize: "28px", marginBottom: "8px" }}>{stat.icon}</div>
+            <div style={{ fontSize: "22px", fontWeight: 800, color: stat.color }}>{stat.val}</div>
+            <div style={{ fontSize: "11px", color: "#71717A", fontWeight: 600, textTransform: "uppercase", letterSpacing: "0.8px", marginTop: "4px" }}>{stat.label}</div>
+          </div>
+        ))}
+      </div>
+
+      {/* How TReDS Works - 3 Participants */}
+      <div style={S.section}>
+        <h2 style={S.h2}><span style={{ background: "rgba(6,182,212,0.2)", padding: "8px 12px", borderRadius: "10px", fontSize: "20px" }}>🔄</span> How TReDS Works — Key Participants</h2>
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))", gap: "16px", marginBottom: "24px" }}>
+          {[
+            { role: "MSME Seller", icon: "🏭", color: "16,185,129", points: ["Uploads approved invoices to TReDS", "Receives competitive bids from financiers", "Gets paid within 24-48 hours", "Non-recourse: no liability if buyer defaults", "No collateral required"] },
+            { role: "Corporate Buyer", icon: "🏢", color: "59,130,246", points: ["Accepts MSME invoices on platform", "Pays financier on original due date", "Companies >₹250Cr must register by mandate", "Improves supplier relationships", "Digital, paperless process"] },
+            { role: "Financier (Bank/NBFC)", icon: "🏦", color: "245,158,11", points: ["Bids competitively to discount invoices", "Risk based on buyer creditworthiness", "RBI-permitted banks and NBFC-Factors", "Insurance companies can provide credit cover", "Earns spread on discounted invoices"] },
+          ].map((p, i) => (
+            <div key={i} style={{ ...S.card, borderTop: `3px solid rgb(${p.color})` }}>
+              <div style={{ display: "flex", alignItems: "center", gap: "10px", marginBottom: "16px" }}>
+                <span style={{ fontSize: "32px" }}>{p.icon}</span>
+                <div style={{ fontWeight: 800, color: `rgb(${p.color})`, fontSize: "18px" }}>{p.role}</div>
+              </div>
+              <div style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
+                {p.points.map((pt, j) => (
+                  <div key={j} style={{ display: "flex", gap: "8px", alignItems: "center" }}>
+                    <span style={{ width: "6px", height: "6px", borderRadius: "50%", background: `rgb(${p.color})`, flexShrink: 0 }} />
+                    <span style={{ color: "#E4E4E7", fontSize: "13px" }}>{pt}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          ))}
+        </div>
+        <div style={{ ...S.infoBox("6,182,212") }}>
+          <strong style={{ color: "#06B6D4" }}>💡 Key Advantage:</strong> <span style={{ color: "#A1A1AA" }}> TReDS financing is <strong style={{ color: "#FFF" }}>without recourse</strong> to the MSME seller. The credit risk is entirely on the <strong style={{ color: "#FFF" }}>buyer</strong>, which means MSMEs get <strong style={{ color: "#FFF" }}>better interest rates</strong> compared to their own credit profile. Even small MSMEs can access institutional finance at rates <strong style={{ color: "#06B6D4" }}>6-9% p.a.</strong> vs 15-24% from informal sources.</span>
+        </div>
+      </div>
+
+      {/* 5 RBI Platforms */}
+      <div style={S.section}>
+        <h2 style={S.h2}><span style={{ background: "rgba(59,130,246,0.2)", padding: "8px 12px", borderRadius: "10px", fontSize: "20px" }}>🏦</span> RBI-Approved TReDS Platforms</h2>
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: "14px" }}>
+          {PLATFORMS.map((p, i) => (
+            <a key={i} href={p.url} target="_blank" rel="noreferrer" style={{ ...S.card, textDecoration: "none", borderLeft: `3px solid rgb(${p.color})`, display: "flex", gap: "14px", alignItems: "flex-start", transition: "border-color 0.2s" }} onMouseOver={e => e.currentTarget.style.borderColor = `rgb(${p.color})`} onMouseOut={e => e.currentTarget.style.borderColor = "rgba(255,255,255,0.06)"}>
+              <span style={{ fontSize: "28px", flexShrink: 0 }}>{p.icon}</span>
+              <div>
+                <div style={{ fontWeight: 700, color: "#FFF", fontSize: "15px", marginBottom: "3px" }}>{p.name} <span style={{ color: `rgb(${p.color})`, fontSize: "12px" }}>↗</span></div>
+                <div style={{ color: "#71717A", fontSize: "11px", marginBottom: "6px" }}>Operated by: {p.operator}</div>
+                <div style={{ color: "#A1A1AA", fontSize: "12px", lineHeight: 1.5 }}>{p.desc}</div>
+              </div>
+            </a>
+          ))}
+        </div>
+      </div>
+
+      {/* Fee Structure */}
+      <div style={S.section}>
+        <h2 style={S.h2}><span style={{ background: "rgba(245,158,11,0.2)", padding: "8px 12px", borderRadius: "10px", fontSize: "20px" }}>💰</span> Fee Structure</h2>
+        <p style={{ color: "#71717A", marginBottom: "20px", lineHeight: 1.7 }}>TReDS fees are <strong style={{ color: "#FFF" }}>transparent and competitive</strong>. The main cost is the discount rate determined by competitive bidding. Platform charges are minimal.</p>
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))", gap: "14px" }}>
+          {FEES.map((f, i) => (
+            <div key={i} style={{ ...S.card, display: "flex", gap: "14px", alignItems: "flex-start", borderLeft: "3px solid rgba(6,182,212,0.4)" }}>
+              <span style={{ fontSize: "28px", flexShrink: 0 }}>{f.icon}</span>
+              <div>
+                <div style={{ fontWeight: 700, color: "#FFF", fontSize: "14px", marginBottom: "4px" }}>{f.item}</div>
+                <div style={{ color: "#06B6D4", fontSize: "16px", fontWeight: 800, marginBottom: "4px" }}>{f.amount}</div>
+                <div style={{ color: "#71717A", fontSize: "12px" }}>{f.note}</div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* Required Documents */}
+      <div style={S.section}>
+        <h2 style={S.h2}><span style={{ background: "rgba(59,130,246,0.2)", padding: "8px 12px", borderRadius: "10px", fontSize: "20px" }}>📄</span> Required Documents for MSME Registration</h2>
+        <p style={{ color: "#71717A", marginBottom: "24px", lineHeight: 1.7 }}>Prepare these documents <strong style={{ color: "#FFF" }}>before registering</strong> on any TReDS platform. The process is fully digital with online KYC.</p>
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))", gap: "14px" }}>
+          {DOCS.map((doc, i) => (
+            <div key={i} style={{ ...S.card, display: "flex", gap: "14px", alignItems: "flex-start", borderLeft: "3px solid rgba(6,182,212,0.4)" }}>
+              <div style={{ fontSize: "28px", flexShrink: 0 }}>{doc.icon}</div>
+              <div style={{ flex: 1 }}>
+                <div style={{ fontWeight: 700, color: "#FFF", fontSize: "14px", marginBottom: "6px" }}>{doc.title}</div>
+                <div style={{ color: "#71717A", fontSize: "13px", lineHeight: 1.6 }}>{doc.desc}</div>
+                {doc.link !== "#" && (
+                  <a href={doc.link} target="_blank" rel="noreferrer" style={{ ...S.link, fontSize: "12px", marginTop: "8px", display: "inline-flex" }} onMouseOver={e => e.currentTarget.style.opacity = 0.7} onMouseOut={e => e.currentTarget.style.opacity = 1}>
+                    {"📎 " + doc.ref + " ↗"}
+                  </a>
+                )}
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* Invoice Discounting Process */}
+      <div style={S.section}>
+        <h2 style={S.h2}><span style={{ background: "rgba(168,85,247,0.2)", padding: "8px 12px", borderRadius: "10px", fontSize: "20px" }}>🔄</span> Invoice Discounting Process — Step by Step</h2>
+        <div style={{ ...S.infoBox("6,182,212"), marginBottom: "24px" }}>
+          <strong style={{ color: "#06B6D4" }}>💡 How it works:</strong> <span style={{ color: "#A1A1AA" }}> The entire process is <strong style={{ color: "#FFF" }}>digital and paperless</strong>. MSMEs upload invoices, buyers accept them, and financiers bid competitively. Funds reach the MSME within <strong style={{ color: "#FFF" }}>24-48 hours</strong>. On the due date, the buyer pays the financier directly. The MSME has <strong style={{ color: "#FFF" }}>zero liability</strong> after receiving payment.</span>
+        </div>
+        <div style={{ position: "relative" }}>
+          <div style={{ position: "absolute", left: "36px", top: "20px", bottom: "20px", width: "2px", background: "linear-gradient(to bottom, #06B6D4, #3B82F6)", borderRadius: "2px" }} />
+          <div style={{ display: "flex", flexDirection: "column", gap: "16px", paddingLeft: "16px" }}>
+            {STEPS.map((step, i) => (
+              <div key={i} style={{ display: "flex", gap: "20px", alignItems: "flex-start" }}>
+                <div style={{ width: "44px", height: "44px", borderRadius: "50%", background: `rgba(${step.color},0.15)`, border: `2px solid rgba(${step.color},0.5)`, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0, fontWeight: 900, color: `rgb(${step.color})`, fontSize: "14px" }}>{step.num}</div>
+                <div style={{ ...S.card, flex: 1, padding: "16px 20px" }}>
+                  <div style={{ fontWeight: 700, color: "#FFF", fontSize: "15px", marginBottom: "6px" }}>{step.title}</div>
+                  <div style={{ color: "#71717A", fontSize: "13px", lineHeight: 1.6 }}>{step.detail}</div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      {/* Eligibility */}
+      <div style={S.section}>
+        <h2 style={S.h2}><span style={{ background: "rgba(16,185,129,0.2)", padding: "8px 12px", borderRadius: "10px", fontSize: "20px" }}>✅</span> Eligibility Criteria</h2>
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))", gap: "16px" }}>
+          <div style={S.card}>
+            <h3 style={{ color: "#22C55E", margin: "0 0 16px 0", fontSize: "16px", fontWeight: 700 }}>✅ MSME Sellers</h3>
+            {[
+              "Valid Udyam Registration (Micro, Small, or Medium)",
+              "Active GST registration with invoice compliance",
+              "Operating for at least 1 year",
+              "Supplying goods/services to registered buyers",
+              "Bank account with a scheduled commercial bank",
+              "No minimum turnover requirement",
+              "Both manufacturing and service MSMEs eligible",
+            ].map((item, i) => (
+              <div key={i} style={{ display: "flex", gap: "10px", alignItems: "center", marginBottom: "8px" }}>
+                <span style={{ fontSize: "14px", flexShrink: 0 }}>✅</span>
+                <span style={{ color: "#E4E4E7", fontSize: "13px" }}>{item}</span>
+              </div>
+            ))}
+          </div>
+          <div style={S.card}>
+            <h3 style={{ color: "#3B82F6", margin: "0 0 16px 0", fontSize: "16px", fontWeight: 700 }}>🏢 Corporate Buyers (Mandatory)</h3>
+            {[
+              "Companies with turnover >₹250 Cr MUST register (Nov 2024 mandate)",
+              "All CPSEs (Central Public Sector Enterprises) must register",
+              "Previous threshold was ₹500 Cr — now expanded significantly",
+              "Government departments and PSUs encouraged to onboard",
+              "Deadline: March/June 2025 for mandatory registration",
+              "Voluntary registration open for all other companies",
+              "Process is free and digital for buyers",
+            ].map((item, i) => (
+              <div key={i} style={{ display: "flex", gap: "10px", alignItems: "center", marginBottom: "8px" }}>
+                <span style={{ fontSize: "14px", flexShrink: 0 }}>🔵</span>
+                <span style={{ color: "#E4E4E7", fontSize: "13px" }}>{item}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      {/* Charts Section */}
+      <div style={S.section}>
+        <h2 style={S.h2}><span style={{ background: "rgba(59,130,246,0.2)", padding: "8px 12px", borderRadius: "10px", fontSize: "20px" }}>📈</span> TReDS Data & Analytics</h2>
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))", gap: "24px" }}>
+
+          {/* Transaction Volume Growth */}
+          <div style={{ ...S.card }}>
+            <h3 style={{ color: "#06B6D4", margin: "0 0 20px 0", fontSize: "16px", fontWeight: 700 }}>📈 Transaction Volume Growth (₹ Crore)</h3>
+            <ResponsiveContainer width="100%" height={280}>
+              <BarChart data={transactionData} margin={{ top: 5, right: 10, left: -10, bottom: 5 }}>
+                <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.05)" />
+                <XAxis dataKey="year" stroke="#71717A" tick={{ fontSize: 10 }} />
+                <YAxis stroke="#71717A" tick={{ fontSize: 10 }} tickFormatter={v => v >= 1000 ? `${(v/1000).toFixed(0)}K` : v} />
+                <Tooltip contentStyle={{ background: "#111216", border: "1px solid rgba(255,255,255,0.1)", borderRadius: "8px" }} formatter={v => [`₹${v.toLocaleString("en-IN")} Cr`]} />
+                <Bar dataKey="volume" fill="#06B6D4" radius={[5, 5, 0, 0]} name="Volume (₹ Cr)" />
+              </BarChart>
+            </ResponsiveContainer>
+          </div>
+
+          {/* Platform Market Share */}
+          <div style={{ ...S.card }}>
+            <h3 style={{ color: "#3B82F6", margin: "0 0 20px 0", fontSize: "16px", fontWeight: 700 }}>🏦 Platform Market Share (%)</h3>
+            <ResponsiveContainer width="100%" height={280}>
+              <BarChart data={platformShare} layout="vertical" margin={{ top: 5, right: 30, left: 60, bottom: 5 }}>
+                <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.05)" />
+                <XAxis type="number" stroke="#71717A" tick={{ fontSize: 10 }} tickFormatter={v => `${v}%`} />
+                <YAxis type="category" dataKey="name" stroke="#71717A" tick={{ fontSize: 11 }} />
+                <Tooltip contentStyle={{ background: "#111216", border: "1px solid rgba(255,255,255,0.1)", borderRadius: "8px" }} formatter={v => [`${v}%`]} />
+                <Bar dataKey="share" fill="#3B82F6" radius={[0, 5, 5, 0]} name="Market Share" />
+              </BarChart>
+            </ResponsiveContainer>
+          </div>
+
+          {/* Interest Rate Comparison */}
+          <div style={{ ...S.card }}>
+            <h3 style={{ color: "#22C55E", margin: "0 0 20px 0", fontSize: "16px", fontWeight: 700 }}>📉 TReDS vs Other Financing (% p.a.)</h3>
+            <ResponsiveContainer width="100%" height={280}>
+              <BarChart data={rateComparison} margin={{ top: 5, right: 10, left: -10, bottom: 5 }}>
+                <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.05)" />
+                <XAxis dataKey="source" stroke="#71717A" tick={{ fontSize: 11 }} />
+                <YAxis stroke="#71717A" tick={{ fontSize: 10 }} tickFormatter={v => `${v}%`} />
+                <Tooltip contentStyle={{ background: "#111216", border: "1px solid rgba(255,255,255,0.1)", borderRadius: "8px" }} formatter={v => [`${v}% p.a.`]} />
+                <Bar dataKey="rate" radius={[5, 5, 0, 0]} name="Interest Rate">
+                  {rateComparison.map((entry, index) => {
+                    const colors = ["#22C55E", "#3B82F6", "#F59E0B", "#EF4444"];
+                    return <Cell key={index} fill={colors[index]} />;
+                  })}
+                </Bar>
+              </BarChart>
+            </ResponsiveContainer>
+          </div>
+
+          {/* MSME Registration Growth */}
+          <div style={{ ...S.card }}>
+            <h3 style={{ color: "#A78BFA", margin: "0 0 20px 0", fontSize: "16px", fontWeight: 700 }}>🏭 Participant Growth Trend</h3>
+            <ResponsiveContainer width="100%" height={280}>
+              <LineChart data={msmeGrowth} margin={{ top: 5, right: 10, left: -10, bottom: 5 }}>
+                <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.05)" />
+                <XAxis dataKey="year" stroke="#71717A" tick={{ fontSize: 10 }} />
+                <YAxis stroke="#71717A" tick={{ fontSize: 9 }} tickFormatter={v => v >= 1000 ? `${(v/1000).toFixed(0)}K` : v} />
+                <Tooltip contentStyle={{ background: "#111216", border: "1px solid rgba(255,255,255,0.1)", borderRadius: "8px" }} />
+                <Legend wrapperStyle={{ fontSize: "11px" }} />
+                <Line type="monotone" dataKey="sellers" stroke="#22C55E" strokeWidth={3} dot={{ r: 4 }} name="MSME Sellers" />
+                <Line type="monotone" dataKey="buyers" stroke="#3B82F6" strokeWidth={3} dot={{ r: 4 }} name="Corporate Buyers" />
+              </LineChart>
+            </ResponsiveContainer>
+          </div>
+        </div>
+      </div>
+
+      {/* Onboarding Timeline */}
+      <div style={S.section}>
+        <h2 style={S.h2}><span style={{ background: "rgba(168,85,247,0.2)", padding: "8px 12px", borderRadius: "10px", fontSize: "20px" }}>⏱️</span> Onboarding & Payout Timeline</h2>
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(140px, 1fr))", gap: "12px" }}>
+          {TIMELINE.map((tl, i) => (
+            <div key={i} style={{ ...S.card, textAlign: "center", borderTop: i === TIMELINE.length - 1 ? "3px solid #06B6D4" : "3px solid rgba(6,182,212,0.3)" }}>
+              <div style={{ fontSize: "28px", marginBottom: "8px" }}>{tl.icon}</div>
+              <div style={{ fontWeight: 700, color: i === TIMELINE.length - 1 ? "#06B6D4" : "#3B82F6", fontSize: "15px", marginBottom: "5px" }}>{tl.duration}</div>
+              <div style={{ color: "#71717A", fontSize: "11px" }}>{tl.phase}</div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* Official Reference Links */}
+      <div style={S.section}>
+        <h2 style={S.h2}><span style={{ background: "rgba(6,182,212,0.2)", padding: "8px 12px", borderRadius: "10px", fontSize: "20px" }}>🔗</span> Official Reference Links</h2>
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))", gap: "14px" }}>
+          {[
+            { label: "RBI — TReDS Guidelines", url: "https://www.rbi.org.in", desc: "RBI master directions and circulars governing TReDS operations and participant regulations." },
+            { label: "M1xchange", url: "https://www.m1xchange.com", desc: "Largest TReDS platform. Register as seller, buyer, or financier. Complete digital onboarding." },
+            { label: "RXIL (NSE-SIDBI)", url: "https://www.rxil.in", desc: "Receivables Exchange of India. Joint venture between NSE and SIDBI for MSME receivables." },
+            { label: "Invoicemart (A.TReDS)", url: "https://www.invoicemart.com", desc: "Axis Bank-backed TReDS platform with growing network of participating institutions." },
+            { label: "Ministry of MSME", url: "https://msme.gov.in", desc: "Official guidelines on mandatory TReDS registration and MSME payment facilitation." },
+            { label: "Udyam Registration", url: "https://udyamregistration.gov.in", desc: "Free MSME registration — mandatory requirement to participate as seller on TReDS." },
+            { label: "MSME Samadhaan", url: "https://samadhaan.msme.gov.in", desc: "Government portal for filing delayed payment complaints against buyers. Complements TReDS." },
+            { label: "MyScheme — TReDS", url: "https://www.myscheme.gov.in", desc: "Central scheme portal with TReDS information and eligibility checker." },
+          ].map((ref, i) => (
+            <a key={i} href={ref.url} target="_blank" rel="noreferrer" style={{ ...S.card, textDecoration: "none", display: "flex", flexDirection: "column", gap: "6px", cursor: "pointer", transition: "border-color 0.2s" }} onMouseOver={e => e.currentTarget.style.borderColor = "rgba(6,182,212,0.3)"} onMouseOut={e => e.currentTarget.style.borderColor = "rgba(255,255,255,0.06)"}>
+              <div style={{ fontWeight: 700, color: "#06B6D4", fontSize: "13px", display: "flex", justifyContent: "space-between" }}>{ref.label}<span>↗</span></div>
+              <div style={{ color: "#71717A", fontSize: "12px" }}>{ref.desc}</div>
+            </a>
+          ))}
+        </div>
+      </div>
+
+      {/* Next Steps */}
+      <div style={{ ...S.infoBox("6,182,212"), borderLeft: "5px solid #06B6D4" }}>
+        <h2 style={{ ...S.h2, marginBottom: "20px" }}>🚀 What To Do Next</h2>
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))", gap: "16px" }}>
+          {[
+            { step: "1", action: "Get Udyam Registration (free) if you don't have it — mandatory for TReDS seller registration", link: "https://udyamregistration.gov.in", cta: "Register Now →" },
+            { step: "2", action: "Choose a TReDS platform (M1xchange, RXIL, Invoicemart) and complete online registration with KYC", link: "https://www.m1xchange.com", cta: "Register on M1xchange →" },
+            { step: "3", action: "Upload your first approved invoice and wait for buyer acceptance on the platform", link: "https://www.rxil.in", cta: "Try RXIL Platform →" },
+            { step: "4", action: "Compare financier bids and accept the best rate — funds arrive within 24-48 hours", link: "#", cta: "Start Discounting →" },
+            { step: "5", action: "Ask your corporate buyers to register on TReDS — mandatory for companies >₹250Cr turnover", link: "https://msme.gov.in", cta: "Share Mandate Details →" },
+            { step: "6", action: "Explore other MSME schemes like CGTMSE, MUDRA, and PMEGP for additional financing support", link: "#related", cta: "Related Schemes ↓" },
+          ].map((ns, i) => (
+            <a key={i} href={ns.link} target={ns.link.startsWith("http") ? "_blank" : "_self"} rel="noreferrer" style={{ background: "rgba(6,182,212,0.08)", border: "1px solid rgba(6,182,212,0.15)", borderRadius: "10px", padding: "16px", textDecoration: "none", display: "flex", flexDirection: "column", gap: "8px", transition: "background 0.2s" }} onMouseOver={e => e.currentTarget.style.background = "rgba(6,182,212,0.15)"} onMouseOut={e => e.currentTarget.style.background = "rgba(6,182,212,0.08)"}>
+              <div style={{ width: "28px", height: "28px", borderRadius: "50%", background: "rgba(6,182,212,0.2)", display: "inline-flex", alignItems: "center", justifyContent: "center", color: "#06B6D4", fontWeight: 800, fontSize: "13px" }}>{ns.step}</div>
+              <div style={{ color: "#E4E4E7", fontSize: "13px", lineHeight: 1.5 }}>{ns.action}</div>
+              <div style={{ color: "#06B6D4", fontSize: "12px", fontWeight: 700 }}>{ns.cta}</div>
+            </a>
+          ))}
+        </div>
+      </div>
+
+      {/* Related Schemes */}
+      <div id="related" style={{ ...S.section, marginTop: "50px" }}>
+        <h2 style={S.h2}><span style={{ background: "rgba(168,85,247,0.2)", padding: "8px 12px", borderRadius: "10px", fontSize: "20px" }}>🧩</span> Related MSME Financing Schemes</h2>
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))", gap: "14px" }}>
+          {RELATED.map((r, i) => (
+            <div key={i} style={{ ...S.card, display: "flex", gap: "14px", alignItems: "flex-start", cursor: r.onClick ? "pointer" : "default" }} onClick={r.onClick || undefined}>
+              <span style={{ fontSize: "28px" }}>{r.icon}</span>
+              <div>
+                <div style={{ fontWeight: 700, color: "#FFF", fontSize: "14px", marginBottom: "5px" }}>{r.name}</div>
+                <div style={{ color: "#71717A", fontSize: "12px", lineHeight: 1.6, marginBottom: "10px" }}>{r.desc}</div>
+                {r.onClick ? (
+                  <button onClick={r.onClick} style={{ ...S.link, fontSize: "12px", background: "none", border: "none", cursor: "pointer", padding: 0 }}>View Full Guide ↗</button>
+                ) : (
+                  <a href={r.link} target="_blank" rel="noreferrer" style={{ ...S.link, fontSize: "12px" }}>Learn More ↗</a>
+                )}
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+    </div>
+  );
+}
+
 export default function IndiaFinBot() {
   const [lang, setLang] = useState("en"); // en, hi, ta, te, ml, kn
   const [theme, setTheme] = useState("dark");
@@ -3104,8 +3573,8 @@ Please provide a comprehensive, structured analysis in ${lang === 'en' ? 'Englis
 
             <div className="grid-cards fade-in-up" style={{ animationDelay: "0.2s", marginBottom: "50px" }}>
               {GOVERNMENT_SCHEMES.map((scheme, i) => (
-                <div key={i} className="glass-panel float-hover fade-in-up" style={{ animationDelay: `${i*0.1}s`, borderRadius: "20px", padding: "30px", border: "1px solid rgba(255,255,255,0.05)", position: "relative", overflow: "hidden", cursor: [1,2,3,4].includes(scheme.rank) ? "pointer" : "default" }}
-                  onClick={() => { if (scheme.rank === 1) setActiveTab("cgtmse"); if (scheme.rank === 2) setActiveTab("pmmy"); if (scheme.rank === 3) setActiveTab("pmegp"); if (scheme.rank === 4) setActiveTab("pli"); }}>
+                <div key={i} className="glass-panel float-hover fade-in-up" style={{ animationDelay: `${i*0.1}s`, borderRadius: "20px", padding: "30px", border: "1px solid rgba(255,255,255,0.05)", position: "relative", overflow: "hidden", cursor: [1,2,3,4,5].includes(scheme.rank) ? "pointer" : "default" }}
+                  onClick={() => { if (scheme.rank === 1) setActiveTab("cgtmse"); if (scheme.rank === 2) setActiveTab("pmmy"); if (scheme.rank === 3) setActiveTab("pmegp"); if (scheme.rank === 4) setActiveTab("pli"); if (scheme.rank === 5) setActiveTab("treds"); }}>
                   <div style={{ position: "absolute", top: -20, right: -20, fontSize: "80px", opacity: 0.05 }}>{scheme.icon}</div>
                   <div style={{ width: 50, height: 50, borderRadius: 12, background: "rgba(255,255,255,0.03)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 24, marginBottom: 15, border: "1px solid rgba(255,255,255,0.05)" }}>
                     {scheme.icon}
@@ -3118,8 +3587,8 @@ Please provide a comprehensive, structured analysis in ${lang === 'en' ? 'Englis
                     <span style={{ color: "#FFF", fontSize: "14px", fontWeight: 600 }}>{scheme.coverage}</span>
                   </div>
 
-                  {[1,2,3,4].includes(scheme.rank) ? (
-                    <button onClick={(e) => { e.stopPropagation(); const tabMap = {1:"cgtmse",2:"pmmy",3:"pmegp",4:"pli"}; setActiveTab(tabMap[scheme.rank]); }} style={{ display: "inline-block", background: scheme.rank === 1 ? "linear-gradient(135deg, #3B82F6, #06B6D4)" : scheme.rank === 2 ? "linear-gradient(135deg, #F59E0B, #EF4444)" : scheme.rank === 3 ? "linear-gradient(135deg, #16A34A, #06B6D4)" : "linear-gradient(135deg, #A855F7, #F59E0B)", color: "#FFF", padding: "10px 20px", borderRadius: "8px", border: "none", cursor: "pointer", fontSize: "14px", fontWeight: 700, transition: "transform 0.2s" }} onMouseOver={e => e.currentTarget.style.transform = "scale(1.05)"} onMouseOut={e => e.currentTarget.style.transform = "scale(1)"}>
+                  {[1,2,3,4,5].includes(scheme.rank) ? (
+                    <button onClick={(e) => { e.stopPropagation(); const tabMap = {1:"cgtmse",2:"pmmy",3:"pmegp",4:"pli",5:"treds"}; setActiveTab(tabMap[scheme.rank]); }} style={{ display: "inline-block", background: scheme.rank === 1 ? "linear-gradient(135deg, #3B82F6, #06B6D4)" : scheme.rank === 2 ? "linear-gradient(135deg, #F59E0B, #EF4444)" : scheme.rank === 3 ? "linear-gradient(135deg, #16A34A, #06B6D4)" : scheme.rank === 4 ? "linear-gradient(135deg, #A855F7, #F59E0B)" : "linear-gradient(135deg, #06B6D4, #3B82F6)", color: "#FFF", padding: "10px 20px", borderRadius: "8px", border: "none", cursor: "pointer", fontSize: "14px", fontWeight: 700, transition: "transform 0.2s" }} onMouseOver={e => e.currentTarget.style.transform = "scale(1.05)"} onMouseOut={e => e.currentTarget.style.transform = "scale(1)"}>
                       📄 Full Guide & Apply ↗
                     </button>
                   ) : (
@@ -3143,6 +3612,7 @@ Please provide a comprehensive, structured analysis in ${lang === 'en' ? 'Englis
         {activeTab === "pmmy" && <PMMYDetailPage setActiveTab={setActiveTab} />}
         {activeTab === "pmegp" && <PMEGPDetailPage setActiveTab={setActiveTab} />}
         {activeTab === "pli" && <PLIDetailPage setActiveTab={setActiveTab} />}
+        {activeTab === "treds" && <TReDSDetailPage setActiveTab={setActiveTab} />}
 
         {activeTab === "privacy" && (
           <div className="content-area glass-panel custom-scrollbar fade-in-up" style={{ borderRadius: "20px", padding: "40px" }}>
